@@ -40,7 +40,7 @@ try{
 
 const response = await axios.put(
 
-`http://localhost:8080/api/nguoidung/${user.id}/matkhau`,
+`/api/nguoidung/${user.id}/matkhau`,
 
 {
 password:newPassword
