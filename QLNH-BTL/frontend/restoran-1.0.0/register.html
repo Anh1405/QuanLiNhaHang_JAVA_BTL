@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Restoran - Đăng Ký</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        /* Ngăn chặn nhảy chữ trên Navbar đã chỉnh sửa ở trang Profile */
+        .navbar-nav .nav-link {
+            white-space: nowrap !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="index.html" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="index.html" class="nav-item nav-link" data-i18n="nav-home">Trang Chủ</a>
+                        <a href="menu.html" class="nav-item nav-link" data-i18n="nav-menu">Thực Đơn</a>
+                        <a href="login.html" class="nav-item nav-link active" data-i18n="nav-login">Đăng Nhập</a>
+                        
+                        <!-- Cụm chọn ngôn ngữ đồng bộ trên Navbar -->
+                        <div class="nav-item dropdown d-flex align-items-center">
+                            <a href="#" class="nav-link dropdown-toggle text-primary fw-bold" data-bs-toggle="dropdown" id="lang-label">
+                                VI
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end m-0 shadow-sm">
+                                <a href="#" class="dropdown-item lang-option" data-lang="vi">VI - Tiếng Việt</a>
+                                <a href="#" class="dropdown-item lang-option" data-lang="en">EN - English</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown" data-i18n="register-title">Đăng Ký</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="wow fadeInUp p-5 border rounded bg-light" data-wow-delay="0.2s">
+                            <form onsubmit="handleRegister(event)">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="fullName" data-i18n-placeholder="register-name-ph" placeholder="Họ tên" required>
+                                            <label for="fullName" data-i18n="register-name-label">Họ và tên</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" data-i18n-placeholder="register-email-ph" placeholder="Email" required>
+                                            <label for="email" data-i18n="register-email-label">Địa chỉ Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="regUsername" data-i18n-placeholder="register-username-ph" placeholder="Tên đăng nhập" required>
+                                            <label for="regUsername" data-i18n="register-username-label">Tên đăng nhập</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="regPassword" data-i18n-placeholder="register-password-ph" placeholder="Mật khẩu" required>
+                                            <label for="regPassword" data-i18n="register-password-label">Mật khẩu</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="confirmPassword" data-i18n-placeholder="register-confirm-ph" placeholder="Nhập lại mật khẩu" required>
+                                            <label for="confirmPassword" data-i18n="register-confirm-label">Xác nhận mật khẩu</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit" data-i18n="register-btn-submit">Đăng Ký Tài Khoản</button>
+                                    </div>
+                                    <div class="col-12 text-center mt-3">
+                                        <p><span data-i18n="register-have-account">Đã có tài khoản?</span> <a href="login.html" class="text-primary fw-bold" data-i18n="register-login-link">Đăng nhập</a></p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nhúng thư viện Javascript và file ngôn ngữ hệ thống -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        async function handleRegister(event) {
+
+            event.preventDefault();
+
+            const fullName = document.getElementById("fullName").value;
+            const email = document.getElementById("email").value;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+            if (!emailRegex.test(email)) {
+                alert("Chỉ được dùng email @gmail.com");
+                document.getElementById("email").focus();
+                return;
+            
+
+                alert(msg);
+                document.getElementById("email").focus();
+                return;
+            }
+            const username = document.getElementById("regUsername").value;
+            const password = document.getElementById("regPassword").value;
+            const confirm = document.getElementById("confirmPassword").value;
+
+            // Xác định ngôn ngữ hiện tại để hiển thị thông báo alert
+            const currentLang = localStorage.getItem("currentLanguage") || "vi";
+
+            if (password !== confirm) {
+                const msg = currentLang === "en" ? "Confirm password does not match!" : "Mật khẩu xác nhận không khớp!";
+                return alert(msg);
+            }
+
+            const data = {
+                hoTen: fullName,
+                email: email,
+                username: username,
+                password: password
+            };
+
+            try {
+                const response = await axios.post('http://localhost:8080/api/nguoidung/register', data);
+                console.log("Đăng ký thành công:", response.data);
+                
+                const successMsg = currentLang === "en" 
+                    ? "Registration successful! Redirecting to login page..." 
+                    : "Đăng ký thành công! Đang chuyển hướng sang trang Đăng nhập...";
+                alert(successMsg);
+                
+                window.location.href = "login.html";
+
+            } catch (error) {
+                console.error("Lỗi đăng ký:", error);
+                if (error.response && error.response.data) {
+                    alert((currentLang === "en" ? "Error: " : "Lỗi: ") + error.response.data); 
+                } else {
+                    const serverErrorMsg = currentLang === "en" ? "Cannot connect to the server!" : "Không thể kết nối đến máy chủ!";
+                    alert(serverErrorMsg);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
