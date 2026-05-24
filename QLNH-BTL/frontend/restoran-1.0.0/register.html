@@ -149,7 +149,7 @@
             };
 
             try {
-                const response = await axios.post('http://localhost:8080/api/nguoidung/register', data);
+                const response = await axios.post('/api/nguoidung/register', data);
                 console.log("Đăng ký thành công:", response.data);
                 
                 const successMsg = currentLang === "en" 
