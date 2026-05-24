@@ -2,14 +2,14 @@
 FROM maven:3.9.6-amazoncorretto-17 AS build
 WORKDIR /app
 
-# Copy toàn bộ code Backend (đang ở trong QLNH-BTL) vào container
+# Copy toàn bộ code hiện tại vào trong container
 COPY . .
 
-# 🔥 ĐOẠN THẦN THÁNH: Tự tạo thư mục static và bốc frontend từ ngoài vào trong src
+# 🔥 ĐOẠN ĐƯỜNG DẪN CHUẨN: Tạo thư mục static và copy toàn bộ ruột bên trong restoran-1.0.0 sang
 RUN mkdir -p src/main/resources/static
-COPY ../frontend/ src/main/resources/static/
+RUN cp -r frontend/restoran-1.0.0/* src/main/resources/static/
 
-# Tiến hành build code nguồn thành file .jar
+# Tiến hành build đóng gói file .jar
 RUN mvn clean package -DskipTests
 
 # Bước 2: Sử dụng môi trường chạy Java Corretto siêu gọn nhẹ
