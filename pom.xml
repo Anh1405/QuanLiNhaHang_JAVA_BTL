@@ -79,13 +79,13 @@
         </dependency>
     </dependencies>
 
-    <build>
+   <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>service.RestaurantApplication</mainClass>
+                    <mainClass>org.example.RestaurantApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
