@@ -46,7 +46,7 @@ try{
 const response=
 await axios.put(
 
-`http://localhost:8080/api/nguoidung/${user.id}/capnhat`,
+`/api/nguoidung/${user.id}/capnhat`,
 
 {
 hoTen:
