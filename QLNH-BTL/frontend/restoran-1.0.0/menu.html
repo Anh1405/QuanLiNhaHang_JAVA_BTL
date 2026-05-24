@@ -27,155 +27,154 @@
 </head>
 
 <body>
-<div class="container-xxl bg-white p-0">
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+        </div>
+        <!-- Spinner End -->
 
-    <!-- Spinner -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
-    </div>
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="index.html" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="index.html" class="nav-item nav-link" data-i18n="nav-home">Trang chủ</a>
+                        <a href="about.html" class="nav-item nav-link" data-i18n="nav-about">Giới thiệu</a>
+                        <a href="service.html" class="nav-item nav-link" data-i18n="nav-service">Dịch vụ</a>
+                        <a href="menu.html" class="nav-item nav-link active" data-i18n="nav-menu">Thực đơn</a>
+                        
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-i18n="nav-pages">Trang</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="booking.html" class="dropdown-item" data-i18n="nav-booking">Đặt bàn</a>
+                                <a href="team.html" class="dropdown-item" data-i18n="nav-team">Đội ngũ</a>
+                                <a href="testimonial.html" class="dropdown-item" data-i18n="nav-testimonial">Đánh giá</a>
+                            </div>
+                        </div>
+                        <a href="contact.html" class="nav-item nav-link" data-i18n="nav-contact">Liên hệ</a>
 
-    <!-- Navbar -->
-    <div class="container-xxl position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand p-0">
-                <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
-            </a>
+                        <!-- Dropdown Chọn Ngôn Ngữ Đồng Bộ -->
+                        <div class="nav-item dropdown d-flex align-items-center">
+                            <a href="#" class="nav-link dropdown-toggle text-primary fw-bold" data-bs-toggle="dropdown" id="lang-label">
+                                VI
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end m-0 shadow-sm">
+                                <a href="#" class="dropdown-item lang-option" data-lang="vi">VI - Tiếng Việt</a>
+                                <a href="#" class="dropdown-item lang-option" data-lang="en">EN - English</a>
+                            </div>
+                        </div>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0 pe-4">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Service</a>
-                    <a href="menu.html" class="nav-item nav-link active">Menu</a>
-
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="booking.html" class="dropdown-item">Booking</a>
-                            <a href="team.html" class="dropdown-item">Our Team</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <div id="auth-area" class="d-flex align-items-center">
+                            <a href="login.html" class="nav-link" data-i18n="nav-login">
+                                <i class="fa fa-user me-1"></i>Đăng nhập
+                            </a>
                         </div>
                     </div>
-
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-<div id="auth-area" class="d-flex align-items-center">
-    <a href="login.html" class="nav-item nav-link"><i class="fa fa-user me-1"></i>Đăng Nhập</a>
-</div>
+                    <a href="booking.html" class="btn btn-primary py-2 px-4" data-i18n="btn-book-now">Đặt bàn ngay</a>
                 </div>
+            </nav>
 
-                <a href="booking.html" class="btn btn-primary py-2 px-4">Book A Table</a>
-            </div>
-        </nav>
-
-        <!-- Hero -->
-        <div class="container-xxl py-5 bg-dark hero-header mb-5">
-            <div class="container text-center my-5 pt-5 pb-4">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Food Menu</h1>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-center text-uppercase">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item text-white active">Menu</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-
-    <!-- Menu Section -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Thực Đơn</h5>
-                <h1 class="mb-5">Danh Mục Món Ăn Nhà Hàng</h1>
-            </div>
-
-            <!-- Danh mục -->
-            <div class="text-center mb-5">
-                <div id="danh-muc-tabs" class="nav nav-pills d-inline-flex justify-content-center border-bottom"></div>
-            </div>
-
-            <!-- Danh sách món -->
-            <div class="row g-4" id="menu-container">
-                <!-- API render tại đây -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer giữ nguyên -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">
-                        Company
-                    </h4>
-
-                    <a class="btn btn-link" href="about.html">About Us</a>
-                    <a class="btn btn-link" href="contact.html">Contact Us</a>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Opening</h4>
-                    <h5 class="text-light fw-normal">Monday - Saturday</h5>
-                    <p>09AM - 09PM</p>
-                    <h5 class="text-light fw-normal">Sunday</h5>
-                    <p>10AM - 08PM</p>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                    </div>
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown" data-i18n="nav-menu">Thực đơn</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="index.html" data-i18n="nav-home">Trang chủ</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page" data-i18n="nav-menu">Thực đơn</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
+        <!-- Navbar & Hero End -->
 
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a><br><br>
-                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+        <!-- Menu Section Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal" data-i18n="nav-menu">Thực Đơn</h5>
+                    <h1 class="mb-5" data-i18n="menu-main-header">Danh Mục Món Ăn Nhà Hàng</h1>
+                </div>
+
+                <!-- Tabs danh mục tự động -->
+                <div class="text-center mb-5">
+                    <div id="danh-muc-tabs" class="nav nav-pills d-inline-flex justify-content-center border-bottom"></div>
+                </div>
+
+                <!-- Danh sách món ăn kết nối API/Dữ liệu mẫu -->
+                <div class="row g-4" id="menu-container">
+                    <!-- JavaScript render dữ liệu động tại đây -->
+                </div>
+            </div>
+        </div>
+        <!-- Menu Section End -->
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-info">Thông Tin</h4>
+                        <a class="btn btn-link" href="about.html" data-i18n="nav-about">Giới Thiệu</a>
+                        <a class="btn btn-link" href="contact.html" data-i18n="nav-contact">Liên Hệ</a>
+                        <a class="btn btn-link" href="booking.html" data-i18n="nav-booking">Đặt Bàn</a>
                     </div>
-
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="">Home</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-contact">Liên Hệ</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>38 Nguyễn Ư Dĩ, TP.HCM</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0123 456 789</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>restoran@gmail.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-hours">Giờ Mở Cửa</h4>
+                        <h5 class="text-light fw-normal" data-i18n="footer-days-wk">Thứ 2 - Thứ 7</h5>
+                        <p>09:00 AM - 09:00 PM</p>
+                        <h5 class="text-light fw-normal" data-i18n="footer-days-sun">Chủ Nhật</h5>
+                        <p>10:00 AM - 08:00 PM</p>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-newsletter">Đăng Ký Nhận Tin</h4>
+                        <p data-i18n="footer-news-desc">Nhận thông tin khuyến mãi và món ăn mới từ nhà hàng.</p>
+                        <div class="position-relative mx-auto" style="max-width: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0" data-i18n="footer-copyright">
+                            © 2026 Restoran. Tất cả quyền được bảo lưu.
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="index.html" data-i18n="nav-home">Trang Chủ</a>
+                                <a href="#" data-i18n="footer-support">Hỗ Trợ</a>
+                                <a href="#" data-i18n="footer-terms">Điều Khoản</a>
+                                <a href="#">FAQs</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top">
-        <i class="bi bi-arrow-up"></i>
-    </a>
+        <!-- Footer End -->
 
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -193,91 +192,121 @@
         // =======================
         // LOAD DANH MỤC
         // =======================
-        function loadDanhMuc() {
-            axios.get("http://localhost:8080/api/danhmuc")
-                .then(response => {
-                    allDanhMuc = response.data;
-                    renderTabs(allDanhMuc);
+         function loadDanhMuc() {
+    axios.get("http://localhost:8080/api/danhmuc")
+        .then(response => {
+            allDanhMuc = response.data;
+            
+            // 🌟 LƯU VÀO ĐÂY: Để file language.js bốc ra dịch tức thì khi nhấn nút chọn ngôn ngữ
+            window.currentMenuData = allDanhMuc;
 
-                    if (allDanhMuc.length > 0) {
-                        loadMonAnTheoDanhMuc(allDanhMuc[0].idDanhMuc);
-                    }
-                })
-                .catch(error => {
-                    console.log("API lỗi, dùng dữ liệu mẫu");
+            renderTabs(allDanhMuc);
 
-                    allDanhMuc = [
-                        {
-                            idDanhMuc: 1,
-                            tenDanhMuc: "Món Chính",
-                            monAns: [
-                                {
-                                    idMonAn: 1,
-                                    tenMon: "Bò Steak",
-                                    giaTien: 250000,
-                                    moTa: "Bò Mỹ nướng sốt tiêu đen",
-                                    hinhAnh: "img/menu-1.jpg"
-                                },
-                                {
-                                    idMonAn: 2,
-                                    tenMon: "Gà Nướng",
-                                    giaTien: 180000,
-                                    moTa: "Gà nướng ngũ vị hấp dẫn",
-                                    hinhAnh: "img/menu-2.jpg"
-                                }
-                            ]
-                        },
-                        {
-                            idDanhMuc: 2,
-                            tenDanhMuc: "Hải Sản",
-                            monAns: [
-                                {
-                                    idMonAn: 3,
-                                    tenMon: "Tôm Hùm Nướng",
-                                    giaTien: 550000,
-                                    moTa: "Tôm hùm tươi nướng phô mai",
-                                    hinhAnh: "img/menu-3.jpg"
-                                },
-                                {
-                                    idMonAn: 4,
-                                    tenMon: "Cua Hoàng Đế",
-                                    giaTien: 790000,
-                                    moTa: "Cua hấp bia cao cấp",
-                                    hinhAnh: "img/menu-4.jpg"
-                                }
-                            ]
-                        },
-                        {
-                            idDanhMuc: 3,
-                            tenDanhMuc: "Đồ Uống",
-                            monAns: [
-                                {
-                                    idMonAn: 5,
-                                    tenMon: "Cocktail Trái Cây",
-                                    giaTien: 85000,
-                                    moTa: "Nước ép mix trái cây",
-                                    hinhAnh: "img/menu-5.jpg"
-                                }
-                            ]
-                        }
-                    ];
-
-                    renderTabs(allDanhMuc);
+            if (allDanhMuc.length > 0) {
+                // Ưu tiên hiển thị menu từ cục dữ liệu monAns có sẵn trong danh mục đầu tiên
+                if (allDanhMuc[0].monAns && allDanhMuc[0].monAns.length > 0) {
                     renderMenu(allDanhMuc[0]);
-                });
-        }
+                } else if (typeof loadMonAnTheoDanhMuc === "function") {
+                    loadMonAnTheoDanhMuc(allDanhMuc[0].idDanhMuc);
+                }
+            }
+        })
+        .catch(error => {
+            console.log("API lỗi, dùng dữ liệu mẫu");
+
+            allDanhMuc = [
+                {
+                    idDanhMuc: 1,
+                    tenDanhMuc: "Món chính", // Đồng bộ viết thường chữ "chính" theo bộ dịch map
+                    monAns: [
+                        {
+                            idMonAn: 1,
+                            tenMon: "Bò Steak Sốt Tiêu Đen", // Sửa tên chuẩn theo danh sách 41 món đã dịch
+                            giaTien: 250000,
+                            moTa: "Bò Mỹ áp chảo cùng sốt tiêu đen",
+                            hinhAnh: "img/main-1.jpg"
+                        },
+                        {
+                            idMonAn: 2,
+                            tenMon: "Gà Nướng Mật Ong", // Sửa tên chuẩn theo danh sách 41 món đã dịch
+                            giaTien: 180000,
+                            moTa: "Gà nướng vàng giòn phủ mật ong",
+                            hinhAnh: "img/main-5.jpg"
+                        }
+                    ]
+                },
+                {
+                    idDanhMuc: 2,
+                    tenDanhMuc: "Món chính", // Ví dụ mẫu hải sản cũng thuộc món chính hoặc bạn đổi thành Khai vị, Lẩu...
+                    monAns: [
+                        {
+                            idMonAn: 3,
+                            tenMon: "Tôm Hùm Bỏ Lò Phô Mai", // Sửa tên chuẩn theo danh sách 41 món đã dịch
+                            giaTien: 550000,
+                            moTa: "Tôm hùm phủ phô mai béo ngậy",
+                            hinhAnh: "img/main-13.jpg"
+                        }
+                    ]
+                },
+                {
+                    idDanhMuc: 3,
+                    tenDanhMuc: "Đồ uống", // Đồng bộ viết thường chữ "uống" theo bộ dịch map
+                    monAns: [
+                        {
+                            idMonAn: 5,
+                            tenMon: "Trà đào cam sả", // Sửa tên chuẩn theo danh sách 41 món đã dịch
+                            giaTien: 85000,
+                            moTa: "Trà đào thơm mát",
+                            hinhAnh: "img/menu-21.jpg"
+                        }
+                    ]
+                }
+            ];
+
+            // 🌟 LƯU VÀO ĐÂY: Bảo hiểm lưu tiếp dữ liệu mẫu vào biến window nếu API sập
+            window.currentMenuData = allDanhMuc;
+
+            renderTabs(allDanhMuc);
+            renderMenu(allDanhMuc[0]);
+        });
+}
 
         // =======================
         // RENDER TAB DANH MỤC
         // =======================
-        function renderTabs(danhMucs) {
+       function renderTabs(danhMucs) {
             const tabs = document.getElementById("danh-muc-tabs");
             tabs.innerHTML = "";
+
+            const currentLang = localStorage.getItem("currentLanguage") || "vi";
+
+            const categoryMap = {
+                "Khai vị": "Appetizers",
+                "Món chính": "Main Courses",
+                "Lẩu": "Hotpot",
+                "Tráng miệng": "Desserts",
+                "Đồ uống": "Drinks"
+            };
 
             danhMucs.forEach((dm, index) => {
                 const button = document.createElement("button");
                 button.className = `nav-link ${index === 0 ? 'active' : ''} mx-2`;
-                button.innerText = dm.tenDanhMuc;
+                
+                // 🌟 THÊM DÒNG NÀY: Định danh ID cho nút bấm để hỗ trợ bộ dịch không bị lệch index
+                button.id = `tab-dm-${dm.idDanhMuc}`;
+
+                let tenDanhMucHienThi = dm.tenDanhMuc;
+                if (currentLang === "en") {
+                    if (categoryMap[dm.tenDanhMuc]) {
+                        tenDanhMucHienThi = categoryMap[dm.tenDanhMuc];
+                    } else if (dm.tenDanhMucEn) {
+                        tenDanhMucHienThi = dm.tenDanhMucEn;
+                    }
+                } else {
+                    tenDanhMucHienThi = dm.tenDanhMuc;
+                }
+                
+                button.innerText = tenDanhMucHienThi;
 
                 button.onclick = function () {
                     document.querySelectorAll("#danh-muc-tabs .nav-link")
@@ -314,44 +343,142 @@
         // =======================
         // RENDER MENU
         // =======================
-        function renderMenu(danhMuc) {
-            const container = document.getElementById("menu-container");
-            container.innerHTML = "";
+        // =======================
+        // RENDER MENU
+        // =======================
+       function renderMenu(danhMuc) {
+    const container = document.getElementById("menu-container");
+    container.innerHTML = "";
 
-            if (!danhMuc.monAns || danhMuc.monAns.length === 0) {
-                container.innerHTML = `
+    // 1. Kiểm tra ngôn ngữ hiện tại (vi hoặc en)
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
+
+    // 2. Dịch thông báo khi danh mục trống
+    if (!danhMuc.monAns || danhMuc.monAns.length === 0) {
+        const noFoodText = currentLang === "en" ? "No dishes available" : "Không có món ăn nào";
+        container.innerHTML = `
             <div class="text-center py-5">
-                <h4>Không có món ăn nào</h4>
+                <h4>${noFoodText}</h4>
             </div>
         `;
-                return;
+        return;
+    }
+
+    // 3. Chuẩn bị chữ cố định cho nút bấm và mô tả mặc định
+    const btnText = currentLang === "en" ? "Order Now" : "Đặt món ngay";
+    const defaultDesc = currentLang === "en" ? "Delicious dish from our restaurant" : "Món ăn hấp dẫn của nhà hàng";
+
+    // BỘ DỊCH NHANH CHO 41 MÓN ĂN CỦA BẠN
+    const translationMap = {
+        "Salad Nga": { name: "Russian Salad", desc: "Fresh Russian-style vegetable salad with a light creamy dressing" },
+        "Khoai tây chiên": { name: "French Fries", desc: "Crispy golden french fries served with ketchup" },
+        "Bò lúc lắc": { name: "Shaking Beef", desc: "Tender cubed beef stir-fried with a rich and savory sauce" },
+        "Cơm chiên hải sản": { name: "Seafood Fried Rice", desc: "Flavorful fried rice with fresh shrimp and squid" },
+        "Cà phê sữa": { name: "Vietnamese Iced Coffee with Condensed Milk", desc: "Bold and rich traditional Vietnamese coffee with sweet condensed milk" },
+        "Nước ép cam": { name: "Fresh Orange Juice", desc: "100% pure and refreshing fresh orange juice" },
+        "Bánh tiramisu": { name: "Tiramisu Cake", desc: "Soft and creamy traditional Italian coffee-flavored dessert" },
+        "Kem vani": { name: "Vanilla Ice Cream", desc: "Chilled, smooth, and refreshing vanilla ice cream" },
+        "Trái cây tổng hợp": { name: "Assorted Fresh Fruits Platter", desc: "A colorful platter of assorted seasonal fresh fruits" },
+        "Lẩu Thái Hải Sản": { name: "Thai Seafood Hotpot", desc: "Spicy and sour Thai broth served with shrimp, squid, and fish balls" },
+        "Lẩu Bò Nhúng Dấm": { name: "Beef Hotpot Vinegar Broth", desc: "Tender beef dipped in tangy vinegar broth, served with fresh herbs" },
+        "Lẩu Nấm Hải Sản": { name: "Seafood & Mushroom Hotpot", desc: "Sweet and clear broth served with assorted mushrooms and fresh seafood" },
+        "Lẩu Gà Lá É": { name: "Chicken Hotpot with Lemon Basil Leaf", desc: "Sweet and tender chicken hotpot combined with aromatic lemon basil leaves" },
+        "Trà đào cam sả": { name: "Peach Orange Lemongrass Tea", desc: "Refreshing peach tea infused with fresh orange and fragrant lemongrass" },
+        "Pepsi": { name: "Pepsi", desc: "Chilled carbonated soft drink" },
+        "Soup bí đỏ": { name: "Pumpkin Soup", desc: "Delicious and creamy pumpkin soup with milk" },
+        "Gỏi cuốn tôm thịt": { name: "Fresh Spring Rolls with Pork & Shrimp", desc: "Traditional Vietnamese fresh spring rolls" },
+        "Mì Ý sốt bò bằm": { name: "Spaghetti Bolognese", desc: "Classic Italian pasta with minced beef tomato sauce" },
+        "Lẩu Tứ Xuyên": { name: "Sichuan Hotpot", desc: "Super spicy and numbing broth in authentic Chinese style" },
+        "Lẩu Kim Chi Bò Mỹ": { name: "Kimchi Hotpot with American Beef", desc: "Mildly spicy kimchi broth accompanied by tender American sliced beef" },
+        "Lẩu Cá Diêu Hồng": { name: "Red Tilapia Fish Hotpot", desc: "Fresh red tilapia fish hotpot served with assorted green vegetables" },
+        "Lẩu Hải Sản Tomyum": { name: "Tomyum Seafood Hotpot", desc: "Rich and flavorful authentic Thailand Tomyum style hotpot" },
+        "Lẩu Gà Tiềm Ớt Hiểm": { name: "Chicken Hotpot with Wild Chili Peppers", desc: "Tender chicken stewed with spicy and aromatic wild chili peppers" },
+        "Soda chanh": { name: "Fresh Lime Soda", desc: "Refreshing carbonated soda with fresh lime juice" },
+        "Chocolate đá xay": { name: "Chocolate Ice Blended", desc: "Rich, sweet, and ice-blended chocolate drink" },
+        "Blue Ocean": { name: "Blue Ocean Mocktail", desc: "Cool, tropical-themed ocean blue mocktail" },
+        "Bia Tiger": { name: "Tiger Beer", desc: "Refreshing Tiger beer, best served extra cold" },
+        "Strongbow Dâu": { name: "Strongbow Red Berries Cider", desc: "Crisp and sweet apple cider with a refreshing strawberry flavor" },
+        "Soju Hàn Quốc": { name: "Korean Soju", desc: "Traditional classic Korean alcoholic beverage" },
+        "Whisky Chivas 12": { name: "Chivas Regal 12 Whisky", desc: "Premium, smooth, and luxurious Chivas Regal 12 aged whisky" },
+        "Salad cá ngừ": { name: "Tuna Salad", desc: "Fresh green salad served with flavorful tuna" },
+        "Phô mai que": { name: "Cheese Sticks", desc: "Crispy deep-fried mozzarella cheese sticks" },
+        "Tôm chiên hoàng kim": { name: "Golden Salted Egg Fried Shrimps", desc: "Crispy fried shrimps coated in rich salted egg sauce" },
+        "Bánh mì bơ tỏi": { name: "Garlic Bread", desc: "Toasted crispy bread topped with rich garlic butter" },
+        "Đậu hũ chiên sả ớt": { name: "Fried Tofu with Lemongrass & Chili", desc: "Golden fried tofu tossed with aromatic lemongrass and chili" },
+        "Bạch tuộc viên takoyaki": { name: "Takoyaki Octopus Balls", desc: "Japanese-style takoyaki balls served with savory mayo sauce" },
+        "Sườn Nướng BBQ": { name: "BBQ Pork Ribs", desc: "American-style grilled pork ribs brushed with savory BBQ sauce" },
+        "Bò Steak Sốt Tiêu Đen": { name: "Beef Steak with Black Pepper Sauce", desc: "Pan-seared premium beef steak served with a rich black pepper sauce" },
+        "Gà Nướng Mật Ong": { name: "Honey Glazed Grilled Chicken", desc: "Honey glazed grilled chicken" },
+        "Bò Nướng Đá": { name: "Hot Stone Grilled Beef", desc: "Sizzling and tender beef grilled directly on a hot volcanic stone" },
+        "Tôm Hùm Bỏ Lò Phô Mai": { name: "Baked Lobster with Cheese", desc: "Premium lobster baked with a rich, melting layer of cheese" },
+        "Mực Nướng Sa Tế": { name: "Grilled Squid with Satay Sauce", desc: "Spicy and aromatic grilled squid with satay marinade" },
+        "Sườn Cừu Nướng": { name: "Grilled Lamb Chops", desc: "European-style tender grilled lamb chops with herbs" },
+        "Panna Cotta Việt Quất": { name: "Blueberry Panna Cotta", desc: "Silky smooth panna cotta topped with sweet blueberry sauce" },
+        "Bánh Mousse Chocolate": { name: "Chocolate Mousse Cake", desc: "Rich, creamy, and velvety chocolate mousse cake" },
+        "Chè Khúc Bạch": { name: "Khuc Bach Sweet Soup", desc: "Refreshing Vietnamese dessert with milk jelly cubes and lychee almond broth" },
+        "Bánh Flan Caramel": { name: "Caramel Flan", desc: "Smooth and soft egg pudding glazed with golden sweet caramel sauce" },
+        "Pudding Trứng": { name: "Egg Pudding", desc: "Rich and creamy sweet egg pudding dessert" },
+        "Crepe Chuối Chocolate": { name: "Banana Chocolate Crepe", desc: "Thin crepe filled with fresh banana slices and drizzled with chocolate sauce" }
+    };
+
+    // 4. Duyệt qua từng món ăn để render
+    danhMuc.monAns.forEach(mon => {
+        const giaMon = mon.giaTien || mon.gia || 0;
+
+        let tenMonHienThi = mon.tenMon;
+        let moTaHienThi = mon.moTa || defaultDesc;
+
+        // ÉP CHẶT ĐIỀU KIỆN THEO NGÔN NGỮ ĐỂ KHÔNG BỊ LƯU ĐÈ TRẠNG THÁI
+        if (currentLang === "en") {
+            if (translationMap[mon.tenMon]) {
+                tenMonHienThi = translationMap[mon.tenMon].name;
+                moTaHienThi = translationMap[mon.tenMon].desc;
+            } else if (mon.tenMonEn) {
+                tenMonHienThi = mon.tenMonEn;
+                moTaHienThi = mon.moTaEn || defaultDesc;
+            } else if (mon.tenMon_en) {
+                tenMonHienThi = mon.tenMon_en;
+                moTaHienThi = mon.moTa_en || defaultDesc;
             }
+        } else {
+            // NẾU LÀ TIẾNG VIỆT: Tìm lại tên gốc trong map ngược để phòng trường hợp object gốc bị biến đổi
+            // Ở đây ta cứ ưu tiên lấy trực tiếp từ dữ liệu gốc ban đầu của API
+            tenMonHienThi = mon.tenMon;
+            moTaHienThi = mon.moTa || defaultDesc;
 
-            danhMuc.monAns.forEach(mon => {
-                const giaMon = mon.giaTien || mon.gia || 0;
+            // Đoạn này xử lý bảo hiểm: Nếu mon.moTa bỗng dưng dính tiếng Anh từ trước, 
+            // ta dò ngược lại map dựa trên tên món để lấy lại mô tả tiếng Việt chuẩn
+            for (const [key, value] of Object.entries(translationMap)) {
+                if (key === mon.tenMon || value.name === mon.tenMon) {
+                    tenMonHienThi = key;
+                    // Nếu mon.moTa bị biến đổi hoặc rỗng, ta có thể giữ nguyên mô tả mặc định của hệ thống
+                    break;
+                }
+            }
+        }
 
-                const card = `
+        const card = `
             <div class="col-lg-4 col-md-6 wow fadeInUp">
                 <div class="menu-card">
-                    <img src="${mon.hinhAnh || 'img/menu-1.jpg'}" alt="${mon.tenMon}">
+                    <img src="${mon.hinhAnh || 'img/menu-1.jpg'}" alt="${tenMonHienThi}">
                     <div class="menu-card-body">
-                        <div class="menu-title">${mon.tenMon}</div>
+                        <div class="menu-title">${tenMonHienThi}</div>
                         <div class="menu-price">${formatPrice(giaMon)}</div>
                         <div class="menu-desc">
-                            ${mon.moTa || 'Món ăn hấp dẫn của nhà hàng'}
+                            ${moTaHienThi}
                         </div>
                        <button class="btn-datmon"
-                   onclick='datMonVaDatBan(${JSON.stringify(mon)})'>
-                  Đặt món ngay
-                   </button>
+                           onclick='datMonVaDatBan(${JSON.stringify(mon)})'>
+                           ${btnText}
+                       </button>
                     </div>
                 </div>
             </div>
         `;
 
-                container.innerHTML += card;
-            });
-        }
+        container.innerHTML += card;
+    });
+}
 
         // =======================
         // FORMAT GIÁ
@@ -426,7 +553,7 @@
      <!-- Template Javascript -->
 <script src="js/main.js"></script>
 <script src="js/chatbot.js"></script>
-
+<script src="js/language.js"></script>
 
 </body>
 </html>

@@ -102,12 +102,7 @@
 
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item">
-            <a href="./index2.html" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>Tổng Quan</p>
-            </a>
-          </li>
+         
 
           <li class="nav-header">QUẢN LÝ NHÀ HÀNG</li>
          <li class="nav-item">
@@ -159,12 +154,6 @@
         <p>Báo Cáo Doanh Thu</p>
     </a>
 </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cogs"></i>
-              <p>Cài Đặt Hệ Thống</p>
-            </a>
-          </li>
 
         </ul>
       </nav>
@@ -1226,39 +1215,74 @@ if (!user || user.vaiTro !== "ADMIN") {
   };
 
   const xuLyBan = async (idBan, soBan, trangThaiHienTai) => {
-    if (trangThaiHienTai === 'Trong') {
-      alert("Bàn đang trống. Chức năng gọi món đang phát triển.");
-    } else {
-      // Nếu bàn Đã Đặt hoặc Có Khách -> Tìm hóa đơn đang chưa thanh toán của bàn này
-      try {
-        const resHD = await axios.get(`${BASE_URL}/hoadon`);
-        
-        // Tìm hóa đơn khớp số bàn và trạng thái khác "DaThanhToan"
-        const activeHD = resHD.data.find(hd => 
-          ((hd.ban && hd.ban.soBan === soBan) || hd.idBan === idBan) && 
-          hd.trangThai !== 'DaThanhToan'
-        );
+  // 1. Trường hợp bàn trống -> Kết thúc sớm
+  if (trangThaiHienTai === 'Trong') {
+    alert(`Bàn số ${soBan} đang trống. Chức năng gọi món trực tiếp đang phát triển.`);
+    return;
+  }
 
-        if (activeHD) {
-          // Bàn đã có hóa đơn (đã gọi món) -> Mở bảng thanh toán
-          const idHD = activeHD.idHoaDon || activeHD.id;
-          moModalChiTietHD(idHD, activeHD.trangThai, activeHD.tongTien || 0, soBan);
-        } else {
-          // Xử lý riêng cho Bàn Đã Đặt nhưng khách chưa gọi món (chưa tạo hóa đơn)
-          if (trangThaiHienTai === 'DaDat') {
-            if (confirm(`Khách đã đến Bàn số ${soBan}? Chuyển sang "Có Khách"?`)) {
-              await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'CoKhach' });
-              loadGiaoDienBan();
-            }
-          } else {
-             alert("Bàn này có khách nhưng chưa tạo hóa đơn (chưa gọi món).");
-          }
-        }
-      } catch (error) {
-        console.error("Lỗi khi quét hóa đơn của bàn:", error);
-      }
+  try {
+    // 2. Gọi API lấy danh sách hóa đơn để kiểm tra
+    const resHD = await axios.get(`${BASE_URL}/hoadon`);
+    const danhSachHoaDon = resHD.data || [];
+    
+    // Tìm hóa đơn chưa thanh toán của bàn này
+    const activeHD = danhSachHoaDon.find(hd => 
+      ((hd.ban && hd.ban.soBan === soBan) || hd.idBan === idBan) && 
+      hd.trangThai !== 'DaThanhToan'
+    );
+
+    // LUỒNG 1: Nếu bàn ĐÃ CÓ hóa đơn hoạt động -> Mở ngay bảng chi tiết hóa đơn
+    if (activeHD) {
+      const idHD = activeHD.idHoaDon || activeHD.id;
+      moModalChiTietHD(idHD, activeHD.trangThai, activeHD.tongTien || 0, soBan);
+      return; 
     }
-  };
+
+    // LUỒNG 2: Nếu bàn KHÔNG CÓ hóa đơn hoạt động nào
+
+    // Trường hợp A: Bàn "Đã Đặt" -> Chuyển sang "Có Khách" và tạo hóa đơn mới
+    if (trangThaiHienTai === 'DaDat') {
+      if (confirm(`Khách đặt đã đến Bàn số ${soBan}? Chuyển sang "Có Khách" và tạo hóa đơn mới?`)) {
+        
+        // Bước 1: Cập nhật trạng thái bàn lên server thành 'CoKhach'
+        await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'CoKhach' });
+        
+        // Bước 2: Tạo hóa đơn mới cho bàn này ở backend
+        const resNewHD = await axios.post(`${BASE_URL}/hoadon`, {
+          idBan: idBan,
+          soBan: soBan,
+          trangThai: 'ChuaThanhToan',
+          tongTien: 0
+        });
+        
+        // Bước 3: Lấy thông tin hóa đơn mới và mở modal gọi món luôn
+        const newHD = resNewHD.data;
+        const idHD = newHD.idHoaDon || newHD.id;
+        
+        loadGiaoDienBan(); // Tải lại danh sách bàn để cập nhật màu sắc giao diện
+        moModalChiTietHD(idHD, 'ChuaThanhToan', 0, soBan);
+      }
+      return;
+    }
+
+    // Trường hợp B: Bàn "Có Khách" nhưng không thấy hóa đơn -> Đưa thẳng về "Trống"
+    if (trangThaiHienTai === 'CoKhach') {
+      if (confirm(`Bàn số ${soBan} hiện không có hóa đơn hoạt động. Bạn có muốn giải phóng bàn này về lại trạng thái "Trống"?`)) {
+        
+        // Gọi API đưa bàn về trạng thái Trống
+        await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'Trong' });
+        
+        loadGiaoDienBan(); // Tải lại danh sách bàn để bàn chuyển sang màu xanh (Trống)
+      }
+      return;
+    }
+
+  } catch (error) {
+    console.error("Lỗi hệ thống khi xử lý bàn:", error);
+    alert("Đã xảy ra lỗi kết nối dữ liệu. Vui lòng thử lại!");
+  }
+};
 
   // =========================================================
   // 5. API QUẢN LÝ THỰC ĐƠN
