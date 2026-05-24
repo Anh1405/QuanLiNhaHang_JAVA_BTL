@@ -1,12 +1,15 @@
-# Bước 1: Sử dụng môi trường Maven kết hợp Amazon Corretto 17 để build code nguồn
+# Bước 1: Build mã nguồn
 FROM maven:3.9.6-amazoncorretto-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Bước 2: Sử dụng môi trường Java Amazon Corretto 17 gọn nhẹ để chạy ứng dụng
+# Bước 2: Chạy ứng dụng
 FROM amazoncorretto:17-alpine
 WORKDIR /app
-COPY --from=build /app/target/QLNH_BTL-1.0-SNAPSHOT.jar app.jar
+# Sử dụng ký tự đại diện để bốc chính xác file jar được sinh ra
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Thêm cấu hình headless=true ngay trong lệnh chạy
+ENTRYPOINT ["java", "-Djava.awt.headless=true", "-jar", "app.jar"]
