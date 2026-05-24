@@ -282,7 +282,7 @@
     <script src="js/chatbot.js"></script>
     <script>
         function loadBan() {
-            axios.get('/api/ban')
+            axios.get('https://quanlinhahang-java-btl-3se3.onrender.com/api/ban')
                 .then(res => {
                     renderBan(res.data);
                 })
@@ -392,7 +392,7 @@
             // === KHÁCH CHỌN TIỀN MẶT -> TẠO HÓA ĐƠN VÀ ĐẶT BÀN LUÔN ===
             const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
             
-            await axios.put(`/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
+            await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
             
             alert(`Đặt bàn thành công! Quý khách vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
             resetGiaoDienDatBan();
@@ -523,7 +523,7 @@
         );
 
         // Cập nhật trạng thái Bàn
-        await axios.put(`/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
+        await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
             trangThai: 'CoKhach' 
         });
 
@@ -560,7 +560,7 @@ async function taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, 
         idBan: idBan 
     };
 
-    const resResult = await axios.post('/api/hoadon', payloadHoaDon);
+    const resResult = await axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/hoadon', payloadHoaDon);
     const idHoaDonMoi = resResult.data.idHoaDon; 
 
     if (!idHoaDonMoi) throw new Error("Không lấy được ID hóa đơn từ Server.");
@@ -573,7 +573,7 @@ async function taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, 
         gia: mon.gia 
     }));
 
-    const requests = danhSachMon.map(item => axios.post('/api/chitiethoadon', item));
+    const requests = danhSachMon.map(item => axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/chitiethoadon', item));
     await Promise.all(requests);
 
     // 3. LƯU LỊCH SỬ HÓA ĐƠN (LocalStorage)
