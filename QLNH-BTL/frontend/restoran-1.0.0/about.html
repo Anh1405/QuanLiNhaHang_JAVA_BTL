@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Restoran - Bootstrap Restaurant Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <link href="img/favicon.ico" rel="icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="index.html" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+
+                        <a href="index.html" class="nav-item nav-link" data-i18n="nav-home">
+                            Trang Chủ
+                        </a>
+
+                        <a href="about.html" class="nav-item nav-link active" data-i18n="nav-about">
+                            Giới Thiệu
+                        </a>
+
+                        <a href="service.html" class="nav-item nav-link" data-i18n="nav-service">
+                            Dịch Vụ
+                        </a>
+
+                        <a href="menu.html" class="nav-item nav-link" data-i18n="nav-menu">
+                            Thực Đơn
+                        </a>
+
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-i18n="nav-pages">
+                                Trang
+                            </a>
+                            <div class="dropdown-menu m-0">
+                                <a href="booking.html" class="dropdown-item" data-i18n="nav-booking">
+                                    Đặt Bàn
+                                </a>
+                                <a href="team.html" class="dropdown-item" data-i18n="nav-team">
+                                    Đội Ngũ
+                                </a>
+                                <a href="testimonial.html" class="dropdown-item" data-i18n="nav-testimonial">
+                                    Đánh Giá
+                                </a>
+                            </div>
+                        </div>
+
+                        <a href="contact.html" class="nav-item nav-link" data-i18n="nav-contact">
+                            Liên Hệ
+                        </a>
+
+                        <div class="nav-item dropdown d-flex align-items-center">
+                            <a href="#" class="nav-link dropdown-toggle text-primary fw-bold" data-bs-toggle="dropdown" id="lang-label">
+                                VI
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end m-0 shadow-sm">
+                                <a href="#" class="dropdown-item lang-option" data-lang="vi">VI - Tiếng Việt</a>
+                                <a href="#" class="dropdown-item lang-option" data-lang="en">EN - English</a>
+                            </div>
+                        </div>
+
+                        <div id="auth-area" class="d-flex align-items-center">
+                            <a href="login.html" class="nav-item nav-link" data-i18n="nav-login">
+                                <i class="fa fa-user me-1"></i>
+                                Đăng Nhập
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <a href="booking.html" class="btn btn-primary py-2 px-4" data-i18n="btn-book-now">
+                        Đặt Bàn Ngay
+                    </a>
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container my-5 py-5">
+                    <div class="row align-items-center g-5">
+
+                        <div class="col-lg-6 text-center text-lg-start">
+
+                            <h5 class="text-primary ff-secondary animated slideInLeft" data-i18n="hero-sub">
+                                Về Chúng Tôi
+                            </h5>
+
+                            <h1 class="display-3 text-white animated slideInLeft" data-i18n="hero-title">
+                                Đồng Hành Cùng <br>
+                                Trải Nghiệm Ẩm Thực Hiện Đại
+                            </h1>
+
+                            <p class="text-white animated slideInLeft mb-4 pb-2" data-i18n="hero-desc-1">
+                                Restoran là hệ thống quản lý và đặt bàn nhà hàng hiện đại,
+                                mang đến trải nghiệm tiện lợi cho khách hàng từ đặt bàn,
+                                gọi món đến thanh toán trực tuyến.
+                            </p>
+
+                            <p class="text-white animated slideInLeft mb-4" data-i18n="hero-desc-2">
+                                Với giao diện thân thiện, dịch vụ chuyên nghiệp và đội ngũ
+                                tận tâm, Restoran giúp nâng cao chất lượng phục vụ
+                                và tối ưu hoạt động quản lý nhà hàng.
+                            </p>
+
+                            <div class="d-flex flex-wrap gap-3">
+                                <a href="booking.html" class="btn btn-primary py-sm-3 px-sm-5 animated slideInLeft" data-i18n="btn-book-now">
+                                    Đặt Bàn Ngay
+                                </a>
+                                <a href="contact.html" class="btn btn-outline-light py-sm-3 px-sm-5 animated slideInLeft" data-i18n="btn-contact-now">
+                                    Liên Hệ Ngay
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 text-center text-lg-end overflow-hidden">
+                            <img class="img-fluid" src="img/hero.png" alt="Về chúng tôi">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-5 align-items-center">
+
+                    <div class="col-lg-6">
+                        <div class="row g-3">
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="img/about-1.jpg">
+                            </div>
+                            <div class="col-6 text-start">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="img/about-2.jpg" style="margin-top: 25%;">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="img/about-3.jpg">
+                            </div>
+                            <div class="col-6 text-end">
+                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="img/about-4.jpg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal" data-i18n="about-sub">
+                            Câu Chuyện Của Chúng Tôi
+                        </h5>
+                        <h1 class="mb-4" data-i18n="about-title">
+                            Trải Nghiệm Ẩm Thực Hiện Đại Tại <i class="fa fa-utensils text-primary me-2"></i> Restoran
+                        </h1>
+                        <p class="mb-4" data-i18n="about-desc-1">
+                            Restoran được xây dựng với mục tiêu mang đến một hệ thống
+                            nhà hàng hiện đại, nơi khách hàng có thể dễ dàng đặt bàn,
+                            lựa chọn món ăn yêu thích và thanh toán trực tuyến nhanh chóng.
+                        </p>
+                        <p class="mb-4" data-i18n="about-desc-2">
+                            Chúng tôi không chỉ tập trung vào chất lượng món ăn mà còn
+                            chú trọng trải nghiệm người dùng với giao diện thân thiện,
+                            quy trình phục vụ chuyên nghiệp và không gian sang trọng.
+                        </p>
+                        <p class="mb-4" data-i18n="about-desc-3">
+                            Với đội ngũ đầu bếp giàu kinh nghiệm cùng sự tận tâm trong phục vụ,
+                            Restoran luôn mong muốn mang lại sự hài lòng và những khoảnh khắc
+                            đáng nhớ cho mọi khách hàng.
+                        </p>
+
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">15</h1>
+                                    <div class="ps-4">
+                                        <p class="mb-0" data-i18n="stat-years">Năm</p>
+                                        <h6 class="text-uppercase mb-0" data-i18n="stat-exp">Kinh Nghiệm</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">50</h1>
+                                    <div class="ps-4">
+                                        <p class="mb-0" data-i18n="stat-chefs">Đầu Bếp</p>
+                                        <h6 class="text-uppercase mb-0" data-i18n="stat-prof">Chuyên Nghiệp</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="booking.html" data-i18n="btn-explore">
+                            Khám Phá Ngay
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-xxl pt-5 pb-3">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h5 class="section-title ff-secondary text-center text-primary fw-normal" data-i18n="team-sub">
+                        Đội Ngũ Đầu Bếp
+                    </h5>
+                    <h1 class="mb-5" data-i18n="team-title">Những Đầu Bếp Chuyên Nghiệp</h1>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="team-item text-center rounded overflow-hidden shadow-lg">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-1.jpg" alt="">
+                            </div>
+                            <h5 class="mb-1">Nguyễn Minh Khôi</h5>
+                            <small class="text-primary" data-i18n="chef1-title">Bếp Trưởng Nhà Hàng</small>
+                            <p class="px-3 mt-3 text-muted" data-i18n="chef1-desc">
+                                Hơn 10 năm kinh nghiệm chế biến món Âu – Á cao cấp.
+                            </p>
+                            <div class="d-flex justify-content-center mt-3 mb-4">
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="team-item text-center rounded overflow-hidden shadow-lg">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-2.jpg" alt="">
+                            </div>
+                            <h5 class="mb-1">Trần Gia Bảo</h5>
+                            <small class="text-primary" data-i18n="chef2-title">Chuyên Gia Hải Sản</small>
+                            <p class="px-3 mt-3 text-muted" data-i18n="chef2-desc">
+                                Chuyên chế biến các món hải sản cao cấp chuẩn vị quốc tế.
+                            </p>
+                            <div class="d-flex justify-content-center mt-3 mb-4">
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="team-item text-center rounded overflow-hidden shadow-lg">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-3.jpg" alt="">
+                            </div>
+                            <h5 class="mb-1">Lê Quốc Huy</h5>
+                            <small class="text-primary" data-i18n="chef3-title">Bếp Bánh & Tráng Miệng</small>
+                            <p class="px-3 mt-3 text-muted" data-i18n="chef3-desc">
+                                Mang đến các món tráng miếng độc đáo và hiện đại.
+                            </p>
+                            <div class="d-flex justify-content-center mt-3 mb-4">
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                        <div class="team-item text-center rounded overflow-hidden shadow-lg">
+                            <div class="rounded-circle overflow-hidden m-4">
+                                <img class="img-fluid" src="img/team-4.jpg" alt="">
+                            </div>
+                            <h5 class="mb-1">Phạm Thành Nam</h5>
+                            <small class="text-primary" data-i18n="chef4-title">Chuyên Gia Món Nướng</small>
+                            <p class="px-3 mt-3 text-muted" data-i18n="chef4-desc">
+                                Kỹ thuật nướng hiện đại giúp món ăn đậm vị hấp dẫn.
+                            </p>
+                            <div class="d-flex justify-content-center mt-3 mb-4">
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-square btn-primary mx-1" href="#"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-info">
+                            Thông Tin
+                        </h4>
+                        <a class="btn btn-link" href="about.html" data-i18n="nav-about">Giới Thiệu</a>
+                        <a class="btn btn-link" href="contact.html" data-i18n="nav-contact">Liên Hệ</a>
+                        <a class="btn btn-link" href="booking.html" data-i18n="nav-booking">Đặt Bàn</a>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-contact">
+                            Liên Hệ
+                        </h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>38 Nguyễn Ư Dĩ, TP.HCM</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>0123 456 789</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>restoran@gmail.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-hours">
+                            Giờ Mở Cửa
+                        </h4>
+                        <h5 class="text-light fw-normal" data-i18n="footer-days-wk">Thứ 2 - Thứ 7</h5>
+                        <p>09:00 AM - 09:00 PM</p>
+                        <h5 class="text-light fw-normal" data-i18n="footer-days-sun">Chủ Nhật</h5>
+                        <p>10:00 AM - 08:00 PM</p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4" data-i18n="footer-newsletter">
+                            Đăng Ký Nhận Tin
+                        </h4>
+                        <p data-i18n="footer-news-desc">
+                            Nhận thông tin khuyến mãi và món ăn mới từ nhà hàng.
+                        </p>
+                        <div class="position-relative mx-auto" style="max-width: 400px;"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0" data-i18n="footer-copyright">
+                            © 2026 Restoran. Tất cả quyền được bảo lưu.
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                               <a href="index.html" data-i18n="nav-home">Trang Chủ</a>
+                                <a href="#" data-i18n="footer-support">Hỗ Trợ</a>
+                                <a href="#" data-i18n="footer-terms">Điều Khoản</a>
+                                <a href="#">FAQs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <script src="js/language.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+
+</html>
