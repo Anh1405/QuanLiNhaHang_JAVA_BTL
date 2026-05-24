@@ -193,7 +193,7 @@
         // LOAD DANH MỤC
         // =======================
          function loadDanhMuc() {
-    axios.get("http://localhost:8080/api/danhmuc")
+    axios.get("/api/danhmuc")
         .then(response => {
             allDanhMuc = response.data;
             
@@ -329,7 +329,7 @@
         // LOAD MÓN ĂN THEO DANH MỤC
         // =======================
         function loadMonAnTheoDanhMuc(idDanhMuc) {
-            axios.get(`http://localhost:8080/api/monan/danhmuc/${idDanhMuc}`)
+            axios.get(`/api/monan/danhmuc/${idDanhMuc}`)
                 .then(response => {
                     renderMenu({
                         monAns: response.data
