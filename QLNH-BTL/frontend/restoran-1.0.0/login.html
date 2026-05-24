@@ -213,7 +213,7 @@ async function handleLogin(event) {
     const passwordInput = document.getElementById("password").value;
 
     try {
-        const response = await axios.post('http://localhost:8080/api/nguoidung/login', {
+        const response = await axios.post('/api/nguoidung/login', {
             username: usernameInput,
             password: passwordInput
         });
