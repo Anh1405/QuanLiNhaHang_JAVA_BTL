@@ -3,9 +3,9 @@
 Dự án Bài Tập Lớn (BTL) xây dựng hệ thống phần mềm Quản lý Nhà Hàng, áp dụng kiến trúc 3 lớp (3-tier architecture) kết hợp giao diện Web trực quan, giúp tự động hóa quy trình phục vụ, quản lý hóa đơn và thống kê doanh thu.
 
 **Giảng viên hướng dẫn:** Cô Trần Thị Dung  
-**Sinh viên thực hiện:** **Nguyễn Lê Quốc Anh (6551071003)**
-                         **Nguyễn Trường Giang (6551071024)**
-                         **Phan Nhất Duy (6551071016)**
+**Sinh viên thực hiện:**   Nguyễn Lê Quốc Anh (6551071003)
+                         * Nguyễn Trường Giang (6551071024)
+                         * Phan Nhất Duy (6551071016)**
 
 ---
 
