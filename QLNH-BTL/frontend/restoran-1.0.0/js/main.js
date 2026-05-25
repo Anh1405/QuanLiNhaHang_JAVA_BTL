@@ -127,7 +127,7 @@ window.loadAuthArea = function() {
     if (userJson) {
         const user = JSON.parse(userJson);
         // Ưu tiên hiển thị hoTen (hoặc hoTen), nếu không có thì hiện username
-        const tenHienThi = user.hoTen || user.username || "User";
+        const tenHienThi = user.username  || user.hoTen || "User";
 
         // Định nghĩa bộ từ vựng dịch nhanh cho các nút bấm trong thẻ Dropdown người dùng
         const authLabels = {
