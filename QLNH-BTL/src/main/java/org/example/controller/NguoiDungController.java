@@ -161,6 +161,17 @@ public class NguoiDungController {
                             .findById(id)
                             .orElseThrow();
 
+            String matKhauHienTai =
+                    body.get("currentPassword");
+
+            if(!nd.getPassword()
+                    .equals(matKhauHienTai)){
+
+                return ResponseEntity
+                        .status(HttpStatus.BAD_REQUEST)
+                        .body("Mật khẩu hiện tại không đúng!");
+            }
+
             nd.setHoTen(
                     body.get("hoTen")
             );

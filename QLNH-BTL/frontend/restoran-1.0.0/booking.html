@@ -282,7 +282,7 @@
     <script src="js/chatbot.js"></script>
     <script>
         function loadBan() {
-            axios.get('https://quanlinhahang-java-btl-3se3.onrender.com/api/ban')
+            axios.get('http://localhost:8080/api/ban')
                 .then(res => {
                     renderBan(res.data);
                 })
@@ -392,7 +392,7 @@
             // === KHÁCH CHỌN TIỀN MẶT -> TẠO HÓA ĐƠN VÀ ĐẶT BÀN LUÔN ===
             const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
             
-            await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
+            await axios.put(`http://localhost:8080/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
             
             alert(`Đặt bàn thành công! Quý khách vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
             resetGiaoDienDatBan();
@@ -523,7 +523,7 @@
         );
 
         // Cập nhật trạng thái Bàn
-        await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
+        await axios.put(`http://localhost:8080/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
             trangThai: 'CoKhach' 
         });
 
@@ -549,60 +549,59 @@
 let duLieuDatBanTam = null;
 
 // Hàm phụ trợ gom toàn bộ logic TẠO HÓA ĐƠN vào đây để tái sử dụng
-async function taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, trangThaiHoaDon, idBan, gioHang) {
-    // 1. Tạo HÓA ĐƠN MỚI trên server
-    const payloadHoaDon = {
-        tenKhachHang: tenKhachHang,
-        soDienThoai: soDienThoai,
-        ghiChu: ghiChu,
-        tongTien: tongTien,
-        trangThai: trangThaiHoaDon, 
-        idBan: idBan 
-    };
+    async function taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, trangThaiHoaDon, idBan, gioHang) {
 
-    const resResult = await axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/hoadon', payloadHoaDon);
-    const idHoaDonMoi = resResult.data.idHoaDon; 
+        const user = JSON.parse(localStorage.getItem("user"));
 
-    if (!idHoaDonMoi) throw new Error("Không lấy được ID hóa đơn từ Server.");
+        const payloadHoaDon = {
+            tenKhachHang,
+            soDienThoai,
+            ghiChu,
+            tongTien,
+            trangThai: trangThaiHoaDon,
+            idBan: idBan,
+            idNguoiDung: user?.id
+        };
 
-    // 2. Tạo CHI TIẾT HÓA ĐƠN
-    const danhSachMon = gioHang.map(mon => ({
-        idHoaDon: idHoaDonMoi, 
-        idMonAn: mon.idMonAn,
-        soLuong: mon.soLuong,
-        gia: mon.gia 
-    }));
+        console.log("USER =", user);
+        console.log("PAYLOAD =", payloadHoaDon);
+        
+        const resResult = await axios.post(
+            'http://localhost:8080/api/hoadon',
+            payloadHoaDon
+        );
 
-    const requests = danhSachMon.map(item => axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/chitiethoadon', item));
-    await Promise.all(requests);
+        const idHoaDonMoi = resResult.data.idHoaDon;
 
-    // 3. LƯU LỊCH SỬ HÓA ĐƠN (LocalStorage)
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-        let orders = JSON.parse(localStorage.getItem("orders")) || [];
-        orders.push({
-            id: idHoaDonMoi,
-            idNguoiDung: user.id,
-            username: user.username,
-            danhSachMon: [...gioHang],
-            tongTien: tongTien,
-            ngay: new Date().toLocaleDateString("vi-VN")
-        });
-        localStorage.setItem("orders", JSON.stringify(orders));
+        if (!idHoaDonMoi) {
+            throw new Error("Không lấy được ID hóa đơn từ Server.");
+        }
+
+        const danhSachMon = gioHang.map(mon => ({
+            idHoaDon: idHoaDonMoi,
+            idMonAn: mon.idMonAn,
+            soLuong: mon.soLuong,
+            gia: mon.gia
+        }));
+
+        const requests = danhSachMon.map(item =>
+            axios.post('http://localhost:8080/api/chitiethoadon', item)
+        );
+
+        await Promise.all(requests);
+
+        return idHoaDonMoi;
     }
-    
-    return idHoaDonMoi; // Trả về ID để dùng thông báo
-}
 
-// Hàm dọn dẹp giao diện sau khi thành công
-function resetGiaoDienDatBan() {
-    document.getElementById("tenKhachHang").value = '';
-    document.getElementById("soDienThoai").value = '';
-    document.getElementById("ghiChu").value = '';
-    localStorage.removeItem("gioHang");
-    hienThiMonDaChon();
-    loadBan();
-}
+    // Hàm dọn dẹp giao diện sau khi thành công
+    function resetGiaoDienDatBan() {
+        document.getElementById("tenKhachHang").value = '';
+        document.getElementById("soDienThoai").value = '';
+        document.getElementById("ghiChu").value = '';
+        localStorage.removeItem("gioHang");
+        hienThiMonDaChon();
+        loadBan();
+    }
 
     </script>
 </body>

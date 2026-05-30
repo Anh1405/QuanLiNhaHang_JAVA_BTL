@@ -28,6 +28,13 @@ public class HoaDonController {
         return service.getById(id);
     }
 
+    @GetMapping("/user/{idNguoiDung}")
+    public List<HoaDon> getByUser(
+            @PathVariable Long idNguoiDung) {
+
+        return service.getByUser(idNguoiDung);
+    }
+
     // 🔥 CREATE
     @PostMapping
     public HoaDon create(@RequestBody HoaDonRequest req) {

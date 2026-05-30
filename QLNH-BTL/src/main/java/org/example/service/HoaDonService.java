@@ -6,6 +6,8 @@ import org.example.entity.Ban;
 import org.example.entity.HoaDon;
 import org.example.repository.HoaDonRepository;
 import org.springframework.stereotype.Service;
+import org.example.entity.NguoiDung;
+import org.example.repository.NguoiDungRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 public class HoaDonService {
 
     private final HoaDonRepository repository;
-
+    private final NguoiDungRepository nguoiDungRepository;
     // 🔹 GET ALL
     public List<HoaDon> getAll() {
         return repository.findAll();
@@ -25,6 +27,10 @@ public class HoaDonService {
     public HoaDon getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy hóa đơn"));
+    }
+
+    public List<HoaDon> getByUser(Long idNguoiDung) {
+        return repository.findByNguoiDung_Id(idNguoiDung);
     }
     
 
@@ -60,6 +66,15 @@ public class HoaDonService {
             hoaDon.setBan(ban);
         }
 
+        if (req.getIdNguoiDung() != null) {
+
+            NguoiDung nguoiDung =
+                    nguoiDungRepository.findById(req.getIdNguoiDung())
+                            .orElseThrow(() ->
+                                    new RuntimeException("Không tìm thấy người dùng"));
+
+            hoaDon.setNguoiDung(nguoiDung);
+        }
         // 4. Lưu vào Database bằng biến 'repository'
         return repository.save(hoaDon);
     }

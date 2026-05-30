@@ -12,4 +12,6 @@ public class HoaDonRequest {
     private String tenKhachHang;
     private String soDienThoai;
     private String ghiChu;
+
+    private Long idNguoiDung;
 }
