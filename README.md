@@ -66,6 +66,7 @@ Dự án được thiết kế theo dạng **Single Page Application (SPA)**, ma
 2. Mở dự án bằng IDE (IntelliJ IDEA / Eclipse / JetBrains).
 3. Cập nhật thông tin kết nối Database trong file `application.properties`:
 ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/qlnh_btl
-   spring.datasource.username=root
-   spring.datasource.password=your_password
+spring.datasource.url=jdbc:mysql://mysql-quan-li-nha-hang-quanlinhahang.j.aivencloud.com:24645/defaultdb?ssl-mode=REQUIRED&serverTimezone=UTC
+spring.datasource.username=avnadmin
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
