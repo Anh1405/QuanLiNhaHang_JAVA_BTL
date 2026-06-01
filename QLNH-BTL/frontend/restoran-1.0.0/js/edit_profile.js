@@ -46,7 +46,7 @@ try{
 const response=
 await axios.put(
 
-`https://quanlinhahang-java-btl-3se3.onrender.com/api/nguoidung/${user.id}/capnhat`,
+`http://localhost:8080/api/nguoidung/${user.id}/capnhat`,
 
 {
 hoTen:
@@ -62,6 +62,11 @@ document.getElementById(
 username:
 document.getElementById(
 "username"
+).value,
+
+currentPassword:
+document.getElementById(
+"currentPassword"
 ).value
 }
 
