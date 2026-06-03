@@ -66,9 +66,11 @@ window.loadOrderHistory = async function () {
         // ==============================
         // RENDER ORDERS
         // ==============================
-        orders.forEach((order) => {
+        // SỬA TẠI ĐÂY: Thêm tham số orderIndex để làm Mã HD tăng dần (bắt đầu từ 0)
+        orders.forEach((order, orderIndex) => {
 
-            const displayOrderId = order.idHoaDon;
+            // Mã HD hiển thị dạng HD-1, HD-2, HD-3... thay vì id gốc từ DB
+            const displayOrderId = orderIndex + 1; 
             const items = order.chiTietHoaDons || [];
 
             items.forEach((item, index) => {
@@ -126,11 +128,13 @@ window.loadOrderHistory = async function () {
 };
 
 // ==============================
-// FORMAT MONEY
+// FORMAT MONEY (CẬP NHẬT TỶ GIÁ 26,290 Đ)
 // ==============================
 function formatTien(tien, isEnglish) {
     if (isEnglish) {
-        return "$" + Number(tien).toLocaleString("en-US");
+        // Quy đổi từ VND sang USD: Chia cho 26290 và lấy 2 chữ số thập phân
+        const tienDo = Number(tien) / 26290;
+        return "$" + tienDo.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
     return Number(tien).toLocaleString("vi-VN") + " đ";
 }
