@@ -377,6 +377,13 @@
 
         async function datBan() {
     // 1. Kiểm tra các điều kiện đầu vào (Validate)
+            const user = JSON.parse(localStorage.getItem("user"));
+
+            if (!user) {
+                alert("Vui lòng đăng nhập trước khi đặt bàn!");
+                window.location.href = "login.html";
+                return;
+            }
     const ngayDat = document.querySelector('input[type="date"]').value;
     const today = new Date();
     today.setHours(0, 0, 0, 0); 
