@@ -804,12 +804,23 @@
     });
 }
 
-        // =======================
-        // FORMAT GIÁ
-        // =======================
-        function formatPrice(price) {
-            return Number(price).toLocaleString('vi-VN') + " VNĐ";
-        }
+// =======================
+// FORMAT GIÁ THEO NGÔN NGỮ & TỶ GIÁ
+// =======================
+function formatPrice(price) {
+    // Lấy ngôn ngữ hiện tại từ localStorage
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
+    const exchangeRate = 26270; // 1 USD = 26.270 VNĐ
+
+    if (currentLang === "en") {
+        // Chuyển đổi sang USD và làm tròn 2 chữ số thập phân
+        const priceInUSD = (Number(price) / exchangeRate).toFixed(2);
+        return "$" + Number(priceInUSD).toLocaleString('en-US');
+    } else {
+        // Giữ nguyên định dạng VNĐ cho tiếng Việt
+        return Number(price).toLocaleString('vi-VN') + " VNĐ";
+    }
+}
 
         // =======================
         // GIỎ HÀNG
