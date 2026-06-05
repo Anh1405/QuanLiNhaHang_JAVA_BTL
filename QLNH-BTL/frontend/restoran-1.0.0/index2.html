@@ -298,7 +298,7 @@
                     </div>
 
                     <div class="progress-group mb-0">
-                        <span class="text-muted small">Tỉ lệ đặt bàn trước</span>
+                        <span class="text-muted small">Tỉ lệ đặt bàn thành công</span>
                         <span class="float-right text-light small" id="kpi-dat-ban-text"><b>0</b>/800 bàn</span>
                         <div class="progress progress-xs mt-1 bg-dark-light">
                             <div class="progress-bar bg-success shadow-none" id="kpi-dat-ban-bar" style="width: 0%"></div>
@@ -1127,7 +1127,7 @@ if (!user || user.vaiTro !== "ADMIN") {
       document.getElementById('kpi-do-uong-bar').style.width = `${phanTramDoUong}%`;
 
       // Cập nhật ngẫu nhiên số lượng đặt bàn để UI khỏi bị trống
-      const soBanDat = hoadons.filter(hd => hd.trangThai === 'DaDat').length;
+      const soBanDat = hoadons.filter(hd => hd.trangThai === 'DaThanhToan').length;
       const phanTramDatBan = Math.min((soBanDat / 800) * 100, 100);
       document.getElementById('kpi-dat-ban-text').innerHTML = `<b>${soBanDat}</b>/800 bàn`;
       document.getElementById('kpi-dat-ban-bar').style.width = `${phanTramDatBan}%`;
@@ -1155,17 +1155,21 @@ if (!user || user.vaiTro !== "ADMIN") {
 
       // 2. Lọc ra danh sách Hóa đơn phát sinh trong RIÊNG ngày hôm nay
       const hoadonHomNay = hoadons.filter(hd => hd.ngayTao && hd.ngayTao.startsWith(ngayHomNay));
-
-      // 3. Tính tổng doanh thu của các hóa đơn hôm nay ĐÃ THANH TOÁN
+      let Khach = 0;
+       let soDonHomNay =0;
       let doanhThuHomNay = 0;
-      hoadonHomNay
-        .filter(hd => hd.trangThai === 'DaThanhToan')
-        .forEach(hd => doanhThuHomNay += hd.tongTien || 0);
+     hoadonHomNay.forEach(hd => {
+      if(hd.trangThai === 'DaThanhToan'){
+        soDonHomNay+=1;
+        doanhThuHomNay += (hd.tongTien||0);
+        Khach += (hd.soLuongKhach||0);
+      }
+     })
 
       // 4. Đổ số liệu động chuẩn xác ra các ô Tổng Quan
       document.getElementById('don-hang-hom-nay').innerText = hoadonHomNay.length; // Số đơn của riêng hôm nay
       document.getElementById('doanh-thu-ngay').innerText = formatVND(doanhThuHomNay); // Tiền thu được riêng hôm nay
-      
+      document.getElementById('khach-hang-phuc-vu').innerText = Khach; 
       // --- Phần in bảng danh sách 5 đơn hàng mới (Giữ nguyên logic cũ của bạn bên dưới) ---
       const tbody = document.getElementById('ds-don-hang');
       if(!tbody) return;
