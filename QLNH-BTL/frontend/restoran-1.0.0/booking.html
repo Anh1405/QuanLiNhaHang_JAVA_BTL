@@ -328,7 +328,6 @@
                 })
                 .catch(err => {
                     console.log("Không thể kết nối tới API. Hiển thị dữ liệu mẫu...");
-                    // Dữ liệu mẫu (Dummy data) để bạn có thể xem UI khi chưa chạy backend localhost
                     const dummyBans = [
                         { soBan: 101, trangThai: 'Trong' }, { soBan: 102, trangThai: 'CoKhach' },
                         { soBan: 103, trangThai: 'Trong' }, { soBan: 104, trangThai: 'Trong' },
@@ -352,8 +351,8 @@
                 div.className = 'ban-mini';
                 if(ban.trangThai === 'CoKhach') div.classList.add('occupied');
                 else if (ban.trangThai === 'DaDat') {
-    div.classList.add('reserved'); 
-}
+                    div.classList.add('reserved'); 
+                }
                 
                 div.innerText = ban.soBan;
                 div.onclick = () => chonBan(div, ban.soBan);
@@ -374,6 +373,9 @@
             el.classList.add('active');
             banDangChon = so;
         }
+
+        // Biến toàn cục lưu trữ dữ liệu tạm thời
+        let duLieuDatBanTam = null;
 
         async function datBan() {
     // 1. Kiểm tra các điều kiện đầu vào (Validate)
@@ -399,18 +401,11 @@
     const soDienThoai = document.getElementById("soDienThoai").value;
     if (!/^[0-9]{10}$/.test(soDienThoai)) return alert("Số điện thoại phải đúng 10 chữ số!");
 
-            const soLuongKhach =
-                document.getElementById("soLuongKhach").value;
+    // 👉 ĐỔI DÒNG NÀY: Ép kiểu Số Nguyên ngay tại đây và dùng biến let/const chuẩn
+    const soLuongKhachSelect = document.getElementById("soLuongKhach").value;
+    const soLuongKhach = parseInt(soLuongKhachSelect, 10) || 1; 
 
-            const ghiChuThem =
-                document.getElementById("ghiChu").value;
-
-            if (!soLuongKhach) {
-                return alert("Vui lòng chọn số lượng khách!");
-            }
-
-            const ghiChu =
-                `Số khách: ${soLuongKhach}. ${ghiChuThem}`;
+    const ghiChu = document.getElementById("ghiChu").value;
     if (!tenKhachHang || !soDienThoai) return alert("Vui lòng nhập đầy đủ Họ tên và Số điện thoại!");
 
     const tongTien = gioHang.reduce((total, mon) => total + (mon.gia * mon.soLuong), 0);
@@ -418,14 +413,13 @@
 
     try {
         if (phuongThucChon === "VNPAY") {
-            // === CHỈ LƯU TẠM THÔNG TIN, CHƯA TẠO HÓA ĐƠN ===
-            duLieuDatBanTam = { tenKhachHang, soDienThoai, ghiChu, tongTien, banDangChon, gioHang };
+            // Đảm bảo dữ liệu tạm lưu con số đã được ép kiểu (Number)
+            duLieuDatBanTam = { tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, banDangChon, gioHang };
 
             const BANK_ID = "vietcombank";
             const ACCOUNT_NO = "1234567890";
             const ACCOUNT_NAME = "NGUYEN VAN A";
             
-            // Dùng số điện thoại làm nội dung chuyển khoản vì chưa có ID Hóa Đơn
             const noiDungChuyenKhoan = `DAT BAN ${soDienThoai}`.replace(/[^a-zA-Z0-9 ]/g, "");
             const qrImageUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=${tongTien}&addInfo=${encodeURIComponent(noiDungChuyenKhoan)}&accountName=${encodeURIComponent(ACCOUNT_NAME)}`;
 
@@ -447,44 +441,96 @@
             document.body.insertAdjacentHTML('beforeend', modalHtml);
 
         } else {
-            // === KHÁCH CHỌN TIỀN MẶT -> TẠO HÓA ĐƠN VÀ ĐẶT BÀN LUÔN ===
-            const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
-            
+            const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
             await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
-            
             alert(`Đặt bàn thành công! Quý khách vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
             resetGiaoDienDatBan();
         }
-
     } catch (error) {
         console.error("Lỗi quá trình đặt bàn:", error);
         alert("Có lỗi xảy ra khi xử lý hệ thống!");
     }
 }
 
-        // Tự động tải bàn khi load xong DOM
-        document.addEventListener('DOMContentLoaded', function () {
-            loadBan();
-            hienThiMonDaChon();
+        async function xacNhanDaChuyenKhoan() {
+            try {
+                if (!duLieuDatBanTam) {
+                    alert("Lỗi: Không tìm thấy dữ liệu đặt bàn. Vui lòng thử lại!");
+                    return;
+                }
 
-            // Lấy thông tin user từ localStorage
-            const userJson = localStorage.getItem("user");
+                // === SỬA TẠI ĐÂY: Bổ sung chính xác tham số duLieuDatBanTam.soLuongKhach vào hàm gọi ===
+                const idHoaDon = await taoHoaDonTrenServer(
+                    duLieuDatBanTam.tenKhachHang,
+                    duLieuDatBanTam.soDienThoai,
+                    duLieuDatBanTam.soLuongKhach,
+                    duLieuDatBanTam.ghiChu,
+                    duLieuDatBanTam.tongTien,
+                    'DaThanhToan', 
+                    duLieuDatBanTam.banDangChon,
+                    duLieuDatBanTam.gioHang
+                );
 
-            if (userJson) {
-                const user = JSON.parse(userJson);
+                await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
+                    trangThai: 'CoKhach' 
+                });
 
-                // Tự động điền form
-                document.getElementById("tenKhachHang").value =
-                    user.hoTen || "";
+                const modal = document.getElementById("qrModal");
+                if (modal) modal.remove();
+                
+                alert(`Thanh toán thành công! Bàn của bạn đã được chuyển sang trạng thái [Có Khách]. Mã hóa đơn: HD-${idHoaDon}`);
+                
+                resetGiaoDienDatBan();
+                duLieuDatBanTam = null;
 
-                document.getElementById("soDienThoai").value =
-                    user.soDienThoai || "";
-
-                document.getElementById("ghiChu").value =
-                    user.ghiChu || "";
+            } catch (error) {
+                console.error("Lỗi cập nhật trạng thái bàn:", error);
+                alert("Không thể cập nhật trạng thái hóa đơn/bàn, vui lòng liên hệ nhân viên!");
             }
-            goiYBan();
-        });
+        }
+
+        // === SỬA TẠI ĐÂY: Thêm tham số soLuongKhach vào cấu trúc hàm và ánh xạ vào JSON Payload ===
+       async function taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, trangThaiHoaDon, idBan, gioHang) {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const payloadHoaDon = {
+        tenKhachHang,
+        soDienThoai,
+        soLuongKhach: parseInt(soLuongKhach, 10), // Ép kiểu một lần nữa tại đây cho chắc chắn
+        ghiChu,
+        tongTien,
+        trangThai: trangThaiHoaDon,
+        idBan: idBan,
+        idNguoiDung: user?.id
+    };
+
+    // 🛑 DÒNG KIỂM TRA: Bật F12 lên xem dòng này có xuất hiện và số lượng khách có chuẩn không nhé!
+    console.log("👉 ĐANG GỬI PAYLOAD LÊN SERVER:", payloadHoaDon);
+    
+    const resResult = await axios.post(
+        'https://quanlinhahang-java-btl-3se3.onrender.com/api/hoadon',
+        payloadHoaDon
+    );
+
+    const idHoaDonMoi = resResult.data.idHoaDon;
+    if (!idHoaDonMoi) {
+        throw new Error("Không lấy được ID hóa đơn từ Server.");
+    }
+
+    const danhSachMon = gioHang.map(mon => ({
+        idHoaDon: idHoaDonMoi,
+        idMonAn: mon.idMonAn,
+        soLuong: mon.soLuong,
+        gia: mon.gia
+    }));
+
+    const requests = danhSachMon.map(item =>
+        axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/chitiethoadon', item)
+    );
+
+    await Promise.all(requests);
+    return idHoaDonMoi;
+}
 
         function hienThiMonDaChon() {
             const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
@@ -499,304 +545,134 @@
                 tongTien += mon.gia * mon.soLuong;
 
                 container.innerHTML += `
-<div class="d-flex align-items-center mb-3 border-bottom pb-3">
-
-    <img src="${mon.hinhAnh}"
-         style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
-
-    <div class="ms-3 flex-grow-1">
-
-        <h6 class="mb-1">${mon.tenMon}</h6>
-
-        <span class="text-primary fw-bold">
-            ${formatTien(mon.gia)}
-        </span>
-
-        <div class="d-flex align-items-center mt-2">
-
-            <button class="btn btn-sm btn-outline-danger"
-                    onclick="giamSoLuong(${mon.idMonAn})">
-                -
-            </button>
-
-            <span class="mx-3 fw-bold">
-                ${mon.soLuong}
-            </span>
-
-            <button class="btn btn-sm btn-outline-success"
-                    onclick="tangSoLuong(${mon.idMonAn})">
-                +
-            </button>
-
-        </div>
-
-    </div>
-
-    <button class="btn btn-danger btn-sm"
-            onclick="xoaMon(${mon.idMonAn})">
-        Xóa
-    </button>
-
-</div>
-`;
-
+                    <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+                        <img src="${mon.hinhAnh}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
+                        <div class="ms-3 flex-grow-1">
+                            <h6 class="mb-1">${mon.tenMon}</h6>
+                            <span class="text-primary fw-bold">${formatTien(mon.gia)}</span>
+                            <div class="d-flex align-items-center mt-2">
+                                <button class="btn btn-sm btn-outline-danger" onclick="giamSoLuong(${mon.idMonAn})">-</button>
+                                <span class="mx-3 fw-bold">${mon.soLuong}</span>
+                                <button class="btn btn-sm btn-outline-success" onclick="tangSoLuong(${mon.idMonAn})">+</button>
+                            </div>
+                        </div>
+                        <button class="btn btn-danger btn-sm" onclick="xoaMon(${mon.idMonAn})">Xóa</button>
+                    </div>
+                `;
             });
 
             container.innerHTML += `
-        <div class="d-flex justify-content-between mt-4">
-            <h5>Tổng cộng:</h5>
-            <h5 class="text-primary">${formatTien(tongTien)}</h5>
-        </div>
-    `;
+                <div class="d-flex justify-content-between mt-4">
+                    <h5>Tổng cộng:</h5>
+                    <h5 class="text-primary">${formatTien(tongTien)}</h5>
+                </div>
+            `;
         }
 
         function formatTien(tien) {
             return Number(tien).toLocaleString('vi-VN') + " đ";
         }
+
         function xoaMon(idMonAn) {
             let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
-
             gioHang = gioHang.filter(mon => mon.idMonAn !== idMonAn);
-
             localStorage.setItem("gioHang", JSON.stringify(gioHang));
-
             hienThiMonDaChon();
-
             alert("Đã xóa món khỏi giỏ hàng!");
         }
+
         document.addEventListener('DOMContentLoaded', function () {
             loadBan();
             hienThiMonDaChon();
 
-            // 👉 set ngày hiện tại
             const today = new Date().toISOString().split("T")[0];
             const dateInput = document.getElementById("ngayNhanBan");
+            if(dateInput) {
+                dateInput.value = today;
+                dateInput.min = today;
+            }
 
-            dateInput.value = today;
-            dateInput.min = today;
-
-            // Lấy thông tin user từ localStorage
             const userJson = localStorage.getItem("user");
-
             if (userJson) {
                 const user = JSON.parse(userJson);
-
                 document.getElementById("tenKhachHang").value = user.hoTen || "";
                 document.getElementById("soDienThoai").value = user.soDienThoai || "";
                 document.getElementById("ghiChu").value = user.ghiChu || "";
             }
-        });
-    async function xacNhanDaChuyenKhoan() {
-    try {
-        if (!duLieuDatBanTam) {
-            alert("Lỗi: Không tìm thấy dữ liệu đặt bàn. Vui lòng thử lại!");
-            return;
-        }
-
-        // BÂY GIỜ MỚI CHÍNH THỨC GỌI API TẠO HÓA ĐƠN
-        // Trạng thái hóa đơn lúc này nên là 'DaThanhToan' (Tùy Backend của bạn quy định)
-        const idHoaDon = await taoHoaDonTrenServer(
-            duLieuDatBanTam.tenKhachHang,
-            duLieuDatBanTam.soDienThoai,
-            duLieuDatBanTam.ghiChu,
-            duLieuDatBanTam.tongTien,
-            'DaThanhToan', // Hoặc 'ChoThanhToan' nếu bạn muốn nhân viên check lại
-            duLieuDatBanTam.banDangChon,
-            duLieuDatBanTam.gioHang
-        );
-
-        // Cập nhật trạng thái Bàn
-        await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
-            trangThai: 'CoKhach' 
+            goiYBan();
         });
 
-        // Xóa khung mã QR khỏi màn hình
-        const modal = document.getElementById("qrModal");
-        if (modal) modal.remove();
-        
-        alert(`Thanh toán thành công! Bàn của bạn đã được chuyển sang trạng thái [Có Khách]. Mã hóa đơn: HD-${idHoaDon}`);
-        
-        // Dọn dẹp giao diện, giỏ hàng form
-        resetGiaoDienDatBan();
-
-        // Xóa dữ liệu tạm đi cho an toàn
-        duLieuDatBanTam = null;
-
-    } catch (error) {
-        console.error("Lỗi cập nhật trạng thái bàn:", error);
-        alert("Không thể cập nhật trạng thái hóa đơn/bàn, vui lòng liên hệ nhân viên!");
-    }
-}
-
-// Biến toàn cục để giữ tạm thông tin form nếu khách chọn QR VNPAY
-let duLieuDatBanTam = null;
-
-// Hàm phụ trợ gom toàn bộ logic TẠO HÓA ĐƠN vào đây để tái sử dụng
-    async function taoHoaDonTrenServer(tenKhachHang, soDienThoai, ghiChu, tongTien, trangThaiHoaDon, idBan, gioHang) {
-
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        const payloadHoaDon = {
-            tenKhachHang,
-            soDienThoai,
-            ghiChu,
-            tongTien,
-            trangThai: trangThaiHoaDon,
-            idBan: idBan,
-            idNguoiDung: user?.id
-        };
-
-        console.log("USER =", user);
-        console.log("PAYLOAD =", payloadHoaDon);
-        
-        const resResult = await axios.post(
-            'https://quanlinhahang-java-btl-3se3.onrender.com/api/hoadon',
-            payloadHoaDon
-        );
-
-        const idHoaDonMoi = resResult.data.idHoaDon;
-
-        if (!idHoaDonMoi) {
-            throw new Error("Không lấy được ID hóa đơn từ Server.");
+        function resetGiaoDienDatBan() {
+            document.getElementById("tenKhachHang").value = '';
+            document.getElementById("soDienThoai").value = '';
+            document.getElementById("soLuongKhach").value = '1';
+            document.getElementById("ghiChu").value = '';
+            if(document.getElementById("thongBaoDoanDong")) {
+                document.getElementById("thongBaoDoanDong").style.display = "none";
+            }
+            localStorage.removeItem("gioHang");
+            hienThiMonDaChon();
+            loadBan();
         }
 
-        const danhSachMon = gioHang.map(mon => ({
-            idHoaDon: idHoaDonMoi,
-            idMonAn: mon.idMonAn,
-            soLuong: mon.soLuong,
-            gia: mon.gia
-        }));
-
-        const requests = danhSachMon.map(item =>
-            axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/chitiethoadon', item)
-        );
-
-        await Promise.all(requests);
-
-        return idHoaDonMoi;
-    }
-
-    // Hàm dọn dẹp giao diện sau khi thành công
-    function resetGiaoDienDatBan() {
-        document.getElementById("tenKhachHang").value = '';
-        document.getElementById("soDienThoai").value = '';
-        document.getElementById("soLuongKhach").value = '';
-        document.getElementById("ghiChu").value = '';
-        document.getElementById("thongBaoDoanDong").style.display = "none";
-        localStorage.removeItem("gioHang");
-        hienThiMonDaChon();
-        loadBan();
-    }
         function tangSoLuong(idMonAn) {
-
-            let gioHang =
-                JSON.parse(localStorage.getItem("gioHang")) || [];
-
-            const mon =
-                gioHang.find(item => item.idMonAn === idMonAn);
-
+            let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+            const mon = gioHang.find(item => item.idMonAn === idMonAn);
             if(mon){
                 mon.soLuong++;
             }
-
-            localStorage.setItem(
-                "gioHang",
-                JSON.stringify(gioHang)
-            );
-
+            localStorage.setItem("gioHang", JSON.stringify(gioHang));
             hienThiMonDaChon();
         }
 
         function giamSoLuong(idMonAn) {
-            function kiemTraSoLuongKhach() {
+            let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+            const mon = gioHang.find(item => item.idMonAn === idMonAn);
+            if(mon){
+                mon.soLuong--;
+                if(mon.soLuong <= 0){
+                    gioHang = gioHang.filter(item => item.idMonAn !== idMonAn);
+                }
+            }
+            localStorage.setItem("gioHang", JSON.stringify(gioHang));
+            hienThiMonDaChon();
+        }
 
-                const soLuong =
-                    parseInt(document.getElementById("soLuongKhach").value);
-
-                const thongBao =
-                    document.getElementById("thongBaoDoanDong");
-
+        function kiemTraSoLuongKhach() {
+            const soLuong = parseInt(document.getElementById("soLuongKhach").value);
+            const thongBao = document.getElementById("thongBaoDoanDong");
+            if(thongBao) {
                 if (soLuong > 20) {
                     thongBao.style.display = "block";
                 } else {
                     thongBao.style.display = "none";
                 }
             }
-            let gioHang =
-                JSON.parse(localStorage.getItem("gioHang")) || [];
-
-            const mon =
-                gioHang.find(item => item.idMonAn === idMonAn);
-
-            if(mon){
-
-                mon.soLuong--;
-
-                if(mon.soLuong <= 0){
-                    gioHang =
-                        gioHang.filter(
-                            item => item.idMonAn !== idMonAn
-                        );
-                }
-            }
-
-            localStorage.setItem(
-                "gioHang",
-                JSON.stringify(gioHang)
-            );
-
-            hienThiMonDaChon();
         }
+
         function goiYBan() {
-
-            const soKhach =
-                parseInt(document.getElementById("soLuongKhach").value);
-
-            document
-                .querySelectorAll(".ban-mini")
-                .forEach(ban => ban.classList.remove("goi-y"));
+            const soKhach = parseInt(document.getElementById("soLuongKhach").value);
+            kiemTraSoLuongKhach();
+            document.querySelectorAll(".ban-mini").forEach(ban => ban.classList.remove("goi-y"));
 
             let dsBan = [];
             let goiY = "";
 
-            if (soKhach <= 2) {
-                dsBan = [1,2,3,4];
-                goiY = "Bàn 2 chỗ";
-            }
-            else if (soKhach <= 4) {
-                dsBan = [5,6,7,8];
-                goiY = "Bàn 4 chỗ";
-            }
-            else if (soKhach <= 6) {
-                dsBan = [9,10,11,12];
-                goiY = "Bàn 6 chỗ";
-            }
-            else if (soKhach <= 8) {
-                dsBan = [13,14,15,16];
-                goiY = "Bàn 8 chỗ";
-            }
-            else {
-                dsBan = [17,18,19,20];
-                goiY = "Bàn lớn hoặc ghép bàn";
-            }
+            if (soKhach <= 2) { dsBan = [1,2,3,4]; goiY = "Bàn 2 chỗ"; }
+            else if (soKhach <= 4) { dsBan = [5,6,7,8]; goiY = "Bàn 4 chỗ"; }
+            else if (soKhach <= 6) { dsBan = [9,10,11,12]; goiY = "Bàn 6 chỗ"; }
+            else if (soKhach <= 8) { dsBan = [13,14,15,16]; goiY = "Bàn 8 chỗ"; }
+            else { dsBan = [17,18,19,20]; goiY = "Bàn lớn hoặc ghép bàn"; }
 
-            document.querySelectorAll(".ban-mini")
-                .forEach(ban => {
+            document.querySelectorAll(".ban-mini").forEach(ban => {
+                const soBan = parseInt(ban.innerText);
+                if (dsBan.includes(soBan) && !ban.classList.contains("occupied") && !ban.classList.contains("reserved")) {
+                    ban.classList.add("goi-y");
+                }
+            });
 
-                    const soBan =
-                        parseInt(ban.innerText);
-
-                    if (
-                        dsBan.includes(soBan) &&
-                        !ban.classList.contains("occupied") &&
-                        !ban.classList.contains("reserved")
-                    ) {
-                        ban.classList.add("goi-y");
-                    }
-                });
-
-            document.getElementById("goiYText").innerHTML =
-                "Hệ thống đề xuất: " + goiY;
+            const textEl = document.getElementById("goiYText");
+            if(textEl) textEl.innerHTML = "Hệ thống đề xuất: " + goiY;
         }
     </script>
 </body>
