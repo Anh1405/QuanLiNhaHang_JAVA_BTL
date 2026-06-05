@@ -54,7 +54,7 @@ public class HoaDonService {
         hoaDon.setTenKhachHang(req.getTenKhachHang());
         hoaDon.setSoDienThoai(req.getSoDienThoai());
         hoaDon.setGhiChu(req.getGhiChu());
-
+        hoaDon.setSoLuongKhach(req.getSoLuongKhach());
         // 2. Set các thông tin khác
         hoaDon.setTongTien(req.getTongTien());
         hoaDon.setTrangThai(req.getTrangThai() != null ? req.getTrangThai() : "ChoThanhToan");
@@ -78,4 +78,5 @@ public class HoaDonService {
         // 4. Lưu vào Database bằng biến 'repository'
         return repository.save(hoaDon);
     }
+
 }
