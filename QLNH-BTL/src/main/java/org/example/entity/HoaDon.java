@@ -38,6 +38,8 @@ public class HoaDon {
     @JoinColumn(name = "id_ban")
     private Ban ban;
 
+    @Column (name="so_luong_khach")
+    private Integer soLuongKhach;
     @ManyToOne
     @JoinColumn(name = "id_nguoi_dung")
     private NguoiDung nguoiDung;
