@@ -142,50 +142,38 @@
                                    maxlength="10"
                                    oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                         </div>
-                        <div class="pasgo-form-group">
-                            <label>Số lượng khách</label>
+                     <div class="pasgo-form-group">
+    <!-- Thêm thuộc tính data-i18n vào đây -->
+    <label data-i18n="booking-form-guests">Số lượng khách</label>
 
-                            <select id="soLuongKhach"
-                                    class="form-control"
-                                    onchange="goiYBan()">
+    <select id="soLuongKhach" class="form-control" onchange="goiYBan()">
+        <option value="1">1 người</option>
+        <option value="2">2 người</option>
+        <option value="3">3 người</option>
+        <option value="4">4 người</option>
+        <option value="5">5 người</option>
+        <option value="6">6 người</option>
+        <option value="7">7 người</option>
+        <option value="8">8 người</option>
+        <option value="9">9 người</option>
+        <option value="10">10 người</option>
+        <option value="15">15 người</option>
+        <option value="20">20 người trở lên</option>
+    </select>
 
-                                <option value="1">1 người</option>
-                                <option value="2">2 người</option>
-                                <option value="3">3 người</option>
-                                <option value="4">4 người</option>
-                                <option value="5">5 người</option>
-                                <option value="6">6 người</option>
-                                <option value="7">7 người</option>
-                                <option value="8">8 người</option>
-                                <option value="9">9 người</option>
-                                <option value="10">10 người</option>
-                                <option value="15">15 người</option>
-                                <option value="20">20 người trở lên</option>
-                            </select>
+    <small id="goiYText" class="text-success fw-bold mt-2 d-block"></small>
+</div>
 
-                            <small id="goiYText"
-                                   class="text-success fw-bold mt-2 d-block">
-                            </small>
-                        </div>
+<!-- Khối cảnh báo chuẩn cấu trúc -->
+<div id="thongBaoDoanDong" style="display:none; margin-top:10px; padding:10px; border-radius:6px; background:#fff3cd; color:#856404;">
+    Đoàn trên 20 khách vui lòng ghi rõ yêu cầu để nhà hàng chuẩn bị tốt hơn.
+</div>
 
-                        <div id="thongBaoDoanDong"
-                             style="display:none;
-            margin-top:10px;
-            padding:10px;
-            border-radius:6px;
-            background:#fff3cd;
-            color:#856404;">
-                            Đoàn trên 20 khách vui lòng ghi rõ yêu cầu để nhà hàng chuẩn bị tốt hơn.
-                        </div>
-
-                        <div class="pasgo-form-group mt-3">
-                            <label>Ghi chú thêm</label>
-
-                            <textarea id="ghiChu"
-                                      rows="3"
-                                      placeholder="Ví dụ: cần phòng riêng, sinh nhật, ghế em bé...">
-    </textarea>
-                        </div>
+<div class="pasgo-form-group mt-3">
+    <!-- Sửa data-i18n và placeholder-ph ở đây -->
+    <label data-i18n="booking-form-note">Ghi chú thêm</label>
+    <textarea id="ghiChu" rows="3" data-i18n-placeholder="booking-form-note-ph" placeholder="Ví dụ: cần phòng riêng, sinh nhật, ghế em bé..."></textarea>
+</div>
                         
                         <h3 class="mt-4" data-i18n="booking-payment-title">Thanh toán</h3>
                         
