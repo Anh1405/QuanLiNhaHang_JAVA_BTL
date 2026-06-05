@@ -529,13 +529,29 @@ function applyLanguage(lang) {
             }
         }
 
+        // Vẽ lại thanh Tab danh mục (để cập nhật ngôn ngữ Khai vị / Món chính...)
         renderTabs(window.currentMenuData);
         
+        // Cập nhật lại trạng thái active và trực tiếp render lại menu món ăn kèm giá tiền mới
         const newTabButtons = document.querySelectorAll("#danh-muc-tabs .nav-link");
         if (newTabButtons && newTabButtons.length > 0) {
             const targetIndex = activeIndex < newTabButtons.length ? activeIndex : 0;
-            if (newTabButtons[targetIndex]) {
-                newTabButtons[targetIndex].click();
+            const targetButton = newTabButtons[targetIndex];
+            
+            if (targetButton) {
+                // Đánh dấu active cho nút tab mới công bằng
+                newTabButtons.forEach(btn => btn.classList.remove("active"));
+                targetButton.classList.add("active");
+                
+                // Lấy dữ liệu danh mục tương ứng để render lại món ăn với giá VNĐ hoặc USD mới
+                const danhMucHienTai = window.currentMenuData[targetIndex];
+                if (danhMucHienTai) {
+                    if (danhMucHienTai.monAns && danhMucHienTai.monAns.length > 0) {
+                        renderMenu(danhMucHienTai);
+                    } else if (typeof loadMonAnTheoDanhMuc === "function") {
+                        loadMonAnTheoDanhMuc(danhMucHienTai.idDanhMuc);
+                    }
+                }
             }
         }
     }
