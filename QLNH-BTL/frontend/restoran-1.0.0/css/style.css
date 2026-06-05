@@ -550,6 +550,8 @@
         .total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
         .total-row span:first-child { font-weight: bold; color: #333; font-size: 18px; }
         .total-row .price { font-size: 24px; color: #FEA116; font-weight: 800; }
+
+/*** Food Menu Card (Đã được tối ưu hóa Flexbox tránh lệch nút bấm) ***/
 .menu-card {
     background: #fff;
     border-radius: 15px;
@@ -557,6 +559,8 @@
     overflow: hidden;
     transition: .4s;
     height: 100%;
+    display: flex;          /* Thiết lập flexbox cho toàn thẻ */
+    flex-direction: column; /* Sắp xếp các thành phần con theo chiều dọc */
 }
 
 .menu-card:hover {
@@ -572,24 +576,38 @@
 
 .menu-card-body {
     padding: 20px;
+    display: flex;          /* Chuyển body sang flexbox */
+    flex-direction: column; /* Đảm bảo nội dung chảy từ trên xuống */
+    flex-grow: 1;           /* Kích hoạt cơ chế tự lấp đầy khoảng trống dư thừa */
 }
 
 .menu-title {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
+    min-height: 56px;       /* Đảm bảo khung tên món luôn giữ không gian bằng 2 dòng chữ */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;  /* Giới hạn tên tối đa 2 dòng, tự động cắt nếu quá dài */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .menu-price {
     color: #FEA116;
     font-size: 22px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .menu-desc {
     color: #666;
     font-size: 14px;
-    margin: 10px 0;
+    margin-bottom: 20px;
+    min-height: 42px;       /* Khống chế chiều cao tối thiểu cho phần mô tả (tương đương 2 dòng) */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;  /* Giới hạn mô tả tối đa 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .btn-datmon {
@@ -601,11 +619,13 @@
     border-radius: 8px;
     font-weight: bold;
     transition: .3s;
+    margin-top: auto;       /* Tuyệt chiêu đẩy nút bấm dính chặt xuống đáy card, thẳng hàng 100% */
 }
 
 .btn-datmon:hover {
     background: #e08e0b;
 }
+
 #auth-area .nav-link {
     color: var(--primary) !important;
     font-weight: 600;
