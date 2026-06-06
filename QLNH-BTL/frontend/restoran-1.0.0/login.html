@@ -205,35 +205,50 @@
     <script src="js/main.js"></script>
     
     <script>
-        // Hàm xử lý đăng nhập mẫu
-    // Tìm và thay thế hàm handleLogin trong file login.html
-async function handleLogin(event) {
-    event.preventDefault();
-    const usernameInput = document.getElementById("username").value;
-    const passwordInput = document.getElementById("password").value;
+        // 🔥 KIỂM TRA ĐĂNG NHẬP: Nếu đã đăng nhập rồi thì không cho phép vào trang login nữa
+        const checkUserLoggedIn = () => {
+            const loggedInUser = JSON.parse(localStorage.getItem("user"));
+            if (loggedInUser) {
+                // Nếu đã đăng nhập và có vai trò quản lý/nhân viên, chuyển hướng về Dashboard index2.html
+                if (loggedInUser.vaiTro === "ADMIN" || loggedInUser.vaiTro === "STAFF") {
+                    window.location.href = "index2.html";
+                } else {
+                    // Nếu là khách hàng bình thường, chuyển hướng ra trang chủ index.html
+                    window.location.href = "index.html";
+                }
+            }
+        };
+        // Gọi hàm kiểm tra ngay khi script được tải
+        checkUserLoggedIn();
 
-    try {
-        const response = await axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/nguoidung/login', {
-            username: usernameInput,
-            password: passwordInput
-        });
+        // Hàm xử lý đăng nhập
+        async function handleLogin(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById("username").value;
+            const passwordInput = document.getElementById("password").value;
 
-        const user = response.data;
-        // 🔥 LƯU THÔNG TIN VÀO LOCALSTORAGE
-        localStorage.setItem("user", JSON.stringify(user));
+            try {
+                const response = await axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/nguoidung/login', {
+                    username: usernameInput,
+                    password: passwordInput
+                });
 
-        alert("Đăng nhập thành công!");
-        
-        // Kiểm tra quyền để chuyển hướng
-        if (user.vaiTro === "ADMIN") {
-            window.location.href = "index2.html";
-        } else {
-            window.location.href = "index.html";
+                const user = response.data;
+                // LƯU THÔNG TIN VÀO LOCALSTORAGE
+                localStorage.setItem("user", JSON.stringify(user));
+
+                alert("Đăng nhập thành công!");
+                
+                // Kiểm tra quyền để chuyển hướng (Đã sửa lỗi viết thường chữ 't' thành chữ 'T' ở vaiTro)
+                if (user.vaiTro === "ADMIN" || user.vaiTro === "STAFF") {
+                    window.location.href = "index2.html";
+                } else {
+                    window.location.href = "index.html";
+                }
+            } catch (error) {
+                alert("Sai tài khoản hoặc mật khẩu!");
+            }
         }
-    } catch (error) {
-        alert("Sai tài khoản hoặc mật khẩu!");
-    }
-}
     </script>
 </body>
 </html>
