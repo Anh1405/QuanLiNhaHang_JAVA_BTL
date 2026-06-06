@@ -1,702 +1,707 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quản Lý Nhà Hàng | Tổng Quan</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản Lý Nhà Hàng | Tổng Quan</title>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
 
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="Logo" height="60" width="60">
-  </div>
-
-  <nav class="main-header navbar navbar-expand navbar-dark">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index.html" class="nav-link">Trang Chủ</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Hỗ Trợ Kỹ Thuật</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Tìm kiếm nhanh..." aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">5</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">5 Thông báo mới</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 2 Yêu cầu đặt bàn mới
-            <span class="float-right text-muted text-sm">3 phút</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-utensils mr-2"></i> 3 Đơn hàng đang chờ bếp
-            <span class="float-right text-muted text-sm">15 phút</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">Xem tất cả thông báo</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="#" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Hệ Thống QLNH</span>
-    </a>
-
-   <div class="sidebar">
-  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-    <div class="image">
-      <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="Logo" height="60" width="60">
     </div>
-    <div class="info">
-      <a href="profile.html" class="d-block" id="ten-user-sidebar">Quản Trị Viên</a>
-    </div>
-  </div>
 
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-         
-
-          <li class="nav-header">QUẢN LÝ NHÀ HÀNG</li>
-         <li class="nav-item">
-  <a href="javascript:void(0)" class="nav-link active" id="menu-tong-quan">
-    <i class="nav-icon fas fa-tachometer-alt"></i>
-    <p>Tổng Quan</p>
-  </a>
-</li>
-
-<li class="nav-item">
-  <a href="javascript:void(0)" class="nav-link" id="menu-so-do-ban">
-    <i class="nav-icon fas fa-chair"></i>
-    <p>Sơ Đồ Bàn <span class="right badge badge-success">Sẵn sàng</span></p>
-  </a>
-</li>
-
-         <li class="nav-item">
-  <a href="javascript:void(0)" class="nav-link" id="menu-thuc-don">
-    <i class="nav-icon fas fa-utensils"></i>
-    <p>Thực Đơn & Món Ăn</p>
-  </a>
-</li>
-
-        <li class="nav-item">
-  <a href="javascript:void(0)" class="nav-link" id="menu-hoa-don">
-    <i class="nav-icon fas fa-file-invoice-dollar"></i>
-    <p>Hóa Đơn & Thanh Toán</p>
-  </a>
-</li>
-
-          <!--   <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-calendar-check"></i>
-              <p>Đặt Bàn Trước <span class="badge badge-info right">2</span></p>
-            </a>
-          </li>  -->
-
-          <li class="nav-header">HỆ THỐNG & NHÂN SỰ</li>
-          <li class="nav-item">
-    <a href="javascript:void(0)" class="nav-link" id="menu-nhan-vien">
-        <i class="nav-icon fas fa-users"></i>
-        <p>Quản Lý Người Dùng</p>
-    </a>
-</li>
-          
-          <li class="nav-item">
-    <a href="javascript:void(0)" class="nav-link" id="menu-bao-cao">
-        <i class="nav-icon fas fa-chart-line"></i>
-        <p>Báo Cáo Doanh Thu</p>
-    </a>
-</li>
-
+    <nav class="main-header navbar navbar-expand navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="index.html" class="nav-link">Trang Chủ</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Hỗ Trợ Kỹ Thuật</a>
+            </li>
         </ul>
-      </nav>
-      </div>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                    <i class="fas fa-search"></i>
+                </a>
+                <div class="navbar-search-block">
+                    <form class="form-inline">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control form-control-navbar" type="search" placeholder="Tìm kiếm nhanh..." aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-navbar" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">5</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">5 Thông báo mới</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> 2 Yêu cầu đặt bàn mới
+                        <span class="float-right text-muted text-sm">3 phút</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-utensils mr-2"></i> 3 Đơn hàng đang chờ bếp
+                        <span class="float-right text-muted text-sm">15 phút</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">Xem tất cả thông báo</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <a href="#" class="brand-link">
+            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Hệ Thống QLNH</span>
+        </a>
+
+        <div class="sidebar">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a href="profile.html" class="d-block" id="ten-user-sidebar">Quản Trị Viên</a>
+                </div>
+            </div>
+
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+
+                    <li class="nav-header">QUẢN LÝ NHÀ HÀNG</li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link active" id="menu-tong-quan">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Tổng Quan</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" id="menu-so-do-ban">
+                            <i class="nav-icon fas fa-chair"></i>
+                            <p>Sơ Đồ Bàn <span class="right badge badge-success">Sẵn sàng</span></p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" id="menu-thuc-don">
+                            <i class="nav-icon fas fa-utensils"></i>
+                            <p>Thực Đơn & Món Ăn</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" id="menu-hoa-don">
+                            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                            <p>Hóa Đơn & Thanh Toán</p>
+                        </a>
+                    </li>
+
+                    <!--   <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-calendar-check"></i>
+                        <p>Đặt Bàn Trước <span class="badge badge-info right">2</span></p>
+                      </a>
+                    </li>  -->
+
+                    <li class="nav-header">HỆ THỐNG & NHÂN SỰ</li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" id="menu-nhan-vien">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>Quản Lý Người Dùng</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" class="nav-link" id="menu-bao-cao">
+                            <i class="nav-icon fas fa-chart-line"></i>
+                            <p>Báo Cáo Doanh Thu</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
     </aside>
 
-  <div class="content-wrapper">
-    <div id="view-tong-quan">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Bảng Tổng Quan Kinh Doanh</h1>
-          </div><div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
-              <li class="breadcrumb-item active">Tổng Quan</li>
-            </ol>
-          </div></div></div></div>
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-concierge-bell"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Đơn Hàng Hôm Nay</span>
-                <span class="info-box-number" id="don-hang-hom-nay">0</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Khách Hàng Phục Vụ</span>
-                <span class="info-box-number" id="khach-hang-phuc-vu">0</span>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix hidden-md-up"></div>
+    <div class="content-wrapper">
+        <div id="view-tong-quan">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Bảng Tổng Quan Kinh Doanh</h1>
+                        </div><div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
+                            <li class="breadcrumb-item active">Tổng Quan</li>
+                        </ol>
+                    </div></div></div></div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-concierge-bell"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Đơn Hàng Hôm Nay</span>
+                                    <span class="info-box-number" id="don-hang-hom-nay">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Khách Hàng Phục Vụ</span>
+                                    <span class="info-box-number" id="khach-hang-phuc-vu">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix hidden-md-up"></div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill-wave"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Doanh Thu Trong Ngày</span>
-                <span class="info-box-number" id="doanh-thu-ngay">0 ₫</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-chair"></i></span>
-              <div class="info-box-content">
-                <span class="info-box-text">Bàn Đang Trống</span>
-                <span class="info-box-number" id="ban-trong">0 / 0</span>
-              </div>
-            </div>
-          </div>
-          </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="card-title">Báo Cáo Doanh Thu Tháng Này</h5>
-                <button class="btn btn-sm btn-success ml-3" onclick="xuatBaoCaoExcel()">
-      <i class="fas fa-file-excel"></i> Xuất Báo Cáo Excel
-  </button>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill-wave"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Doanh Thu Trong Ngày</span>
+                                    <span class="info-box-number" id="doanh-thu-ngay">0 ₫</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-chair"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Bàn Đang Trống</span>
+                                    <span class="info-box-number" id="ban-trong">0 / 0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Báo Cáo Doanh Thu Tháng Này</h5>
+                                    <button class="btn btn-sm btn-success ml-3" onclick="xuatBaoCaoExcel()">
+                                        <i class="fas fa-file-excel"></i> Xuất Báo Cáo Excel
+                                    </button>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-12">
+                                            <div class="card bg-secondary-gradient border-0 shadow-sm mb-4">
+                                                <div class="card-body py-3">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-sm-4 mb-2 mb-sm-0">
+                                                            <div class="input-group input-group-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text bg-dark border-secondary text-muted small">Từ:</span>
+                                                                </div>
+                                                                <input type="date" id="fromDate" class="form-control bg-dark text-white border-secondary">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 mb-2 mb-sm-0">
+                                                            <div class="input-group input-group-sm">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text bg-dark border-secondary text-muted small">Đến:</span>
+                                                                </div>
+                                                                <input type="date" id="toDate" class="form-control bg-dark text-white border-secondary">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <button type="button" id="btnFilter" class="btn btn-primary btn-sm btn-block font-weight-bold shadow-sm">
+                                                                <i class="fas fa-filter fa-xs mr-1"></i> Lọc dữ liệu
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <p class="text-center mb-2">
+                                                <i class="fas fa-chart-line text-info mr-1"></i>
+                                                <strong id="chartTitle" class="text-light font-weight-normal" style="letter-spacing: 0.5px;">Biểu đồ doanh thu: Tải dữ liệu...</strong>
+                                            </p>
+                                            <div class="chart-container position-relative mb-4" style="height: 250px;">
+                                                <canvas id="salesChart"></canvas>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-12">
+                                            <div class="card bg-dark border-secondary h-100 shadow-sm">
+                                                <div class="card-header border-bottom border-secondary bg-transparent py-2">
+                                                    <h6 class="card-title m-0 text-info font-weight-bold small">
+                                                        <i class="fas fa-bullseye mr-1"></i> TIẾN ĐỘ KPI THÁNG
+                                                    </h6>
+                                                </div>
+                                                <div class="card-body d-flex flex-column justify-content-around py-3">
+
+                                                    <div class="progress-group mb-3">
+                                                        <span class="text-muted small">Doanh thu món chính</span>
+                                                        <span class="float-right text-light small" id="kpi-mon-chinh-text"><b>0tr</b>/200tr</span>
+                                                        <div class="progress progress-xs mt-1 bg-dark-light">
+                                                            <div class="progress-bar bg-primary shadow-none" id="kpi-mon-chinh-bar" style="width: 0%"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="progress-group mb-3">
+                                                        <span class="text-muted small">Doanh thu đồ uống</span>
+                                                        <span class="float-right text-light small" id="kpi-do-uong-text"><b>0tr</b>/40tr</span>
+                                                        <div class="progress progress-xs mt-1 bg-dark-light">
+                                                            <div class="progress-bar bg-danger shadow-none" id="kpi-do-uong-bar" style="width: 0%"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="progress-group mb-0">
+                                                        <span class="text-muted small">Tỉ lệ đặt bàn thành công</span>
+                                                        <span class="float-right text-light small" id="kpi-dat-ban-text"><b>0</b>/800 bàn</span>
+                                                        <div class="progress progress-xs mt-1 bg-dark-light">
+                                                            <div class="progress-bar bg-success shadow-none" id="kpi-dat-ban-bar" style="width: 0%"></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100 mx-0 mt-4">
+
+                            <div class="col-xl-7 col-lg-7 col-md-12 mb-4 px-2">
+                                <div class="card bg-dark border-secondary h-100 shadow-sm">
+                                    <div class="card-header border-bottom border-secondary bg-transparent d-flex align-items-center py-2">
+                                        <h6 class="card-title m-0 text-warning font-weight-bold small">
+                                            <i class="fas fa-spinner fa-spin mr-1"></i> ĐƠN HÀNG ĐANG XỬ LÝ
+                                        </h6>
+                                        <div class="card-tools ml-auto">
+                                            <button type="button" class="btn btn-tool text-muted py-0" data-card-widget="collapse">
+                                                <i class="fas fa-minus fa-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body p-0" style="max-height: 320px; overflow-y: auto;">
+                                        <div class="table-responsive">
+                                            <table class="table table-head-fixed table-dark m-0 small text-center" style="background-color: transparent;">
+                                                <thead>
+                                                <tr class="text-muted border-bottom border-secondary" style="font-size: 0.85rem; background-color: rgba(255,255,255,0.02);">
+                                                    <th class="border-0 py-3">Mã Đơn</th>
+                                                    <th class="border-0 py-3">Bàn</th>
+                                                    <th class="border-0 py-3">Ngày Tạo</th>
+                                                    <th class="border-0 py-3">Trạng Thái</th>
+                                                    <th class="border-0 py-3 text-right pr-4">Thành Tiền</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="ds-don-hang">
+                                                <tr><td colspan="5" class="text-muted py-4">Đang tải dữ liệu...</td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer border-top border-secondary bg-transparent d-flex justify-content-between align-items-center py-2.5">
+                                        <a class="btn btn-sm btn-outline-info font-weight-bold px-3" href="booking.html">
+                                            <i class="fas fa-plus fa-xs mr-1"></i> Tạo Đơn Mới
+                                        </a>
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-link text-muted p-0 small" onclick="document.getElementById('menu-hoa-don').click()">
+                                            Xem tất cả hóa đơn <i class="fas fa-angle-right fa-xs ml-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-5 col-lg-5 col-md-12 mb-4 px-2">
+                                <div class="card bg-dark border-secondary h-100 shadow-sm">
+                                    <div class="card-header border-bottom border-secondary bg-transparent d-flex align-items-center py-2">
+                                        <h6 class="card-title m-0 text-success font-weight-bold small">
+                                            <i class="fas fa-fire text-danger mr-1"></i> THỰC ĐƠN NỔI BẬT
+                                        </h6>
+                                        <div class="card-tools ml-auto">
+                                            <button type="button" class="btn btn-tool text-muted py-0" data-card-widget="collapse">
+                                                <i class="fas fa-minus fa-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body p-0" style="max-height: 320px; overflow-y: auto; overflow-x: hidden;">
+                                        <ul class="products-list product-list-in-card pl-3 pr-3" id="ds-mon-an">
+                                            <li class="item text-center text-muted py-4 small">Đang tải danh sách món ăn...</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="card-footer border-top border-secondary bg-transparent text-center py-2.5">
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-link text-muted p-0 small uppercase font-weight-bold" onclick="document.getElementById('menu-thuc-don').click()">
+                                            <i class="fas fa-cog fa-xs mr-1"></i> Chỉnh Sửa Thực Đơn
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div></section>
+        </div>
+        <div id="view-so-do-ban" style="display: none;">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Sơ Đồ Bàn</h1>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="card-body">
-    <div class="row">
-        <div class="col-lg-8 col-md-12">
-            <div class="card bg-secondary-gradient border-0 shadow-sm mb-4">
-                <div class="card-body py-3">
-                    <div class="row align-items-center">
-                        <div class="col-sm-4 mb-2 mb-sm-0">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-dark border-secondary text-muted small">Từ:</span>
-                                </div>
-                                <input type="date" id="fromDate" class="form-control bg-dark text-white border-secondary">
-                            </div>
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row" id="danh-sach-ban">
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div id="view-thuc-don" style="display: none;">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Quản Lý Thực Đơn</h1>
                         </div>
-                        <div class="col-sm-4 mb-2 mb-sm-0">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-dark border-secondary text-muted small">Đến:</span>
-                                </div>
-                                <input type="date" id="toDate" class="form-control bg-dark text-white border-secondary">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <button type="button" id="btnFilter" class="btn btn-primary btn-sm btn-block font-weight-bold shadow-sm">
-                                <i class="fas fa-filter fa-xs mr-1"></i> Lọc dữ liệu
+                        <div class="col-sm-6 text-right">
+                            <button class="btn btn-primary" onclick="moModalThemMon()">
+                                <i class="fas fa-plus"></i> Thêm Món Mới
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row" id="danh-sach-thuc-don">
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="modal fade" id="modal-mon-an" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="modal-mon-an-title">Thêm Món Mới</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-mon-an">
+                            <input type="hidden" id="mon-id">
 
-            <p class="text-center mb-2">
-                <i class="fas fa-chart-line text-info mr-1"></i>
-                <strong id="chartTitle" class="text-light font-weight-normal" style="letter-spacing: 0.5px;">Biểu đồ doanh thu: Tải dữ liệu...</strong>
-            </p>
-            <div class="chart-container position-relative mb-4" style="height: 250px;">
-                <canvas id="salesChart"></canvas>
+                            <div class="form-group">
+                                <label>Tên món ăn <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="mon-ten" placeholder="Nhập tên món..." required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Giá tiền (VNĐ) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="mon-gia" placeholder="VD: 50000" required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Danh mục</label>
+                                    <select class="form-control" id="mon-danhmuc">
+                                        <option value="">Đang tải...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hình ảnh món ăn</label>
+                                <input type="file" class="form-control-file" id="mon-anh-file" accept="image/*">
+                                <input type="hidden" id="mon-anh-base64">
+
+                                <div class="mt-2 text-center">
+                                    <img id="mon-anh-preview" src="" alt="Preview" style="max-height: 120px; border-radius: 8px; display: none; border: 1px solid #6c757d; padding: 2px;">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mô tả ngắn</label>
+                                <textarea class="form-control" id="mon-mota" rows="3" placeholder="Nhập mô tả món ăn..."></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-primary" onclick="luuMonAn()">Lưu Lại</button>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="col-lg-4 col-md-12">
-            <div class="card bg-dark border-secondary h-100 shadow-sm">
-                <div class="card-header border-bottom border-secondary bg-transparent py-2">
-                    <h6 class="card-title m-0 text-info font-weight-bold small">
-                        <i class="fas fa-bullseye mr-1"></i> TIẾN ĐỘ KPI THÁNG
-                    </h6>
-                </div>
-                <div class="card-body d-flex flex-column justify-content-around py-3">
-                    
-                    <div class="progress-group mb-3">
-                        <span class="text-muted small">Doanh thu món chính</span>
-                        <span class="float-right text-light small" id="kpi-mon-chinh-text"><b>0tr</b>/200tr</span>
-                        <div class="progress progress-xs mt-1 bg-dark-light">
-                            <div class="progress-bar bg-primary shadow-none" id="kpi-mon-chinh-bar" style="width: 0%"></div>
+        <div id="view-hoa-don" style="display: none;">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Quản Lý Hóa Đơn</h1>
                         </div>
                     </div>
+                </div>
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <!-- Thêm d-flex để kích hoạt Flexbox, justify-content-between để đẩy 2 phần tử về 2 đầu, align-items-center để căn giữa theo chiều dọc -->
+                        <div class="card-header bg-dark d-flex align-items-center">
+                            <h3 class="card-title m-0 text-white">Danh Sách Hóa Đơn</h3>
+                            <!-- Thêm class ml-auto vào đây để đẩy nút sang phải -->
+                            <a class="btn btn-success ml-auto" href="booking.html">
+                                ➕ Thêm Hóa Đơn
+                            </a>
+                        </div>
 
-                    <div class="progress-group mb-3">
-                        <span class="text-muted small">Doanh thu đồ uống</span>
-                        <span class="float-right text-light small" id="kpi-do-uong-text"><b>0tr</b>/40tr</span>
-                        <div class="progress progress-xs mt-1 bg-dark-light">
-                            <div class="progress-bar bg-danger shadow-none" id="kpi-do-uong-bar" style="width: 0%"></div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover m-0 text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>Mã HĐ</th>
+                                        <th>Bàn Phục Vụ</th>
+                                        <th>Ngày Tạo</th>
+                                        <th>Tổng Tiền</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Thao Tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="bang-danh-sach-hd">
+                                    <tr><td colspan="6">Đang tải danh sách hóa đơn...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="progress-group mb-0">
-                        <span class="text-muted small">Tỉ lệ đặt bàn thành công</span>
-                        <span class="float-right text-light small" id="kpi-dat-ban-text"><b>0</b>/800 bàn</span>
-                        <div class="progress progress-xs mt-1 bg-dark-light">
-                            <div class="progress-bar bg-success shadow-none" id="kpi-dat-ban-bar" style="width: 0%"></div>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
+            </section>
         </div>
-    </div>
-</div>
-            </div>
-          </div>
-        <div class="row w-100 mx-0 mt-4">
-    
-    <div class="col-xl-7 col-lg-7 col-md-12 mb-4 px-2">
-        <div class="card bg-dark border-secondary h-100 shadow-sm">
-            <div class="card-header border-bottom border-secondary bg-transparent d-flex align-items-center py-2">
-                <h6 class="card-title m-0 text-warning font-weight-bold small">
-                    <i class="fas fa-spinner fa-spin mr-1"></i> ĐƠN HÀNG ĐANG XỬ LÝ
-                </h6>
-                <div class="card-tools ml-auto">
-                    <button type="button" class="btn btn-tool text-muted py-0" data-card-widget="collapse">
-                        <i class="fas fa-minus fa-xs"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="card-body p-0" style="max-height: 320px; overflow-y: auto;">
-                <div class="table-responsive">
-                    <table class="table table-head-fixed table-dark m-0 small text-center" style="background-color: transparent;">
-                        <thead>
-                            <tr class="text-muted border-bottom border-secondary" style="font-size: 0.85rem; background-color: rgba(255,255,255,0.02);">
-                                <th class="border-0 py-3">Mã Đơn</th>
-                                <th class="border-0 py-3">Bàn</th>
-                                <th class="border-0 py-3">Ngày Tạo</th>
-                                <th class="border-0 py-3">Trạng Thái</th>
-                                <th class="border-0 py-3 text-right pr-4">Thành Tiền</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ds-don-hang">
-                            <tr><td colspan="5" class="text-muted py-4">Đang tải dữ liệu...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="card-footer border-top border-secondary bg-transparent d-flex justify-content-between align-items-center py-2.5">
-                <a class="btn btn-sm btn-outline-info font-weight-bold px-3" href="booking.html">
-                    <i class="fas fa-plus fa-xs mr-1"></i> Tạo Đơn Mới
-                </a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-link text-muted p-0 small" onclick="document.getElementById('menu-hoa-don').click()">
-                    Xem tất cả hóa đơn <i class="fas fa-angle-right fa-xs ml-1"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-5 col-lg-5 col-md-12 mb-4 px-2">
-        <div class="card bg-dark border-secondary h-100 shadow-sm">
-            <div class="card-header border-bottom border-secondary bg-transparent d-flex align-items-center py-2">
-                <h6 class="card-title m-0 text-success font-weight-bold small">
-                    <i class="fas fa-fire text-danger mr-1"></i> THỰC ĐƠN NỔI BẬT
-                </h6>
-                <div class="card-tools ml-auto">
-                    <button type="button" class="btn btn-tool text-muted py-0" data-card-widget="collapse">
-                        <i class="fas fa-minus fa-xs"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div class="card-body p-0" style="max-height: 320px; overflow-y: auto; overflow-x: hidden;">
-                <ul class="products-list product-list-in-card pl-3 pr-3" id="ds-mon-an">
-                    <li class="item text-center text-muted py-4 small">Đang tải danh sách món ăn...</li>
-                </ul>
-            </div>
-            
-            <div class="card-footer border-top border-secondary bg-transparent text-center py-2.5">
-                <a href="javascript:void(0)" class="btn btn-sm btn-link text-muted p-0 small uppercase font-weight-bold" onclick="document.getElementById('menu-thuc-don').click()">
-                    <i class="fas fa-cog fa-xs mr-1"></i> Chỉnh Sửa Thực Đơn
-                </a>
-            </div>
-        </div>
-    </div>
-
-</div></section>
-    </div>
-    <div id="view-so-do-ban" style="display: none;">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Sơ Đồ Bàn</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row" id="danh-sach-ban">
-           </div>
-      </div>
-    </section>
-    </div>
-    <div id="view-thuc-don" style="display: none;">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Quản Lý Thực Đơn</h1>
-          </div>
-          <div class="col-sm-6 text-right">
-            <button class="btn btn-primary" onclick="moModalThemMon()">
-              <i class="fas fa-plus"></i> Thêm Món Mới
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row" id="danh-sach-thuc-don">
-           </div>
-      </div>
-    </section>
-  </div>
-  <div class="modal fade" id="modal-mon-an" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content bg-dark">
-        <div class="modal-header border-bottom-0">
-          <h5 class="modal-title" id="modal-mon-an-title">Thêm Món Mới</h5>
-          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="form-mon-an">
-            <input type="hidden" id="mon-id">
-            
-            <div class="form-group">
-              <label>Tên món ăn <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="mon-ten" placeholder="Nhập tên món..." required>
-            </div>
-            
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label>Giá tiền (VNĐ) <span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="mon-gia" placeholder="VD: 50000" required>
-              </div>
-              <div class="col-md-6 form-group">
-                <label>Danh mục</label>
-                <select class="form-control" id="mon-danhmuc">
-                  <option value="">Đang tải...</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Đường dẫn hình ảnh (URL)</label>
-              <input type="text" class="form-control" id="mon-anh" placeholder="VD: img/menu-1.jpg">
-            </div>
-
-            <div class="form-group">
-              <label>Mô tả ngắn</label>
-              <textarea class="form-control" id="mon-mota" rows="3" placeholder="Nhập mô tả món ăn..."></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer border-top-0">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-          <button type="button" class="btn btn-primary" onclick="luuMonAn()">Lưu Lại</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="view-hoa-don" style="display: none;">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Quản Lý Hóa Đơn</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-    <section class="content">
-  <div class="container-fluid">
-    <div class="card">
-      <!-- Thêm d-flex để kích hoạt Flexbox, justify-content-between để đẩy 2 phần tử về 2 đầu, align-items-center để căn giữa theo chiều dọc -->
-   <div class="card-header bg-dark d-flex align-items-center">
-  <h3 class="card-title m-0 text-white">Danh Sách Hóa Đơn</h3>
-  <!-- Thêm class ml-auto vào đây để đẩy nút sang phải -->
-  <a class="btn btn-success ml-auto" href="booking.html">
-    ➕ Thêm Hóa Đơn
-  </a>
-</div>
-      
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-striped table-hover m-0 text-center">
-            <thead>
-              <tr>
-                <th>Mã HĐ</th>
-                <th>Bàn Phục Vụ</th>
-                <th>Ngày Tạo</th>
-                <th>Tổng Tiền</th>
-                <th>Trạng Thái</th>
-                <th>Thao Tác</th>
-              </tr>
-            </thead>
-            <tbody id="bang-danh-sach-hd">
-              <tr><td colspan="6">Đang tải danh sách hóa đơn...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-  </div>
-  <div id="content-nhan-vien" class="content-section" style="display: none;">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h3 class="card-title">Danh Sách Tài Khoản & Phân Công Nhiệm Vụ</h3>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr class="text-center">
-                            <th>ID</th>
-                            <th>Họ Tên</th>
-                            <th>EMAIL</th>
-                            <th>Nhiệm Vụ Hiện Tại</th>
-                            <th>Thao Tác</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bang-nhan-vien">
-                        </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="view-bao-cao" class="content-section" style="display: none;">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Báo Cáo Thống Kê</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <section class="content">
-        <div class="container-fluid">
+        <div id="content-nhan-vien" class="content-section" style="display: none;">
             <div class="card">
-                <div class="card-header bg-dark text-white border-transparent">
-                    <h3 class="card-title mt-1"><i class="fas fa-chart-area"></i> Biểu Đồ Doanh Thu 7 Ngày Qua</h3>
-                    <button class="btn btn-sm btn-success float-right" onclick="xuatBaoCaoExcel()">
-                        <i class="fas fa-file-excel"></i> Xuất Báo Cáo Excel
-                    </button>
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title">Danh Sách Tài Khoản & Phân Công Nhiệm Vụ</h3>
                 </div>
                 <div class="card-body">
-                    <div class="chart">
-                        <canvas id="chartBaoCao" height="300" style="height: 300px;"></canvas>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr class="text-center">
+                                <th>ID</th>
+                                <th>Họ Tên</th>
+                                <th>EMAIL</th>
+                                <th>Nhiệm Vụ Hiện Tại</th>
+                                <th>Thao Tác</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bang-nhan-vien">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <div class="card mt-4">
-            <div class="card-header bg-info text-white border-transparent">
-                <h3 class="card-title mt-1"><i class="fas fa-list-alt"></i> Chi Tiết Doanh Thu Theo Ngày</h3>
+        <div id="view-bao-cao" class="content-section" style="display: none;">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Báo Cáo Thống Kê</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped text-center m-0">
-                        <thead class="thead-light">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white border-transparent">
+                            <h3 class="card-title mt-1"><i class="fas fa-chart-area"></i> Biểu Đồ Doanh Thu 7 Ngày Qua</h3>
+                            <button class="btn btn-sm btn-success float-right" onclick="xuatBaoCaoExcel()">
+                                <i class="fas fa-file-excel"></i> Xuất Báo Cáo Excel
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="chartBaoCao" height="300" style="height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white border-transparent">
+                    <h3 class="card-title mt-1"><i class="fas fa-list-alt"></i> Chi Tiết Doanh Thu Theo Ngày</h3>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center m-0">
+                            <thead class="thead-light">
                             <tr>
                                 <th>STT</th>
                                 <th>Ngày / Tháng</th>
                                 <th>Số Đơn Hoàn Thành</th>
                                 <th>Tổng Doanh Thu</th>
                             </tr>
-                        </thead>
-                        <tbody id="bang-doanh-thu-ngay-bc">
+                            </thead>
+                            <tbody id="bang-doanh-thu-ngay-bc">
                             <tr><td colspan="4">Đang tải dữ liệu...</td></tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-</div>
 
-  <div class="modal fade" id="modal-chi-tiet-hd" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content bg-dark">
-        <div class="modal-header border-bottom-0">
-          <h5 class="modal-title font-weight-bold" id="hd-title">Chi Tiết Hóa Đơn #ID</h5>
-          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="thanh-toan-hd-id"> <input type="hidden" id="thanh-toan-hd-tong" value="0">
-          <input type="hidden" id="thanh-toan-hd-soban" value="">
-          <table class="table table-bordered text-center">
-            <hr>
+        <div class="modal fade" id="modal-chi-tiet-hd" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title font-weight-bold" id="hd-title">Chi Tiết Hóa Đơn #ID</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="thanh-toan-hd-id"> <input type="hidden" id="thanh-toan-hd-tong" value="0">
+                        <input type="hidden" id="thanh-toan-hd-soban" value="">
+                        <table class="table table-bordered text-center">
+                            <hr>
 
-            <h5 class="text-info mt-3">Thêm món vào hóa đơn</h5>
+                            <h5 class="text-info mt-3">Thêm món vào hóa đơn</h5>
 
-            <div class="row align-items-center mb-3">
+                            <div class="row align-items-center mb-3">
 
-              <div class="col-md-6">
-                <select id="chon-mon-them" class="form-control">
-                  <option>Đang tải món...</option>
-                </select>
-              </div>
+                                <div class="col-md-6">
+                                    <select id="chon-mon-them" class="form-control">
+                                        <option>Đang tải món...</option>
+                                    </select>
+                                </div>
 
-              <div class="col-md-3">
-                <input type="number"
-                       id="so-luong-them"
-                       class="form-control"
-                       value="1"
-                       min="1">
-              </div>
+                                <div class="col-md-3">
+                                    <input type="number"
+                                           id="so-luong-them"
+                                           class="form-control"
+                                           value="1"
+                                           min="1">
+                                </div>
 
-              <div class="col-md-3">
-                <button class="btn btn-success w-100"
-                        onclick="themMonVaoHoaDon()">
-                  ➕ Thêm món
-                </button>
-              </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-success w-100"
+                                            onclick="themMonVaoHoaDon()">
+                                        ➕ Thêm món
+                                    </button>
+                                </div>
 
-            </div>
-            <thead class="thead-light">
-              <tr>
-                <th>STT</th>
-                <th>Tên Món Ăn</th>
-                <th>Đơn Giá</th>
-                <th>Số Lượng</th>
-                <th>Thành Tiền</th>
-              </tr>
-            </thead>
-            <tbody id="bang-chi-tiet-hd">
-              </tbody>
-          </table>
-          <div class="text-right mt-3">
-            <h4 class="text-warning">Tổng cộng: <span id="hd-tong-tien-text" class="font-weight-bold">0 ₫</span></h4>
-          </div>
-        </div>
-        <div class="modal-footer border-top-0">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-success" id="btn-thanh-toan" onclick="xuLyThanhToan()">
-            <i class="fas fa-check-circle"></i> Xác nhận Thanh Toán
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="modalPhanQuyen" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Thay Đổi Nhiệm Vụ Nhân Sự</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="id-nguoi-dung-dang-sua">
-                <div class="form-group">
-                    <label for="chon-vai-tro">Chọn nhiệm vụ mới:</label>
-                 <select class="form-control" id="chon-vai-tro">
-    <option value="USER">Người Dùng (USER)</option>
-    <option value="STAFF">Nhân Viên (STAFF)</option>
-    <option value="ADMIN">Quản Trị Viên (ADMIN)</option>
-</select>
+                            </div>
+                            <thead class="thead-light">
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên Món Ăn</th>
+                                <th>Đơn Giá</th>
+                                <th>Số Lượng</th>
+                                <th>Thành Tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody id="bang-chi-tiet-hd">
+                            </tbody>
+                        </table>
+                        <div class="text-right mt-3">
+                            <h4 class="text-warning">Tổng cộng: <span id="hd-tong-tien-text" class="font-weight-bold">0 ₫</span></h4>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-success" id="btn-thanh-toan" onclick="xuLyThanhToan()">
+                            <i class="fas fa-check-circle"></i> Xác nhận Thanh Toán
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-success" onclick="luuVaiTroMoi()">Lưu Thay Đổi</button>
+        </div>
+        <div class="modal fade" id="modalPhanQuyen" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thay Đổi Nhiệm Vụ Nhân Sự</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id-nguoi-dung-dang-sua">
+                        <div class="form-group">
+                            <label for="chon-vai-tro">Chọn nhiệm vụ mới:</label>
+                            <select class="form-control" id="chon-vai-tro">
+                                <option value="USER">Người Dùng (USER)</option>
+                                <option value="STAFF">Nhân Viên (STAFF)</option>
+                                <option value="ADMIN">Quản Trị Viên (ADMIN)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-success" onclick="luuVaiTroMoi()">Lưu Thay Đổi</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-    </div>
-  <aside class="control-sidebar control-sidebar-dark">
+    <aside class="control-sidebar control-sidebar-dark">
     </aside>
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2026 Hệ Thống Quản Lý Nhà Hàng.</strong>
-    Bản quyền thuộc về team phát triển.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Phiên bản</b> 1.0.0
-    </div>
-  </footer>
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2026 Hệ Thống Quản Lý Nhà Hàng.</strong>
+        Bản quyền thuộc về team phát triển.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Phiên bản</b> 1.0.0
+        </div>
+    </footer>
 </div>
 <script src="plugins/jquery/jquery.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -706,1352 +711,1387 @@
 <script src="dist/js/pages/dashboard2.js"></script>
 
 <script>
-  const user = JSON.parse(localStorage.getItem("user"));
-if (!user || (user.vaiTro !== "ADMIN" && user.vaiTro !== "STAFF")) {
-    alert("Bạn không có quyền truy cập trang này!");
-    window.location.href = "login.html";
-}
-  // =========================================================
-  // 1. CẤU HÌNH & TIỆN ÍCH
-  // =========================================================
-  const BASE_URL = 'https://quanlinhahang-java-btl-3se3.onrender.com/api';
-
-  const formatVND = (amount) => {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
-  };
-
- // =========================================================
-  // 2. LOGIC CHUYỂN TAB (SPA ROUTING)
-  // =========================================================
-  const menuTongQuan = document.getElementById('menu-tong-quan');
-  const viewTongQuan = document.getElementById('view-tong-quan');
-
-  const menuSoDoBan = document.getElementById('menu-so-do-ban');
-  const viewSoDoBan = document.getElementById('view-so-do-ban');
-
-  const menuThucDon = document.getElementById('menu-thuc-don');
-  const viewThucDon = document.getElementById('view-thuc-don');
-
-  const menuHoaDon = document.getElementById('menu-hoa-don');
-  const viewHoaDon = document.getElementById('view-hoa-don');
-
-  // Thêm 2 biến cho Nhân Viên
-  const menuNhanVien = document.getElementById('menu-nhan-vien');
-  const viewNhanVien = document.getElementById('content-nhan-vien');
-
-  const menuBaoCao = document.getElementById('menu-bao-cao');
-  const viewBaoCao = document.getElementById('view-bao-cao');
-
-  // Hàm dùng chung để chuyển đổi qua lại giữa TẤT CẢ màn hình
-  const chieuLuanChuyenTab = (menuActive, viewActive) => {
-    // 1. Cập nhật mảng này (Thêm menuBaoCao)
-    [menuTongQuan, menuSoDoBan, menuThucDon, menuHoaDon, menuNhanVien, menuBaoCao].forEach(menu => {
-      if(menu) menu.classList.remove('active');
-    });
-    // 2. Cập nhật mảng này (Thêm viewBaoCao)
-    [viewTongQuan, viewSoDoBan, viewThucDon, viewHoaDon, viewNhanVien, viewBaoCao].forEach(view => {
-      if(view) view.style.display = 'none';
-    });
-    
-    if(menuActive) menuActive.classList.add('active');
-    if(viewActive) viewActive.style.display = 'block';
-  };
-
-  // Các sự kiện click cũ giữ nguyên
-  if(menuTongQuan) {
-    menuTongQuan.addEventListener('click', () => {
-      chieuLuanChuyenTab(menuTongQuan, viewTongQuan);
-      loadBan(); loadHoaDon(); loadMonAn();
-    });
+    const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || (user.vaiTro !== "ADMIN" && user.vaiTro !== "STAFF")) {
+      alert("Bạn không có quyền truy cập trang này!")``;
+      window.location.href = "login.html";
   }
+    // =========================================================
+    // 1. CẤU HÌNH & TIỆN ÍCH
+    // =========================================================
+    const BASE_URL = 'https://quanlinhahang-java-btl-3se3.onrender.com/api';
 
-  if(menuSoDoBan) {
-    menuSoDoBan.addEventListener('click', () => {
-      chieuLuanChuyenTab(menuSoDoBan, viewSoDoBan);
-      loadGiaoDienBan();
-    });
-  }
-
-  if(menuThucDon) {
-    menuThucDon.addEventListener('click', () => {
-      chieuLuanChuyenTab(menuThucDon, viewThucDon);
-      loadGiaoDienThucDon();
-    });
-  }
-
-  if(menuHoaDon) {
-    menuHoaDon.addEventListener('click', () => {
-      chieuLuanChuyenTab(menuHoaDon, viewHoaDon);
-      loadDanhSachHoaDonToanBo();
-    });
-  }
-
-  // --- THÊM SỰ KIỆN CLICK CHO MENU NHÂN VIÊN ---
-  if(menuNhanVien) {
-    menuNhanVien.addEventListener('click', () => {
-      chieuLuanChuyenTab(menuNhanVien, viewNhanVien);
-      loadDanhSachNhanVien(); // Gọi API lấy danh sách
-    });
-  }
-  if(menuBaoCao) {
-    menuBaoCao.addEventListener('click', () => {
-      chieuLuanChuyenTab(menuBaoCao, viewBaoCao);
-      loadHoaDon(); // Gọi hàm này để nó tự chạy API lấy tiền và vẽ biểu đồ
-    });
-  }
-
-  // =========================================================
-  // 3. API DASHBOARD (TỔNG QUAN)
-  // =========================================================
-  const loadBan = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/ban`);
-      const tables = response.data;
-      const banTrong = tables.filter(t => t.trangThai === 'Trong').length;
-      document.getElementById('ban-trong').innerText = `${banTrong} / ${tables.length}`;
-    } catch (error) {
-      console.error("Lỗi Bàn Dashboard:", error);
-    }
-  };
-// =========================================================
-  // HÀM VẼ BIỂU ĐỒ DOANH THU 7 NGÀY (CHART.JS)
-  // =========================================================
-  // =========================================================
-  // HÀM VẼ BIỂU ĐỒ DOANH THU 7 NGÀY (CHART.JS) - BẢN KÉP
-  // =========================================================
-  
-  // Khai báo 2 biến để quản lý 2 biểu đồ riêng biệt
-  let bieuDoTongQuan = null; 
-  let bieuDoBaoCao = null;
-
-  const veBieuDoDoanhThu = (danhSachHoaDon) => {
-    const hdDaThanhToan = danhSachHoaDon.filter(hd => hd.trangThai === 'DaThanhToan');
-    const labelsNgay = [];
-    const dataDoanhThu = [];
-
-    // Xử lý dữ liệu 7 ngày qua
-    for (let i = 6; i >= 0; i--) {
-        const d = new Date();
-        d.setDate(d.getDate() - i);
-        const dateStr = d.toISOString().split('T')[0]; 
-        labelsNgay.push(`${d.getDate()}/${d.getMonth() + 1}`);
-
-        const tongTienNgay = hdDaThanhToan
-            .filter(hd => hd.ngayTao && hd.ngayTao.startsWith(dateStr))
-            .reduce((sum, hd) => sum + (hd.tongTien || 0), 0);
-        dataDoanhThu.push(tongTienNgay);
-    }
-
-    // --- HÀM NỘI BỘ DÙNG ĐỂ VẼ RA NHIỀU NƠI ---
-    const thucHienVe = (canvasId, bienBieuDoCu) => {
-        const canvas = document.getElementById(canvasId);
-        if (!canvas) return bienBieuDoCu; // Nếu không tìm thấy canvas ở HTML thì bỏ qua
-
-        if (bienBieuDoCu) bienBieuDoCu.destroy(); // Xóa biểu đồ cũ tránh nhấp nháy
-
-        // Trả về biểu đồ mới
-        return new Chart(canvas.getContext('2d'), {
-            type: 'line',
-            data: {
-                labels: labelsNgay,
-                datasets: [{
-                    label: 'Doanh thu (VNĐ)',
-                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                    borderColor: 'rgba(0, 123, 255, 1)',
-                    pointBackgroundColor: '#28a745',
-                    pointRadius: 4,
-                    data: dataDoanhThu,
-                    fill: true,
-                    borderWidth: 2,
-                    tension: 0.3
-                }]
-            },
-            options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    legend: {
-        display: false // Ẩn nhãn "Doanh thu (VNĐ)" dư thừa vì tiêu đề đã ghi rõ
-    },
-    scales: {
-        xAxes: [{
-            gridLines: {
-                display: false // Ẩn dòng kẻ dọc giúp biểu đồ thoáng hơn
-            },
-            ticks: {
-                fontColor: '#8a8a8a',
-                fontSize: 11
-            }
-        }],
-        yAxes: [{
-            gridLines: {
-                color: 'rgba(255, 255, 255, 0.05)', // Đường kẻ ngang mờ tinh tế
-                zeroLineColor: 'rgba(255, 255, 255, 0.1)'
-            },
-            ticks: {
-                beginAtZero: true,
-                fontColor: '#8a8a8a',
-                fontSize: 11,
-                callback: value => value >= 1000000 ? (value / 1000000) + 'tr' : value.toLocaleString('vi-VN')
-            }
-        }]
-    },
-    tooltips: {
-        backgroundColor: '#1f2d3d',
-        titleFontColor: '#fff',
-        bodyFontColor: '#28a745',
-        borderColor: 'rgba(255,255,255,0.1)',
-        borderWidth: 1,
-        displayColors: false,
-        callbacks: {
-            label: tooltipItem => ' Doanh thu: ' + tooltipItem.yLabel.toLocaleString('vi-VN') + ' đ'
-        }
-    }
-}
-        });
+    const formatVND = (amount) => {
+      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
     };
 
-    // Gọi hàm vẽ ra cả 2 nơi
-    bieuDoTongQuan = thucHienVe('salesChart', bieuDoTongQuan);
-    bieuDoBaoCao = thucHienVe('chartBaoCao', bieuDoBaoCao);
-  };
-  // =========================================================
-  // HÀM LỌC VÀ HIỂN THỊ DOANH THU THEO NGÀY (BẢN KÉP ĐỔ 2 NƠI)
-  // =========================================================
-  const loadBaoCaoTungNgay = (danhSachHoaDon) => {
-    // 1. Lọc hóa đơn đã thanh toán
-    const hdDaThanhToan = danhSachHoaDon.filter(hd => hd.trangThai === 'DaThanhToan');
-    const doanhThuTheoNgay = {};
+   // =========================================================
+    // 2. LOGIC CHUYỂN TAB (SPA ROUTING)
+    // =========================================================
+    const menuTongQuan = document.getElementById('menu-tong-quan');
+    const viewTongQuan = document.getElementById('view-tong-quan');
 
-    // 2. Gom nhóm cộng dồn theo ngày
-    hdDaThanhToan.forEach(hd => {
-      if (hd.ngayTao) {
-        const ngay = hd.ngayTao.split('T')[0]; 
-        if (!doanhThuTheoNgay[ngay]) {
-          doanhThuTheoNgay[ngay] = { soDon: 0, tongTien: 0 };
-        }
-        doanhThuTheoNgay[ngay].soDon += 1;
-        doanhThuTheoNgay[ngay].tongTien += (hd.tongTien || 0);
+    const menuSoDoBan = document.getElementById('menu-so-do-ban');
+    const viewSoDoBan = document.getElementById('view-so-do-ban');
+
+    const menuThucDon = document.getElementById('menu-thuc-don');
+    const viewThucDon = document.getElementById('view-thuc-don');
+
+    const menuHoaDon = document.getElementById('menu-hoa-don');
+    const viewHoaDon = document.getElementById('view-hoa-don');
+
+    // Thêm 2 biến cho Nhân Viên
+    const menuNhanVien = document.getElementById('menu-nhan-vien');
+    const viewNhanVien = document.getElementById('content-nhan-vien');
+
+    const menuBaoCao = document.getElementById('menu-bao-cao');
+    const viewBaoCao = document.getElementById('view-bao-cao');
+
+    // Hàm dùng chung để chuyển đổi qua lại giữa TẤT CẢ màn hình
+    const chieuLuanChuyenTab = (menuActive, viewActive) => {
+      // 1. Cập nhật mảng này (Thêm menuBaoCao)
+      [menuTongQuan, menuSoDoBan, menuThucDon, menuHoaDon, menuNhanVien, menuBaoCao].forEach(menu => {
+        if(menu) menu.classList.remove('active');
+      });
+      // 2. Cập nhật mảng này (Thêm viewBaoCao)
+      [viewTongQuan, viewSoDoBan, viewThucDon, viewHoaDon, viewNhanVien, viewBaoCao].forEach(view => {
+        if(view) view.style.display = 'none';
+      });
+
+      if(menuActive) menuActive.classList.add('active');
+      if(viewActive) viewActive.style.display = 'block';
+    };
+
+    // Các sự kiện click cũ giữ nguyên
+    if(menuTongQuan) {
+      menuTongQuan.addEventListener('click', () => {
+        chieuLuanChuyenTab(menuTongQuan, viewTongQuan);
+        loadBan(); loadHoaDon(); loadMonAn();
+      });
+    }
+
+    if(menuSoDoBan) {
+      menuSoDoBan.addEventListener('click', () => {
+        chieuLuanChuyenTab(menuSoDoBan, viewSoDoBan);
+        loadGiaoDienBan();
+      });
+    }
+
+    if(menuThucDon) {
+      menuThucDon.addEventListener('click', () => {
+        chieuLuanChuyenTab(menuThucDon, viewThucDon);
+        loadGiaoDienThucDon();
+      });
+    }
+
+    if(menuHoaDon) {
+      menuHoaDon.addEventListener('click', () => {
+        chieuLuanChuyenTab(menuHoaDon, viewHoaDon);
+        loadDanhSachHoaDonToanBo();
+      });
+    }
+
+    // --- THÊM SỰ KIỆN CLICK CHO MENU NHÂN VIÊN ---
+    if(menuNhanVien) {
+      menuNhanVien.addEventListener('click', () => {
+        chieuLuanChuyenTab(menuNhanVien, viewNhanVien);
+        loadDanhSachNhanVien(); // Gọi API lấy danh sách
+      });
+    }
+    if(menuBaoCao) {
+      menuBaoCao.addEventListener('click', () => {
+        chieuLuanChuyenTab(menuBaoCao, viewBaoCao);
+        loadHoaDon(); // Gọi hàm này để nó tự chạy API lấy tiền và vẽ biểu đồ
+      });
+    }
+
+    // =========================================================
+    // 3. API DASHBOARD (TỔNG QUAN)
+    // =========================================================
+    const loadBan = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/ban`);
+        const tables = response.data;
+        const banTrong = tables.filter(t => t.trangThai === 'Trong').length;
+        document.getElementById('ban-trong').innerText = `${banTrong} / ${tables.length}`;
+      } catch (error) {
+        console.error("Lỗi Bàn Dashboard:", error);
       }
-    });
+    };
+  // =========================================================
+    // HÀM VẼ BIỂU ĐỒ DOANH THU 7 NGÀY (CHART.JS)
+    // =========================================================
+    // =========================================================
+    // HÀM VẼ BIỂU ĐỒ DOANH THU 7 NGÀY (CHART.JS) - BẢN KÉP
+    // =========================================================
 
-    // 3. Sắp xếp ngày mới nhất lên đầu
-    const mangDoanhThu = Object.keys(doanhThuTheoNgay).map(ngay => {
-      return {
-        ngay: ngay,
-        soDon: doanhThuTheoNgay[ngay].soDon,
-        tongTien: doanhThuTheoNgay[ngay].tongTien
+    // Khai báo 2 biến để quản lý 2 biểu đồ riêng biệt
+    let bieuDoTongQuan = null;
+    let bieuDoBaoCao = null;
+
+    const veBieuDoDoanhThu = (danhSachHoaDon) => {
+      const hdDaThanhToan = danhSachHoaDon.filter(hd => hd.trangThai === 'DaThanhToan');
+      const labelsNgay = [];
+      const dataDoanhThu = [];
+
+      // Xử lý dữ liệu 7 ngày qua
+      for (let i = 6; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const dateStr = d.toISOString().split('T')[0];
+          labelsNgay.push(`${d.getDate()}/${d.getMonth() + 1}`);
+
+          const tongTienNgay = hdDaThanhToan
+              .filter(hd => hd.ngayTao && hd.ngayTao.startsWith(dateStr))
+              .reduce((sum, hd) => sum + (hd.tongTien || 0), 0);
+          dataDoanhThu.push(tongTienNgay);
+      }
+
+      // --- HÀM NỘI BỘ DÙNG ĐỂ VẼ RA NHIỀU NƠI ---
+      const thucHienVe = (canvasId, bienBieuDoCu) => {
+          const canvas = document.getElementById(canvasId);
+          if (!canvas) return bienBieuDoCu; // Nếu không tìm thấy canvas ở HTML thì bỏ qua
+
+          if (bienBieuDoCu) bienBieuDoCu.destroy(); // Xóa biểu đồ cũ tránh nhấp nháy
+
+          // Trả về biểu đồ mới
+          return new Chart(canvas.getContext('2d'), {
+              type: 'line',
+              data: {
+                  labels: labelsNgay,
+                  datasets: [{
+                      label: 'Doanh thu (VNĐ)',
+                      backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                      borderColor: 'rgba(0, 123, 255, 1)',
+                      pointBackgroundColor: '#28a745',
+                      pointRadius: 4,
+                      data: dataDoanhThu,
+                      fill: true,
+                      borderWidth: 2,
+                      tension: 0.3
+                  }]
+              },
+              options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+          display: false // Ẩn nhãn "Doanh thu (VNĐ)" dư thừa vì tiêu đề đã ghi rõ
+      },
+      scales: {
+          xAxes: [{
+              gridLines: {
+                  display: false // Ẩn dòng kẻ dọc giúp biểu đồ thoáng hơn
+              },
+              ticks: {
+                  fontColor: '#8a8a8a',
+                  fontSize: 11
+              }
+          }],
+          yAxes: [{
+              gridLines: {
+                  color: 'rgba(255, 255, 255, 0.05)', // Đường kẻ ngang mờ tinh tế
+                  zeroLineColor: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                  beginAtZero: true,
+                  fontColor: '#8a8a8a',
+                  fontSize: 11,
+                  callback: value => value >= 1000000 ? (value / 1000000) + 'tr' : value.toLocaleString('vi-VN')
+              }
+          }]
+      },
+      tooltips: {
+          backgroundColor: '#1f2d3d',
+          titleFontColor: '#fff',
+          bodyFontColor: '#28a745',
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1,
+          displayColors: false,
+          callbacks: {
+              label: tooltipItem => ' Doanh thu: ' + tooltipItem.yLabel.toLocaleString('vi-VN') + ' đ'
+          }
+      }
+  }
+          });
       };
-    }).sort((a, b) => new Date(b.ngay) - new Date(a.ngay)); 
 
-    // --- HÀM NỘI BỘ DÙNG ĐỂ ĐỔ DỮ LIỆU RA THẺ TBODY ĐƯỢC CHỈ ĐỊNH ---
-    const thucHienDoDuLieu = (tbodyId) => {
-      const tbody = document.getElementById(tbodyId);
-      if (!tbody) return; // Nếu không tìm thấy ID này ở HTML thì bỏ qua
-      
-      tbody.innerHTML = '';
-      if (mangDoanhThu.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4">Chưa có dữ liệu doanh thu nào.</td></tr>';
-        return;
-      }
+      // Gọi hàm vẽ ra cả 2 nơi
+      bieuDoTongQuan = thucHienVe('salesChart', bieuDoTongQuan);
+      bieuDoBaoCao = thucHienVe('chartBaoCao', bieuDoBaoCao);
+    };
+    // =========================================================
+    // HÀM LỌC VÀ HIỂN THỊ DOANH THU THEO NGÀY (BẢN KÉP ĐỔ 2 NƠI)
+    // =========================================================
+    const loadBaoCaoTungNgay = (danhSachHoaDon) => {
+      // 1. Lọc hóa đơn đã thanh toán
+      const hdDaThanhToan = danhSachHoaDon.filter(hd => hd.trangThai === 'DaThanhToan');
+      const doanhThuTheoNgay = {};
 
-      let stt = 1;
-      mangDoanhThu.forEach(item => {
-        const [nam, thang, ngay] = item.ngay.split('-');
-        const ngayDep = `${ngay}/${thang}/${nam}`;
-
-        tbody.innerHTML += `
-          <tr>
-            <td>${stt++}</td>
-            <td class="font-weight-bold text-primary">${ngayDep}</td>
-            <td><span class="badge badge-secondary px-2">${item.soDon} đơn</span></td>
-            <td class="text-success font-weight-bold" style="font-size: 1.1rem;">${formatVND(item.tongTien)}</td>
-          </tr>
-        `;
+      // 2. Gom nhóm cộng dồn theo ngày
+      hdDaThanhToan.forEach(hd => {
+        if (hd.ngayTao) {
+          const ngay = hd.ngayTao.split('T')[0];
+          if (!doanhThuTheoNgay[ngay]) {
+            doanhThuTheoNgay[ngay] = { soDon: 0, tongTien: 0 };
+          }
+          doanhThuTheoNgay[ngay].soDon += 1;
+          doanhThuTheoNgay[ngay].tongTien += (hd.tongTien || 0);
+        }
       });
+
+      // 3. Sắp xếp ngày mới nhất lên đầu
+      const mangDoanhThu = Object.keys(doanhThuTheoNgay).map(ngay => {
+        return {
+          ngay: ngay,
+          soDon: doanhThuTheoNgay[ngay].soDon,
+          tongTien: doanhThuTheoNgay[ngay].tongTien
+        };
+      }).sort((a, b) => new Date(b.ngay) - new Date(a.ngay));
+
+      // --- HÀM NỘI BỘ DÙNG ĐỂ ĐỔ DỮ LIỆU RA THẺ TBODY ĐƯỢC CHỈ ĐỊNH ---
+      const thucHienDoDuLieu = (tbodyId) => {
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody) return; // Nếu không tìm thấy ID này ở HTML thì bỏ qua
+
+        tbody.innerHTML = '';
+        if (mangDoanhThu.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4">Chưa có dữ liệu doanh thu nào.</td></tr>';
+          return;
+        }
+
+        let stt = 1;
+        mangDoanhThu.forEach(item => {
+          const [nam, thang, ngay] = item.ngay.split('-');
+          const ngayDep = `${ngay}/${thang}/${nam}`;
+
+          tbody.innerHTML += `
+            <tr>
+              <td>${stt++}</td>
+              <td class="font-weight-bold text-primary">${ngayDep}</td>
+              <td><span class="badge badge-secondary px-2">${item.soDon} đơn</span></td>
+              <td class="text-success font-weight-bold" style="font-size: 1.1rem;">${formatVND(item.tongTien)}</td>
+            </tr>
+          `;
+        });
+      };
+
+      // 4. Kích hoạt đổ dữ liệu đồng thời ra cả 2 bảng ở 2 trang
+      thucHienDoDuLieu('bang-doanh-thu-ngay');    // Bảng nằm ở trang Tổng Quan
+      thucHienDoDuLieu('bang-doanh-thu-ngay-bc');  // Bảng nằm ở trang Báo Cáo Doanh Thu
+    };
+    // =========================================================
+    // HÀM XUẤT BÁO CÁO EXCEL (BẢN ĐẸP CÓ KẺ BẢNG - EXCELJS)
+    // =========================================================
+    const xuatBaoCaoExcel = async () => {
+      try {
+        // 1. Gọi API lấy dữ liệu Hóa Đơn
+        const response = await axios.get(`${BASE_URL}/hoadon`);
+        const hdDaThanhToan = response.data.filter(hd => hd.trangThai === 'DaThanhToan');
+
+        if (hdDaThanhToan.length === 0) {
+          alert("Chưa có hóa đơn nào đã thanh toán để xuất báo cáo!");
+          return;
+        }
+
+        // 2. Khởi tạo file Excel
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Doanh Thu');
+
+        // 3. Khai báo cột và điều chỉnh độ rộng cho đẹp
+        worksheet.columns = [
+          { header: 'STT', key: 'stt', width: 8 },
+          { header: 'Mã HĐ', key: 'maHD', width: 12 },
+          { header: 'Bàn Phục Vụ', key: 'ban', width: 15 },
+          { header: 'Ngày Tạo', key: 'ngayTao', width: 22 },
+          { header: 'Doanh Thu (VNĐ)', key: 'doanhThu', width: 20 },
+          { header: 'Ghi Chú', key: 'ghiChu', width: 30 }
+        ];
+
+        // 4. Trang trí Tiêu đề (In đậm, nền xanh, chữ trắng, căn giữa)
+        const headerRow = worksheet.getRow(1);
+        headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+        headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF007BFF' } };
+        headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
+
+        // 5. Đổ dữ liệu vào các dòng
+        hdDaThanhToan.forEach((hd, index) => {
+          let soBan = (hd.ban && hd.ban.soBan) ? hd.ban.soBan : (hd.idBan || 'Trống');
+          worksheet.addRow({
+            stt: index + 1,
+            maHD: `HD${hd.idHoaDon || hd.id}`,
+            ban: `Bàn ${soBan}`,
+            ngayTao: hd.ngayTao ? hd.ngayTao.replace('T', ' ').substring(0, 16) : 'N/A',
+            doanhThu: hd.tongTien || 0,
+            ghiChu: hd.ghiChu || ''
+          });
+        });
+
+        // 6. Vòng lặp kẻ viền đen (Border) cho toàn bộ bảng
+        worksheet.eachRow((row, rowNumber) => {
+          row.eachCell((cell, colNumber) => {
+            // Kẻ viền 4 góc cho ô
+            cell.border = {
+              top: { style: 'thin' }, left: { style: 'thin' },
+              bottom: { style: 'thin' }, right: { style: 'thin' }
+            };
+
+            // Căn giữa cho STT, Mã HĐ, Bàn, Ngày Tạo
+            if (colNumber <= 4) {
+              cell.alignment = { vertical: 'middle', horizontal: 'center' };
+            }
+
+            // Định dạng số tiền có dấu phẩy (VD: 150,000 ₫) và căn lề phải
+            if (rowNumber > 1 && colNumber === 5) {
+              cell.numFmt = '#,##0 "₫"';
+              cell.alignment = { vertical: 'middle', horizontal: 'right' };
+            }
+          });
+        });
+
+        // 7. Đóng gói và ép trình duyệt tải file xuống
+        const buffer = await workbook.xlsx.writeBuffer();
+        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        const dateHienTai = new Date().toISOString().split('T')[0];
+        saveAs(blob, `Bao_Cao_Doanh_Thu_${dateHienTai}.xlsx`);
+
+      } catch (error) {
+        console.error("Lỗi khi xuất Excel:", error);
+        alert("Đã xảy ra lỗi khi tạo file Excel!");
+      }
+    };
+    // =========================================================
+    // HÀM TÍNH TOÁN VÀ ĐỔ DỮ LIỆU CHO BẢNG TIẾN ĐỘ KPI
+    // =========================================================
+    const loadTiendoKPI = async () => {
+      try {
+        // 1. Dùng Promise.all để gọi cùng lúc 3 API cho tốc độ bàn thờ
+        const [resHoaDon, resChiTiet, resDanhMuc] = await Promise.all([
+          axios.get(`${BASE_URL}/hoadon`),
+          axios.get(`${BASE_URL}/chitiethoadon`),
+          axios.get(`${BASE_URL}/danhmuc`)
+        ]);
+
+        const hoadons = resHoaDon.data;
+        const chitiets = resChiTiet.data;
+        const danhmucs = resDanhMuc.data;
+
+        // 2. Lấy danh sách ID của những Hóa Đơn đã thu tiền
+        const idHoaDonDaThanhToan = hoadons
+          .filter(hd => hd.trangThai === 'DaThanhToan')
+          .map(hd => hd.idHoaDon || hd.id);
+
+        // 3. Quét Danh Mục để tìm xem danh mục nào là "Đồ Uống"
+        // (Dựa vào chữ 'uống' hoặc 'nước' trong Database của bạn)
+        const idDanhThuDoUong = danhmucs
+          .filter(dm => dm.tenDanhMuc.toLowerCase().includes('uống') || dm.tenDanhMuc.toLowerCase().includes('nước'))
+          .map(dm => dm.idDanhMuc || dm.id);
+
+        // 4. Phân loại tiền
+        let doanhThuMonChinh = 0;
+        let doanhThuDoUong = 0;
+
+        chitiets.forEach(ct => {
+          // Lấy ID hóa đơn của chi tiết này
+          let idHD = null;
+          if (ct.hoaDon) idHD = ct.hoaDon.idHoaDon || ct.hoaDon.id;
+          else if (ct.hoadon) idHD = ct.hoadon.idHoaDon || ct.hoadon.id;
+          else idHD = ct.idHoaDon;
+
+          // Chỉ cộng tiền nếu nó thuộc hóa đơn ĐÃ THANH TOÁN
+          if (idHoaDonDaThanhToan.includes(idHD)) {
+            const thanhTien = (ct.giaTien || 0) * (ct.soLuong || 1);
+
+            // Kiểm tra xem món ăn này thuộc Danh mục số mấy
+            const idDanhMucMon = (ct.monAn && ct.monAn.danhMuc) ? (ct.monAn.danhMuc.idDanhMuc || ct.monAn.danhMuc.id) : null;
+
+            // Phân loại đút tiền vào 2 rổ
+            if (idDanhThuDoUong.includes(idDanhMucMon)) {
+              doanhThuDoUong += thanhTien;
+            } else {
+              doanhThuMonChinh += thanhTien;
+            }
+          }
+        });
+
+        // 5. Cài đặt Mục Tiêu KPI (Có thể đổi số theo ý bạn)
+        const MUC_TIEU_MON_CHINH = 200000000; // 200 triệu
+        const MUC_TIEU_DO_UONG = 40000000;    // 40 triệu
+
+        // Tính % độ dài của thanh màu (Tối đa 100%)
+        const phanTramMonChinh = Math.min((doanhThuMonChinh / MUC_TIEU_MON_CHINH) * 100, 100);
+        const phanTramDoUong = Math.min((doanhThuDoUong / MUC_TIEU_DO_UONG) * 100, 100);
+
+        // Hàm format chữ rút gọn (VD: 1.500.000 -> 1.5tr)
+        const formatTrieu = (tien) => (tien / 1000000).toFixed(1) + 'tr';
+
+        // 6. Đổ kết quả ra giao diện
+        document.getElementById('kpi-mon-chinh-text').innerHTML = `<b>${formatTrieu(doanhThuMonChinh)}</b>/200tr`;
+        document.getElementById('kpi-mon-chinh-bar').style.width = `${phanTramMonChinh}%`;
+
+        document.getElementById('kpi-do-uong-text').innerHTML = `<b>${formatTrieu(doanhThuDoUong)}</b>/40tr`;
+        document.getElementById('kpi-do-uong-bar').style.width = `${phanTramDoUong}%`;
+
+        // Cập nhật ngẫu nhiên số lượng đặt bàn để UI khỏi bị trống
+        const soBanDat = hoadons.filter(hd => hd.trangThai === 'DaThanhToan').length;
+        const phanTramDatBan = Math.min((soBanDat / 800) * 100, 100);
+        document.getElementById('kpi-dat-ban-text').innerHTML = `<b>${soBanDat}</b>/800 bàn`;
+        document.getElementById('kpi-dat-ban-bar').style.width = `${phanTramDatBan}%`;
+
+      } catch (error) {
+        console.error("Lỗi tính toán KPI:", error);
+      }
+    };
+    const loadHoaDon = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/hoadon`);
+        const hoadons = response.data;
+
+        // Kích hoạt các hàm biểu đồ, báo cáo và KPI
+        veBieuDoDoanhThu(hoadons);
+        loadBaoCaoTungNgay(hoadons);
+        loadTiendoKPI();
+
+        // 1. Lấy chuỗi ngày hôm nay dạng YYYY-MM-DD theo máy tính của bạn
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const ngayHomNay = `${yyyy}-${mm}-${dd}`; // Kết quả: "2026-05-17"
+
+        // 2. Lọc ra danh sách Hóa đơn phát sinh trong RIÊNG ngày hôm nay
+        const hoadonHomNay = hoadons.filter(hd => hd.ngayTao && hd.ngayTao.startsWith(ngayHomNay));
+        let Khach = 0;
+         let soDonHomNay =0;
+        let doanhThuHomNay = 0;
+       hoadonHomNay.forEach(hd => {
+        if(hd.trangThai === 'DaThanhToan'){
+          soDonHomNay+=1;
+          doanhThuHomNay += (hd.tongTien||0);
+          Khach += (hd.soLuongKhach||0);
+        }
+       })
+
+        // 4. Đổ số liệu động chuẩn xác ra các ô Tổng Quan
+        document.getElementById('don-hang-hom-nay').innerText = hoadonHomNay.length; // Số đơn của riêng hôm nay
+        document.getElementById('doanh-thu-ngay').innerText = formatVND(doanhThuHomNay); // Tiền thu được riêng hôm nay
+        document.getElementById('khach-hang-phuc-vu').innerText = Khach;
+        // --- Phần in bảng danh sách 5 đơn hàng mới (Giữ nguyên logic cũ của bạn bên dưới) ---
+        const tbody = document.getElementById('ds-don-hang');
+        if(!tbody) return;
+        tbody.innerHTML = '';
+
+        if(hoadons.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-center">Không có đơn hàng nào.</td></tr>';
+          return;
+        }
+
+        const recentInvoices = hoadons.slice(0, 5);
+        recentInvoices.forEach(hd => {
+          let badgeClass = hd.trangThai === 'DaThanhToan' ? 'badge-success' : 'badge-warning';
+          let tenTrangThai = hd.trangThai === 'DaThanhToan' ? 'Đã thanh toán' : (hd.trangThai || 'Đang xử lý');
+          let soBan = (hd.ban && hd.ban.soBan) ? hd.ban.soBan : (hd.idBan || '?');
+
+          // Thay thế đoạn ép dữ liệu vào `tbody.innerHTML` cũ bằng đoạn này:
+  tbody.innerHTML += `
+    <tr class="border-bottom border-secondary-light align-middle">
+      <td class="py-2"><a href="#" class="text-info font-weight-bold">HD${hd.idHoaDon || hd.id || ''}</a></td>
+      <td class="py-2 text-white">Bàn ${soBan}</td>
+      <td class="py-2 text-muted">${hd.ngayTao ? hd.ngayTao.substring(0, 10).split('-').reverse().join('/') : '...'}</td>
+      <td class="py-2"><span class="badge ${badgeClass} px-2 py-1" style="font-size: 0.7rem; font-weight: 500;">${tenTrangThai}</span></td>
+      <td class="py-2 text-right pr-3 font-weight-bold text-warning">${formatVND(hd.tongTien || 0)}</td>
+    </tr>
+  `;
+        });
+      } catch (error) {
+        console.error("Lỗi HĐ Dashboard:", error);
+      }
     };
 
-    // 4. Kích hoạt đổ dữ liệu đồng thời ra cả 2 bảng ở 2 trang
-    thucHienDoDuLieu('bang-doanh-thu-ngay');    // Bảng nằm ở trang Tổng Quan
-    thucHienDoDuLieu('bang-doanh-thu-ngay-bc');  // Bảng nằm ở trang Báo Cáo Doanh Thu
-  };
-  // =========================================================
-  // HÀM XUẤT BÁO CÁO EXCEL (BẢN ĐẸP CÓ KẺ BẢNG - EXCELJS)
-  // =========================================================
-  const xuatBaoCaoExcel = async () => {
-    try {
-      // 1. Gọi API lấy dữ liệu Hóa Đơn
-      const response = await axios.get(`${BASE_URL}/hoadon`);
-      const hdDaThanhToan = response.data.filter(hd => hd.trangThai === 'DaThanhToan');
+    const loadMonAn = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/monan`);
+        const monans = response.data;
+        const ul = document.getElementById('ds-mon-an');
+        if(!ul) return;
+        ul.innerHTML = '';
 
-      if (hdDaThanhToan.length === 0) {
-        alert("Chưa có hóa đơn nào đã thanh toán để xuất báo cáo!");
-        return;
-      }
-
-      // 2. Khởi tạo file Excel
-      const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet('Doanh Thu');
-
-      // 3. Khai báo cột và điều chỉnh độ rộng cho đẹp
-      worksheet.columns = [
-        { header: 'STT', key: 'stt', width: 8 },
-        { header: 'Mã HĐ', key: 'maHD', width: 12 },
-        { header: 'Bàn Phục Vụ', key: 'ban', width: 15 },
-        { header: 'Ngày Tạo', key: 'ngayTao', width: 22 },
-        { header: 'Doanh Thu (VNĐ)', key: 'doanhThu', width: 20 },
-        { header: 'Ghi Chú', key: 'ghiChu', width: 30 }
-      ];
-
-      // 4. Trang trí Tiêu đề (In đậm, nền xanh, chữ trắng, căn giữa)
-      const headerRow = worksheet.getRow(1);
-      headerRow.font = { bold: true, color: { argb: 'FFFFFFFF' } };
-      headerRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF007BFF' } }; 
-      headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
-
-      // 5. Đổ dữ liệu vào các dòng
-      hdDaThanhToan.forEach((hd, index) => {
-        let soBan = (hd.ban && hd.ban.soBan) ? hd.ban.soBan : (hd.idBan || 'Trống');
-        worksheet.addRow({
-          stt: index + 1,
-          maHD: `HD${hd.idHoaDon || hd.id}`,
-          ban: `Bàn ${soBan}`,
-          ngayTao: hd.ngayTao ? hd.ngayTao.replace('T', ' ').substring(0, 16) : 'N/A',
-          doanhThu: hd.tongTien || 0,
-          ghiChu: hd.ghiChu || ''
-        });
-      });
-
-      // 6. Vòng lặp kẻ viền đen (Border) cho toàn bộ bảng
-      worksheet.eachRow((row, rowNumber) => {
-        row.eachCell((cell, colNumber) => {
-          // Kẻ viền 4 góc cho ô
-          cell.border = {
-            top: { style: 'thin' }, left: { style: 'thin' },
-            bottom: { style: 'thin' }, right: { style: 'thin' }
-          };
-          
-          // Căn giữa cho STT, Mã HĐ, Bàn, Ngày Tạo
-          if (colNumber <= 4) {
-            cell.alignment = { vertical: 'middle', horizontal: 'center' };
-          }
-          
-          // Định dạng số tiền có dấu phẩy (VD: 150,000 ₫) và căn lề phải
-          if (rowNumber > 1 && colNumber === 5) {
-            cell.numFmt = '#,##0 "₫"';
-            cell.alignment = { vertical: 'middle', horizontal: 'right' };
-          }
-        });
-      });
-
-      // 7. Đóng gói và ép trình duyệt tải file xuống
-      const buffer = await workbook.xlsx.writeBuffer();
-      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      
-      const dateHienTai = new Date().toISOString().split('T')[0];
-      saveAs(blob, `Bao_Cao_Doanh_Thu_${dateHienTai}.xlsx`);
-
-    } catch (error) {
-      console.error("Lỗi khi xuất Excel:", error);
-      alert("Đã xảy ra lỗi khi tạo file Excel!");
-    }
-  };
-  // =========================================================
-  // HÀM TÍNH TOÁN VÀ ĐỔ DỮ LIỆU CHO BẢNG TIẾN ĐỘ KPI
-  // =========================================================
-  const loadTiendoKPI = async () => {
-    try {
-      // 1. Dùng Promise.all để gọi cùng lúc 3 API cho tốc độ bàn thờ
-      const [resHoaDon, resChiTiet, resDanhMuc] = await Promise.all([
-        axios.get(`${BASE_URL}/hoadon`),
-        axios.get(`${BASE_URL}/chitiethoadon`),
-        axios.get(`${BASE_URL}/danhmuc`)
-      ]);
-
-      const hoadons = resHoaDon.data;
-      const chitiets = resChiTiet.data;
-      const danhmucs = resDanhMuc.data;
-
-      // 2. Lấy danh sách ID của những Hóa Đơn đã thu tiền
-      const idHoaDonDaThanhToan = hoadons
-        .filter(hd => hd.trangThai === 'DaThanhToan')
-        .map(hd => hd.idHoaDon || hd.id);
-
-      // 3. Quét Danh Mục để tìm xem danh mục nào là "Đồ Uống" 
-      // (Dựa vào chữ 'uống' hoặc 'nước' trong Database của bạn)
-      const idDanhThuDoUong = danhmucs
-        .filter(dm => dm.tenDanhMuc.toLowerCase().includes('uống') || dm.tenDanhMuc.toLowerCase().includes('nước'))
-        .map(dm => dm.idDanhMuc || dm.id);
-
-      // 4. Phân loại tiền
-      let doanhThuMonChinh = 0;
-      let doanhThuDoUong = 0;
-
-      chitiets.forEach(ct => {
-        // Lấy ID hóa đơn của chi tiết này
-        let idHD = null;
-        if (ct.hoaDon) idHD = ct.hoaDon.idHoaDon || ct.hoaDon.id;
-        else if (ct.hoadon) idHD = ct.hoadon.idHoaDon || ct.hoadon.id;
-        else idHD = ct.idHoaDon;
-
-        // Chỉ cộng tiền nếu nó thuộc hóa đơn ĐÃ THANH TOÁN
-        if (idHoaDonDaThanhToan.includes(idHD)) {
-          const thanhTien = (ct.giaTien || 0) * (ct.soLuong || 1);
-          
-          // Kiểm tra xem món ăn này thuộc Danh mục số mấy
-          const idDanhMucMon = (ct.monAn && ct.monAn.danhMuc) ? (ct.monAn.danhMuc.idDanhMuc || ct.monAn.danhMuc.id) : null;
-
-          // Phân loại đút tiền vào 2 rổ
-          if (idDanhThuDoUong.includes(idDanhMucMon)) {
-            doanhThuDoUong += thanhTien;
-          } else {
-            doanhThuMonChinh += thanhTien; 
-          }
-        }
-      });
-
-      // 5. Cài đặt Mục Tiêu KPI (Có thể đổi số theo ý bạn)
-      const MUC_TIEU_MON_CHINH = 200000000; // 200 triệu
-      const MUC_TIEU_DO_UONG = 40000000;    // 40 triệu
-
-      // Tính % độ dài của thanh màu (Tối đa 100%)
-      const phanTramMonChinh = Math.min((doanhThuMonChinh / MUC_TIEU_MON_CHINH) * 100, 100);
-      const phanTramDoUong = Math.min((doanhThuDoUong / MUC_TIEU_DO_UONG) * 100, 100);
-
-      // Hàm format chữ rút gọn (VD: 1.500.000 -> 1.5tr)
-      const formatTrieu = (tien) => (tien / 1000000).toFixed(1) + 'tr';
-
-      // 6. Đổ kết quả ra giao diện
-      document.getElementById('kpi-mon-chinh-text').innerHTML = `<b>${formatTrieu(doanhThuMonChinh)}</b>/200tr`;
-      document.getElementById('kpi-mon-chinh-bar').style.width = `${phanTramMonChinh}%`;
-
-      document.getElementById('kpi-do-uong-text').innerHTML = `<b>${formatTrieu(doanhThuDoUong)}</b>/40tr`;
-      document.getElementById('kpi-do-uong-bar').style.width = `${phanTramDoUong}%`;
-
-      // Cập nhật ngẫu nhiên số lượng đặt bàn để UI khỏi bị trống
-      const soBanDat = hoadons.filter(hd => hd.trangThai === 'DaThanhToan').length;
-      const phanTramDatBan = Math.min((soBanDat / 800) * 100, 100);
-      document.getElementById('kpi-dat-ban-text').innerHTML = `<b>${soBanDat}</b>/800 bàn`;
-      document.getElementById('kpi-dat-ban-bar').style.width = `${phanTramDatBan}%`;
-
-    } catch (error) {
-      console.error("Lỗi tính toán KPI:", error);
-    }
-  };
-  const loadHoaDon = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/hoadon`);
-      const hoadons = response.data;
-      
-      // Kích hoạt các hàm biểu đồ, báo cáo và KPI
-      veBieuDoDoanhThu(hoadons);
-      loadBaoCaoTungNgay(hoadons); 
-      loadTiendoKPI();
-
-      // 1. Lấy chuỗi ngày hôm nay dạng YYYY-MM-DD theo máy tính của bạn
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const dd = String(today.getDate()).padStart(2, '0');
-      const ngayHomNay = `${yyyy}-${mm}-${dd}`; // Kết quả: "2026-05-17"
-
-      // 2. Lọc ra danh sách Hóa đơn phát sinh trong RIÊNG ngày hôm nay
-      const hoadonHomNay = hoadons.filter(hd => hd.ngayTao && hd.ngayTao.startsWith(ngayHomNay));
-      let Khach = 0;
-       let soDonHomNay =0;
-      let doanhThuHomNay = 0;
-     hoadonHomNay.forEach(hd => {
-      if(hd.trangThai === 'DaThanhToan'){
-        soDonHomNay+=1;
-        doanhThuHomNay += (hd.tongTien||0);
-        Khach += (hd.soLuongKhach||0);
-      }
-     })
-
-      // 4. Đổ số liệu động chuẩn xác ra các ô Tổng Quan
-      document.getElementById('don-hang-hom-nay').innerText = hoadonHomNay.length; // Số đơn của riêng hôm nay
-      document.getElementById('doanh-thu-ngay').innerText = formatVND(doanhThuHomNay); // Tiền thu được riêng hôm nay
-      document.getElementById('khach-hang-phuc-vu').innerText = Khach; 
-      // --- Phần in bảng danh sách 5 đơn hàng mới (Giữ nguyên logic cũ của bạn bên dưới) ---
-      const tbody = document.getElementById('ds-don-hang');
-      if(!tbody) return;
-      tbody.innerHTML = ''; 
-      
-      if(hoadons.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="text-center">Không có đơn hàng nào.</td></tr>';
-        return;
-      }
-
-      const recentInvoices = hoadons.slice(0, 5); 
-      recentInvoices.forEach(hd => {
-        let badgeClass = hd.trangThai === 'DaThanhToan' ? 'badge-success' : 'badge-warning';
-        let tenTrangThai = hd.trangThai === 'DaThanhToan' ? 'Đã thanh toán' : (hd.trangThai || 'Đang xử lý');
-        let soBan = (hd.ban && hd.ban.soBan) ? hd.ban.soBan : (hd.idBan || '?');
-
-        // Thay thế đoạn ép dữ liệu vào `tbody.innerHTML` cũ bằng đoạn này:
-tbody.innerHTML += `
-  <tr class="border-bottom border-secondary-light align-middle">
-    <td class="py-2"><a href="#" class="text-info font-weight-bold">HD${hd.idHoaDon || hd.id || ''}</a></td>
-    <td class="py-2 text-white">Bàn ${soBan}</td>
-    <td class="py-2 text-muted">${hd.ngayTao ? hd.ngayTao.substring(0, 10).split('-').reverse().join('/') : '...'}</td>
-    <td class="py-2"><span class="badge ${badgeClass} px-2 py-1" style="font-size: 0.7rem; font-weight: 500;">${tenTrangThai}</span></td>
-    <td class="py-2 text-right pr-3 font-weight-bold text-warning">${formatVND(hd.tongTien || 0)}</td>
-  </tr>
-`;
-      });
-    } catch (error) {
-      console.error("Lỗi HĐ Dashboard:", error);
-    }
-  };
-
-  const loadMonAn = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/monan`);
-      const monans = response.data;
-      const ul = document.getElementById('ds-mon-an');
-      if(!ul) return;
-      ul.innerHTML = ''; 
-      
-      const topMonAns = monans.slice(0, 4);
-      topMonAns.forEach(mon => {
-        const imgSrc = mon.hinhAnh ? mon.hinhAnh : 'dist/img/default-150x150.png';
-        const price = mon.giaTien || 0;
-       // Thay thế đoạn ép dữ liệu vào `ul.innerHTML` cũ bằng đoạn này:
-ul.innerHTML += `
-  <li class="item d-flex align-items-center py-2.5 border-bottom border-secondary-light" style="background: transparent;">
-    <div class="product-img mr-3">
-      <img src="${imgSrc}" alt="${mon.tenMon}" class="rounded-circle border border-secondary" style="width: 46px; height: 46px; object-fit: cover;">
-    </div>
-    <div class="product-info w-100 pr-2">
-      <div class="d-flex justify-content-between align-items-center mb-1">
-        <span class="product-title font-weight-bold text-light" style="font-size: 0.95rem;">${mon.tenMon || 'Tên món'}</span>
-        <span class="badge badge-sm bg-dark text-success font-weight-bold border border-success-light px-2 py-1" style="font-size: 0.85rem;">${formatVND(price)}</span>
+        const topMonAns = monans.slice(0, 4);
+        topMonAns.forEach(mon => {
+          const imgSrc = mon.hinhAnh ? mon.hinhAnh : 'dist/img/default-150x150.png';
+          const price = mon.giaTien || 0;
+         // Thay thế đoạn ép dữ liệu vào `ul.innerHTML` cũ bằng đoạn này:
+  ul.innerHTML += `
+    <li class="item d-flex align-items-center py-2.5 border-bottom border-secondary-light" style="background: transparent;">
+      <div class="product-img mr-3">
+        <img src="${imgSrc}" alt="${mon.tenMon}" class="rounded-circle border border-secondary" style="width: 46px; height: 46px; object-fit: cover;">
       </div>
-      <span class="product-description text-muted small d-block text-truncate" style="max-width: 350px;">${mon.moTa || 'Không có mô tả chi tiết cho món ăn này.'}</span>
-    </div>
-  </li>
-`;
-      });
-    } catch (error) {
-      console.error("Lỗi Món ăn Dashboard:", error);
-    }
-  };
-
-  // =========================================================
-  // 4. API SƠ ĐỒ BÀN
-  // =========================================================
-  const loadGiaoDienBan = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/ban`);
-      const tables = response.data;
-      const container = document.getElementById('danh-sach-ban');
-      container.innerHTML = ''; 
-
-      tables.forEach(ban => {
-        let bgColor = 'bg-success';
-        let icon = 'fa-check-circle';
-        let textTrangThai = 'Trống';
-
-        if (ban.trangThai === 'DaDat') {
-          bgColor = 'bg-warning'; icon = 'fa-clock'; textTrangThai = 'Đã Đặt';
-        } else if (ban.trangThai === 'CoKhach') {
-          bgColor = 'bg-danger'; icon = 'fa-user-friends'; textTrangThai = 'Có Khách';
-        }
-
-        container.innerHTML += `
-          <div class="col-lg-3 col-6">
-            <div class="small-box ${bgColor}">
-              <div class="inner">
-                <h3>Bàn ${ban.soBan}</h3>
-                <p>Trạng thái: <b>${textTrangThai}</b></p>
-              </div>
-              <div class="icon"><i class="fas ${icon}"></i></div>
-              <a href="javascript:void(0)" class="small-box-footer" onclick="xuLyBan(${ban.idBan}, ${ban.soBan}, '${ban.trangThai}')">
-                Thao tác <i class="fas fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
-        `;
-      });
-    } catch (error) {
-      console.error("Lỗi Sơ Đồ Bàn:", error);
-    }
-  };
-
-  const xuLyBan = async (idBan, soBan, trangThaiHienTai) => {
-  // 1. Trường hợp bàn trống -> Kết thúc sớm
-  if (trangThaiHienTai === 'Trong') {
-    alert(`Bàn số ${soBan} đang trống. Chức năng gọi món trực tiếp đang phát triển.`);
-    return;
-  }
-
-  try {
-    // 2. Gọi API lấy danh sách hóa đơn để kiểm tra
-    const resHD = await axios.get(`${BASE_URL}/hoadon`);
-    const danhSachHoaDon = resHD.data || [];
-    
-    // Tìm hóa đơn chưa thanh toán của bàn này
-    const activeHD = danhSachHoaDon.find(hd => 
-      ((hd.ban && hd.ban.soBan === soBan) || hd.idBan === idBan) && 
-      hd.trangThai !== 'DaThanhToan'
-    );
-
-    // LUỒNG 1: Nếu bàn ĐÃ CÓ hóa đơn hoạt động -> Mở ngay bảng chi tiết hóa đơn
-    if (activeHD) {
-      const idHD = activeHD.idHoaDon || activeHD.id;
-      moModalChiTietHD(idHD, activeHD.trangThai, activeHD.tongTien || 0, soBan);
-      return; 
-    }
-
-    // LUỒNG 2: Nếu bàn KHÔNG CÓ hóa đơn hoạt động nào
-
-    // Trường hợp A: Bàn "Đã Đặt" -> Chuyển sang "Có Khách" và tạo hóa đơn mới
-    if (trangThaiHienTai === 'DaDat') {
-      if (confirm(`Khách đặt đã đến Bàn số ${soBan}? Chuyển sang "Có Khách" và tạo hóa đơn mới?`)) {
-        
-        // Bước 1: Cập nhật trạng thái bàn lên server thành 'CoKhach'
-        await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'CoKhach' });
-        
-        // Bước 2: Tạo hóa đơn mới cho bàn này ở backend
-        const resNewHD = await axios.post(`${BASE_URL}/hoadon`, {
-          idBan: idBan,
-          soBan: soBan,
-          trangThai: 'ChuaThanhToan',
-          tongTien: 0
+      <div class="product-info w-100 pr-2">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <span class="product-title font-weight-bold text-light" style="font-size: 0.95rem;">${mon.tenMon || 'Tên món'}</span>
+          <span class="badge badge-sm bg-dark text-success font-weight-bold border border-success-light px-2 py-1" style="font-size: 0.85rem;">${formatVND(price)}</span>
+        </div>
+        <span class="product-description text-muted small d-block text-truncate" style="max-width: 350px;">${mon.moTa || 'Không có mô tả chi tiết cho món ăn này.'}</span>
+      </div>
+    </li>
+  `;
         });
-        
-        // Bước 3: Lấy thông tin hóa đơn mới và mở modal gọi món luôn
-        const newHD = resNewHD.data;
-        const idHD = newHD.idHoaDon || newHD.id;
-        
-        loadGiaoDienBan(); // Tải lại danh sách bàn để cập nhật màu sắc giao diện
-        moModalChiTietHD(idHD, 'ChuaThanhToan', 0, soBan);
+      } catch (error) {
+        console.error("Lỗi Món ăn Dashboard:", error);
       }
-      return;
-    }
+    };
 
-    // Trường hợp B: Bàn "Có Khách" nhưng không thấy hóa đơn -> Đưa thẳng về "Trống"
-    if (trangThaiHienTai === 'CoKhach') {
-      if (confirm(`Bàn số ${soBan} hiện không có hóa đơn hoạt động. Bạn có muốn giải phóng bàn này về lại trạng thái "Trống"?`)) {
-        
-        // Gọi API đưa bàn về trạng thái Trống
-        await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'Trong' });
-        
-        loadGiaoDienBan(); // Tải lại danh sách bàn để bàn chuyển sang màu xanh (Trống)
-      }
-      return;
-    }
+    // =========================================================
+    // 4. API SƠ ĐỒ BÀN
+    // =========================================================
+    const loadGiaoDienBan = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/ban`);
+        const tables = response.data;
+        const container = document.getElementById('danh-sach-ban');
+        container.innerHTML = '';
 
-  } catch (error) {
-    console.error("Lỗi hệ thống khi xử lý bàn:", error);
-    alert("Đã xảy ra lỗi kết nối dữ liệu. Vui lòng thử lại!");
-  }
-};
+        tables.forEach(ban => {
+          let bgColor = 'bg-success';
+          let icon = 'fa-check-circle';
+          let textTrangThai = 'Trống';
 
-  // =========================================================
-  // 5. API QUẢN LÝ THỰC ĐƠN
-  // =========================================================
-  const loadGiaoDienThucDon = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/monan`);
-      const monans = response.data;
-      const container = document.getElementById('danh-sach-thuc-don');
-      container.innerHTML = ''; 
+          if (ban.trangThai === 'DaDat') {
+            bgColor = 'bg-warning'; icon = 'fa-clock'; textTrangThai = 'Đã Đặt';
+          } else if (ban.trangThai === 'CoKhach') {
+            bgColor = 'bg-danger'; icon = 'fa-user-friends'; textTrangThai = 'Có Khách';
+          }
 
-      monans.forEach(mon => {
-        const imgSrc = mon.hinhAnh ? mon.hinhAnh : 'dist/img/default-150x150.png';
-        const price = mon.giaTien || 0;
-        container.innerHTML += `
-          <div class="col-md-3 col-sm-6 col-12">
-            <div class="card card-widget widget-user-2 shadow-sm">
-              <div class="widget-user-header bg-light">
-                <div class="widget-user-image">
-                  <img class="img-circle elevation-2" src="${imgSrc}" alt="${mon.tenMon}" style="width: 65px; height: 65px; object-fit: cover;">
+          container.innerHTML += `
+            <div class="col-lg-3 col-6">
+              <div class="small-box ${bgColor}">
+                <div class="inner">
+                  <h3>Bàn ${ban.soBan}</h3>
+                  <p>Trạng thái: <b>${textTrangThai}</b></p>
                 </div>
-                <h3 class="widget-user-username" style="font-size: 1.1rem; font-weight: bold; margin-left: 80px;">${mon.tenMon}</h3>
-                <h5 class="widget-user-desc text-danger font-weight-bold" style="margin-left: 80px;">${formatVND(price)}</h5>
-              </div>
-              <div class="card-footer p-0">
-                <ul class="nav flex-column">
-                  <li class="nav-item p-3 text-muted" style="font-size: 0.9rem; min-height: 60px;">${mon.moTa || '...'}</li>
-                  <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link text-center text-primary border-top" onclick="suaMonAn(${mon.idMonAn || mon.id})">
-                      <i class="fas fa-edit"></i> Chỉnh sửa
-                    </a>
-                  </li>
-                </ul>
+                <div class="icon"><i class="fas ${icon}"></i></div>
+                <a href="javascript:void(0)" class="small-box-footer" onclick="xuLyBan(${ban.idBan}, ${ban.soBan}, '${ban.trangThai}')">
+                  Thao tác <i class="fas fa-arrow-circle-right"></i>
+                </a>
               </div>
             </div>
-          </div>
-        `;
-      });
-    } catch (error) {
-      console.error("Lỗi Thực Đơn:", error);
-    }
-  };
+          `;
+        });
+      } catch (error) {
+        console.error("Lỗi Sơ Đồ Bàn:", error);
+      }
+    };
 
-  const loadDanhMuc = async () => {
+    const xuLyBan = async (idBan, soBan, trangThaiHienTai) => {
+    // 1. Trường hợp bàn trống -> Kết thúc sớm
+    if (trangThaiHienTai === 'Trong') {
+      alert(`Bàn số ${soBan} đang trống. Chức năng gọi món trực tiếp đang phát triển.`);
+      return;
+    }
+
     try {
-      const response = await axios.get(`${BASE_URL}/danhmuc`);
-      const danhMucs = response.data;
-      const selectObj = document.getElementById('mon-danhmuc');
-      selectObj.innerHTML = ''; 
-      danhMucs.forEach(dm => {
-        selectObj.innerHTML += `<option value="${dm.idDanhMuc || dm.id}">${dm.tenDanhMuc}</option>`;
-      });
+      // 2. Gọi API lấy danh sách hóa đơn để kiểm tra
+      const resHD = await axios.get(`${BASE_URL}/hoadon`);
+      const danhSachHoaDon = resHD.data || [];
+
+      // Tìm hóa đơn chưa thanh toán của bàn này
+      const activeHD = danhSachHoaDon.find(hd =>
+        ((hd.ban && hd.ban.soBan === soBan) || hd.idBan === idBan) &&
+        hd.trangThai !== 'DaThanhToan'
+      );
+
+      // LUỒNG 1: Nếu bàn ĐÃ CÓ hóa đơn hoạt động -> Mở ngay bảng chi tiết hóa đơn
+      if (activeHD) {
+        const idHD = activeHD.idHoaDon || activeHD.id;
+        moModalChiTietHD(idHD, activeHD.trangThai, activeHD.tongTien || 0, soBan);
+        return;
+      }
+
+      // LUỒNG 2: Nếu bàn KHÔNG CÓ hóa đơn hoạt động nào
+
+      // Trường hợp A: Bàn "Đã Đặt" -> Chuyển sang "Có Khách" và tạo hóa đơn mới
+      if (trangThaiHienTai === 'DaDat') {
+        if (confirm(`Khách đặt đã đến Bàn số ${soBan}? Chuyển sang "Có Khách" và tạo hóa đơn mới?`)) {
+
+          // Bước 1: Cập nhật trạng thái bàn lên server thành 'CoKhach'
+          await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'CoKhach' });
+
+          // Bước 2: Tạo hóa đơn mới cho bàn này ở backend
+          const resNewHD = await axios.post(`${BASE_URL}/hoadon`, {
+            idBan: idBan,
+            soBan: soBan,
+            trangThai: 'ChuaThanhToan',
+            tongTien: 0
+          });
+
+          // Bước 3: Lấy thông tin hóa đơn mới và mở modal gọi món luôn
+          const newHD = resNewHD.data;
+          const idHD = newHD.idHoaDon || newHD.id;
+
+          loadGiaoDienBan(); // Tải lại danh sách bàn để cập nhật màu sắc giao diện
+          moModalChiTietHD(idHD, 'ChuaThanhToan', 0, soBan);
+        }
+        return;
+      }
+
+      // Trường hợp B: Bàn "Có Khách" nhưng không thấy hóa đơn -> Đưa thẳng về "Trống"
+      if (trangThaiHienTai === 'CoKhach') {
+        if (confirm(`Bàn số ${soBan} hiện không có hóa đơn hoạt động. Bạn có muốn giải phóng bàn này về lại trạng thái "Trống"?`)) {
+
+          // Gọi API đưa bàn về trạng thái Trống
+          await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'Trong' });
+
+          loadGiaoDienBan(); // Tải lại danh sách bàn để bàn chuyển sang màu xanh (Trống)
+        }
+        return;
+      }
+
     } catch (error) {
-      console.error("Lỗi tải Danh mục:", error);
+      console.error("Lỗi hệ thống khi xử lý bàn:", error);
+      alert("Đã xảy ra lỗi kết nối dữ liệu. Vui lòng thử lại!");
     }
   };
 
-  const moModalThemMon = () => {
+    // =========================================================
+    // 5. API QUẢN LÝ THỰC ĐƠN
+    // =========================================================
+    // Lắng nghe sự kiện khi người dùng chọn ảnh
+  document.getElementById('mon-anh-file').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64String = e.target.result;
+
+        // Gán chuỗi Base64 vào thẻ input ẩn
+        document.getElementById('mon-anh-base64').value = base64String;
+
+        // Hiển thị ảnh xem trước
+        const preview = document.getElementById('mon-anh-preview');
+        preview.src = base64String;
+        preview.style.display = 'inline-block';
+      };
+      reader.readAsDataURL(file); // Bắt đầu đọc file
+    }
+  });
+    const loadGiaoDienThucDon = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/monan`);
+        const monans = response.data;
+        const container = document.getElementById('danh-sach-thuc-don');
+        container.innerHTML = '';
+
+        monans.forEach(mon => {
+          const imgSrc = mon.hinhAnh ? mon.hinhAnh : 'dist/img/default-150x150.png';
+          const price = mon.giaTien || 0;
+          container.innerHTML += `
+            <div class="col-md-3 col-sm-6 col-12">
+              <div class="card card-widget widget-user-2 shadow-sm">
+                <div class="widget-user-header bg-light">
+                  <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="${imgSrc}" alt="${mon.tenMon}" style="width: 65px; height: 65px; object-fit: cover;">
+                  </div>
+                  <h3 class="widget-user-username" style="font-size: 1.1rem; font-weight: bold; margin-left: 80px;">${mon.tenMon}</h3>
+                  <h5 class="widget-user-desc text-danger font-weight-bold" style="margin-left: 80px;">${formatVND(price)}</h5>
+                </div>
+                <div class="card-footer p-0">
+                  <ul class="nav flex-column">
+                    <li class="nav-item p-3 text-muted" style="font-size: 0.9rem; min-height: 60px;">${mon.moTa || '...'}</li>
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link text-center text-primary border-top" onclick="suaMonAn(${mon.idMonAn || mon.id})">
+                        <i class="fas fa-edit"></i> Chỉnh sửa
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      } catch (error) {
+        console.error("Lỗi Thực Đơn:", error);
+      }
+    };
+
+    const loadDanhMuc = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/danhmuc`);
+        const danhMucs = response.data;
+        const selectObj = document.getElementById('mon-danhmuc');
+        selectObj.innerHTML = '';
+        danhMucs.forEach(dm => {
+          selectObj.innerHTML += `<option value="${dm.idDanhMuc || dm.id}">${dm.tenDanhMuc}</option>`;
+        });
+      } catch (error) {
+        console.error("Lỗi tải Danh mục:", error);
+      }
+    };
+
+   const moModalThemMon = () => {
     document.getElementById('modal-mon-an-title').innerText = "Thêm Món Mới";
     document.getElementById('form-mon-an').reset();
-    document.getElementById('mon-id').value = ""; 
+    document.getElementById('mon-id').value = "";
+
+    // Reset lại phần ảnh
+    document.getElementById('mon-anh-base64').value = "";
+    document.getElementById('mon-anh-file').value = "";
+    document.getElementById('mon-anh-preview').style.display = 'none';
+
     if(document.getElementById('mon-danhmuc').options.length <= 1) loadDanhMuc();
     $('#modal-mon-an').modal('show');
   };
 
-  const suaMonAn = async (idMonAn) => {
-    try {
-      document.getElementById('modal-mon-an-title').innerText = "Chỉnh Sửa Món Ăn";
-      if(document.getElementById('mon-danhmuc').options.length <= 1) await loadDanhMuc();
+    const suaMonAn = async (idMonAn) => {
+      try {
+        document.getElementById('modal-mon-an-title').innerText = "Chỉnh Sửa Món Ăn";
+        if(document.getElementById('mon-danhmuc').options.length <= 1) await loadDanhMuc();
 
-      const response = await axios.get(`${BASE_URL}/monan/${idMonAn}`);
-      const monData = response.data;
+        const response = await axios.get(`${BASE_URL}/monan/${idMonAn}`);
+        const monData = response.data;
 
-      document.getElementById('mon-id').value = monData.idMonAn || monData.id;
-      document.getElementById('mon-ten').value = monData.tenMon || "";
-      document.getElementById('mon-gia').value = monData.giaTien || 0;
-      document.getElementById('mon-anh').value = monData.hinhAnh || "";
-      document.getElementById('mon-mota').value = monData.moTa || "";
-      if (monData.danhMuc) document.getElementById('mon-danhmuc').value = monData.danhMuc.idDanhMuc || monData.danhMuc.id;
+        document.getElementById('mon-id').value = monData.idMonAn || monData.id;
+        document.getElementById('mon-ten').value = monData.tenMon || "";
+        document.getElementById('mon-gia').value = monData.giaTien || 0;
+        document.getElementById('mon-anh-base64').value = monData.hinhAnh || "";
+  document.getElementById('mon-anh-file').value = ""; // Đặt rỗng file input
+  const preview = document.getElementById('mon-anh-preview');
+  if (monData.hinhAnh) {
+    preview.src = monData.hinhAnh;
+    preview.style.display = 'inline-block';
+  } else {
+    preview.style.display = 'none';
+  }
+        document.getElementById('mon-mota').value = monData.moTa || "";
+        if (monData.danhMuc) document.getElementById('mon-danhmuc').value = monData.danhMuc.idDanhMuc || monData.danhMuc.id;
 
-      $('#modal-mon-an').modal('show');
-    } catch (error) {
-      console.error("Lỗi lấy thông tin món:", error);
-    }
-  };
-
-  const luuMonAn = async () => {
-    const id = document.getElementById('mon-id').value;
-    const payload = {
-      tenMon: document.getElementById('mon-ten').value.trim(),
-      giaTien: parseFloat(document.getElementById('mon-gia').value),
-      hinhAnh: document.getElementById('mon-anh').value.trim(),
-      moTa: document.getElementById('mon-mota').value.trim(),
-      danhMuc: { idDanhMuc: parseInt(document.getElementById('mon-danhmuc').value) }
+        $('#modal-mon-an').modal('show');
+      } catch (error) {
+        console.error("Lỗi lấy thông tin món:", error);
+      }
     };
 
-    try {
-      if (id) {
-        await axios.put(`${BASE_URL}/monan/${id}`, payload);
-        alert("Cập nhật thành công!");
-      } else {
-        await axios.post(`${BASE_URL}/monan`, payload);
-        alert("Thêm món mới thành công!");
-      }
-      $('#modal-mon-an').modal('hide');
-      loadGiaoDienThucDon();
-    } catch (error) {
-      console.error("Lỗi lưu món ăn:", error);
-      alert("Lỗi khi lưu vào Database!");
-    }
+    const luuMonAn = async () => {
+      const id = document.getElementById('mon-id').value;
+      const payload = {
+    tenMon: document.getElementById('mon-ten').value.trim(),
+    giaTien: parseFloat(document.getElementById('mon-gia').value),
+
+    // Sửa dòng hinhAnh thành như sau:
+    hinhAnh: document.getElementById('mon-anh-base64').value.trim(),
+
+    moTa: document.getElementById('mon-mota').value.trim(),
+    danhMuc: { idDanhMuc: parseInt(document.getElementById('mon-danhmuc').value) }
   };
 
-  // =========================================================
-  // 6. API QUẢN LÝ HÓA ĐƠN
-  // =========================================================
-  const loadDanhSachHoaDonToanBo = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/hoadon`);
-      const hoadons = response.data;
-      const tbody = document.getElementById('bang-danh-sach-hd');
-      tbody.innerHTML = '';
-
-      if (hoadons.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6">Chưa có hóa đơn nào.</td></tr>';
-        return;
-      }
-
-      hoadons.sort((a, b) => (b.idHoaDon || b.id) - (a.idHoaDon || a.id));
-
-      hoadons.forEach(hd => {
-        let badgeClass = 'badge-warning';
-        let txtStatus = 'Đang chờ phục vụ';
-        if (hd.trangThai === 'DaThanhToan') {
-          badgeClass = 'badge-success'; txtStatus = 'Đã thanh toán';
-        }
-
-        const idHD = hd.idHoaDon || hd.id;
-        let soBan = (hd.ban && hd.ban.soBan) ? hd.ban.soBan : (hd.idBan || '?');
-
-        const nutHuyDon = (user && user.vaiTro === "ADMIN") ? `
-  <button class="btn btn-sm btn-danger ml-1" onclick="huyHoaDonToanBo(${idHD})">
-    <i class="fas fa-trash"></i> Hủy Đơn
-  </button>
-` : '';
-
-tbody.innerHTML += `
-  <tr>
-    <td class="font-weight-bold">HD${idHD}</td>
-    <td>Bàn ${soBan}</td>
-    <td>${hd.ngayTao ? hd.ngayTao.replace('T', ' ').substring(0, 16) : 'N/A'}</td>
-    <td class="text-warning font-weight-bold">${formatVND(hd.tongTien || 0)}</td>
-    <td><span class="badge ${badgeClass} px-2 py-1">${txtStatus}</span></td>
-    <td>
-      <button class="btn btn-sm btn-info" onclick="moModalChiTietHD(${idHD}, '${hd.trangThai}', ${hd.tongTien || 0}, ${soBan})">
-        <i class="fas fa-eye"></i> Xem / Thanh Toán
-      </button>
-      ${nutHuyDon}
-    </td>
-  </tr>
-`;
-      });
-    } catch (error) {
-      console.error("Lỗi danh sách Hóa Đơn:", error);
-    }
-  };
-
-  // Nhận thêm tham số soBan (mặc định là null nếu gọi từ Dashboard)
-  const moModalChiTietHD = async (idHoaDon, trangThai, tongTien, soBan = null) => {
-    loadMonChoHoaDon();
-    try {
-      document.getElementById('hd-title').innerText = `Chi Tiết Hóa Đơn HD${idHoaDon}`;
-      document.getElementById('hd-tong-tien-text').innerText = formatVND(tongTien);
-      document.getElementById('thanh-toan-hd-id').value = idHoaDon;
-      document.getElementById('thanh-toan-hd-tong').value = tongTien;
-      
-      // Gắn số bàn vào input ẩn để lát nữa hàm Thanh Toán gọi API dọn bàn
-      document.getElementById('thanh-toan-hd-soban').value = soBan || ''; 
-
-      const btnThanhToan = document.getElementById('btn-thanh-toan');
-      btnThanhToan.style.display = (trangThai === 'DaThanhToan') ? 'none' : 'inline-block';
-
-      const tbody = document.getElementById('bang-chi-tiet-hd');
-      tbody.innerHTML = '<tr><td colspan="5">Đang tải món ăn...</td></tr>';
-      $('#modal-chi-tiet-hd').modal('show');
-
-      const response = await axios.get(`${BASE_URL}/chitiethoadon`);
-      const tatCaChiTiet = response.data;
-      console.log("Tất cả chi tiết lấy từ Server:", tatCaChiTiet);
-
-      // SỬA LẠI ĐOẠN LỌC NÀY: Dùng dấu == (hai dấu bằng) thay vì === để tránh lỗi chuỗi/số
-      // và bao trọn các trường hợp tên biến phổ biến
-      const chiTietCuaHD = tatCaChiTiet.filter(ct => {
-        let match = false;
-        
-        // 1. Nếu Backend trả về object HoaDon lồng nhau
-        if (ct.hoaDon) {
-          if (ct.hoaDon.idHoaDon == idHoaDon) match = true;
-          if (ct.hoaDon.id == idHoaDon) match = true;
-        }
-        if (ct.hoadon) { // Trường hợp viết thường
-          if (ct.hoadon.idHoaDon == idHoaDon || ct.hoadon.id == idHoaDon) match = true;
-        }
-        if (ct.hoa_don) { // Trường hợp có dấu gạch dưới
-          if (ct.hoa_don.idHoaDon == idHoaDon || ct.hoa_don.id == idHoaDon || ct.hoa_don.id_hoa_don == idHoaDon) match = true;
-        }
-
-        // 2. Nếu Backend trả về ID phẳng (không lồng object)
-        if (ct.idHoaDon == idHoaDon) match = true;
-        if (ct.id_hoa_don == idHoaDon) match = true;
-        if (ct.idHoadon == idHoaDon) match = true;
-        if (ct.hoadonId == idHoaDon) match = true;
-
-        return match;
-      });
-
-      console.log(`Chi tiết của riêng Hóa Đơn ${idHoaDon}:`, chiTietCuaHD);
-
-      tbody.innerHTML = '';
-      if (chiTietCuaHD.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5">Không có món ăn nào.</td></tr>'; return;
-      }
-
-      let stt = 1;
-      chiTietCuaHD.forEach(ct => {
-        const tenMon = (ct.monAn && ct.monAn.tenMon) ? ct.monAn.tenMon : 'Món ăn';
-        const donGia = ct.giaTien || 0;
-        const soLuong = ct.soLuong || 1;
-        tbody.innerHTML += `
-  <tr>
-    <td>${stt++}</td>
-    <td class="text-left font-weight-bold">${tenMon}</td>
-    <td>${formatVND(donGia)}</td>
-    <td>${soLuong}</td>
-    <td>${formatVND(donGia * soLuong)}</td>
-    <td>
-      <button class="btn btn-danger btn-sm"
-        onclick="xoaMonKhoiHoaDon(${ct.idChiTiet || ct.id}, ${idHoaDon})">
-        ❌
-      </button>
-    </td>
-  </tr>
-`;
-      })
-      // 1. Tính toán lại tổng tiền hiển thị trong Modal
-      const tongTienMoi = tinhTongTienHoaDon(); 
-      
-      // 2. Gọi hàm đồng bộ lên Backend
-      await capNhatTongTienLendBackend(idHoaDon, tongTienMoi);
-      
-      // 3. Tải lại bảng Hóa Đơn và Tổng Quan bên ngoài ngay lập tức
-      loadDanhSachHoaDonToanBo();
-      loadHoaDon();
-    } catch (error) {
-      console.error("Lỗi tải chi tiết Hóa đơn:", error);
-    }
-  };
-
-  const xuLyThanhToan = async () => {
-    const idHoaDon = document.getElementById('thanh-toan-hd-id').value;
-    const tongTien = document.getElementById('thanh-toan-hd-tong').value;
-    const soBan = document.getElementById('thanh-toan-hd-soban').value; // Lấy số bàn
-
-    if (confirm(`Xác nhận thu khách số tiền: ${formatVND(tongTien)}?`)) {
       try {
-        // 1. Lấy thông tin HD và chuyển thành DaThanhToan
-        const resGet = await axios.get(`${BASE_URL}/hoadon/${idHoaDon}`);
-        let hdUpdate = resGet.data;
-        hdUpdate.trangThai = 'DaThanhToan';
-        await axios.put(`${BASE_URL}/hoadon/${idHoaDon}`, hdUpdate);
-
-        // 2. Chuyển trạng thái bàn về "Trong" nếu biết số bàn
-        if (soBan && soBan !== '?') {
-          try {
-            await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'Trong' });
-          } catch (errBan) {
-             console.error("Hóa đơn đã thu tiền, nhưng lỗi khi dọn bàn:", errBan);
-          }
+        if (id) {
+          await axios.put(`${BASE_URL}/monan/${id}`, payload);
+          alert("Cập nhật thành công!");
+        } else {
+          await axios.post(`${BASE_URL}/monan`, payload);
+          alert("Thêm món mới thành công!");
         }
-
-        alert("Thanh toán thành công! Bàn đã được dọn dẹp.");
-        $('#modal-chi-tiet-hd').modal('hide');
-        
-        // 3. Tải lại toàn bộ dữ liệu trên các màn hình cho đồng bộ
-        loadDanhSachHoaDonToanBo();
-        loadGiaoDienBan(); 
-        loadBan(); 
-        loadHoaDon(); 
+        $('#modal-mon-an').modal('hide');
+        loadGiaoDienThucDon();
       } catch (error) {
-        console.error("Lỗi thanh toán:", error);
-        alert("Lỗi khi gửi yêu cầu thanh toán!");
+        console.error("Lỗi lưu món ăn:", error);
+        alert("Lỗi khi lưu vào Database!");
       }
-    }
-  };
+    };
 
-  // =========================================================
-  // 7. KHỞI CHẠY KHI TẢI TRANG
-  // =========================================================
- document.addEventListener("DOMContentLoaded", () => {
-  // ---- TỰ ĐỘNG ĐỔI TÊN VÀ ĐỔI MÀU ROLE TRÊN SIDEBAR ----
-    const user = JSON.parse(localStorage.getItem("user"));
-    
-    if (user && document.getElementById('ten-user-sidebar')) {
-        let badgeColor = 'badge-secondary'; // Mặc định USER màu xám
-        
-        if (user.vaiTro === 'ADMIN') {
-            badgeColor = 'badge-danger';   // ADMIN màu đỏ
-        } else if (user.vaiTro === 'STAFF') {
-            badgeColor = 'badge-primary';  // STAFF màu xanh dương
+    // =========================================================
+    // 6. API QUẢN LÝ HÓA ĐƠN
+    // =========================================================
+    const loadDanhSachHoaDonToanBo = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/hoadon`);
+        const hoadons = response.data;
+        const tbody = document.getElementById('bang-danh-sach-hd');
+        tbody.innerHTML = '';
+
+        if (hoadons.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6">Chưa có hóa đơn nào.</td></tr>';
+          return;
         }
 
-        // Lấy tên người dùng (ưu tiên hoTen hoặc tenKhachHang tùy thuộc vào API của bạn)
-        const tenNguoiDung = user.username || user.tenKhachHang || 'Người dùng';
+        hoadons.sort((a, b) => (b.idHoaDon || b.id) - (a.idHoaDon || a.id));
 
-        // Đổ dữ liệu ra sidebar bao gồm: Tên + Badge màu
-        document.getElementById('ten-user-sidebar').innerHTML = `
-            ${tenNguoiDung} <span class="badge ${badgeColor} ml-1" style="font-size: 11px;">${user.vaiTro}</span>
-        `;
-    }
-  // Phân quyền ẩn chức năng cho STAFF
-  if (user && user.vaiTro === "STAFF") {
-      if (document.getElementById('menu-nhan-vien')) {
-          document.getElementById('menu-nhan-vien').parentElement.style.display = 'none';
-      }
-      if (document.getElementById('menu-bao-cao')) {
-          document.getElementById('menu-bao-cao').parentElement.style.display = 'none';
-      }
-    const navHeaders = document.querySelectorAll('.nav-header');
-      navHeaders.forEach(header => {
-          if (header.textContent.trim() === "HỆ THỐNG & NHÂN SỰ") {
-              header.style.display = 'none';
+        hoadons.forEach(hd => {
+          let badgeClass = 'badge-warning';
+          let txtStatus = 'Đang chờ phục vụ';
+          if (hd.trangThai === 'DaThanhToan') {
+            badgeClass = 'badge-success'; txtStatus = 'Đã thanh toán';
           }
-      });
-  }
-  
 
-  // Mặc định load tab Tổng quan
-  loadBan();
-  loadHoaDon();
-  loadMonAn();
-});
-  const loadMonChoHoaDon = async () => {
-    const res = await axios.get(`${BASE_URL}/monan`);
-    const select = document.getElementById("chon-mon-them");
+          const idHD = hd.idHoaDon || hd.id;
+          let soBan = (hd.ban && hd.ban.soBan) ? hd.ban.soBan : (hd.idBan || '?');
 
-    select.innerHTML = "";
+          const nutHuyDon = (user && user.vaiTro === "ADMIN") ? `
+    <button class="btn btn-sm btn-danger ml-1" onclick="huyHoaDonToanBo(${idHD})">
+      <i class="fas fa-trash"></i> Hủy Đơn
+    </button>
+  ` : '';
 
-    res.data.forEach(mon => {
-      select.innerHTML += `
-      <option value="${mon.idMonAn}">
-        ${mon.tenMon} - ${formatVND(mon.giaTien)}
-      </option>
-    `;
-    });
-  };
-  const themMonVaoHoaDon = async () => {
-    const idHoaDon = document.getElementById('thanh-toan-hd-id').value;
-    const idMonAn = document.getElementById('chon-mon-them').value;
-    const soLuong = parseInt(document.getElementById('so-luong-them').value);
+  tbody.innerHTML += `
+    <tr>
+      <td class="font-weight-bold">HD${idHD}</td>
+      <td>Bàn ${soBan}</td>
+      <td>${hd.ngayTao ? hd.ngayTao.replace('T', ' ').substring(0, 16) : 'N/A'}</td>
+      <td class="text-warning font-weight-bold">${formatVND(hd.tongTien || 0)}</td>
+      <td><span class="badge ${badgeClass} px-2 py-1">${txtStatus}</span></td>
+      <td>
+        <button class="btn btn-sm btn-info" onclick="moModalChiTietHD(${idHD}, '${hd.trangThai}', ${hd.tongTien || 0}, ${soBan})">
+          <i class="fas fa-eye"></i> Xem / Thanh Toán
+        </button>
+        ${nutHuyDon}
+      </td>
+    </tr>
+  `;
+        });
+      } catch (error) {
+        console.error("Lỗi danh sách Hóa Đơn:", error);
+      }
+    };
 
-    if (!soLuong || soLuong <= 0) {
-      return alert("Số lượng không hợp lệ!");
+    // Nhận thêm tham số soBan (mặc định là null nếu gọi từ Dashboard)
+    const moModalChiTietHD = async (idHoaDon, trangThai, tongTien, soBan = null) => {
+      loadMonChoHoaDon();
+      try {
+        document.getElementById('hd-title').innerText = `Chi Tiết Hóa Đơn HD${idHoaDon}`;
+        document.getElementById('hd-tong-tien-text').innerText = formatVND(tongTien);
+        document.getElementById('thanh-toan-hd-id').value = idHoaDon;
+        document.getElementById('thanh-toan-hd-tong').value = tongTien;
+
+        // Gắn số bàn vào input ẩn để lát nữa hàm Thanh Toán gọi API dọn bàn
+        document.getElementById('thanh-toan-hd-soban').value = soBan || '';
+
+        const btnThanhToan = document.getElementById('btn-thanh-toan');
+        btnThanhToan.style.display = (trangThai === 'DaThanhToan') ? 'none' : 'inline-block';
+
+        const tbody = document.getElementById('bang-chi-tiet-hd');
+        tbody.innerHTML = '<tr><td colspan="5">Đang tải món ăn...</td></tr>';
+        $('#modal-chi-tiet-hd').modal('show');
+
+        const response = await axios.get(`${BASE_URL}/chitiethoadon`);
+        const tatCaChiTiet = response.data;
+        console.log("Tất cả chi tiết lấy từ Server:", tatCaChiTiet);
+
+        // SỬA LẠI ĐOẠN LỌC NÀY: Dùng dấu == (hai dấu bằng) thay vì === để tránh lỗi chuỗi/số
+        // và bao trọn các trường hợp tên biến phổ biến
+        const chiTietCuaHD = tatCaChiTiet.filter(ct => {
+          let match = false;
+
+          // 1. Nếu Backend trả về object HoaDon lồng nhau
+          if (ct.hoaDon) {
+            if (ct.hoaDon.idHoaDon == idHoaDon) match = true;
+            if (ct.hoaDon.id == idHoaDon) match = true;
+          }
+          if (ct.hoadon) { // Trường hợp viết thường
+            if (ct.hoadon.idHoaDon == idHoaDon || ct.hoadon.id == idHoaDon) match = true;
+          }
+          if (ct.hoa_don) { // Trường hợp có dấu gạch dưới
+            if (ct.hoa_don.idHoaDon == idHoaDon || ct.hoa_don.id == idHoaDon || ct.hoa_don.id_hoa_don == idHoaDon) match = true;
+          }
+
+          // 2. Nếu Backend trả về ID phẳng (không lồng object)
+          if (ct.idHoaDon == idHoaDon) match = true;
+          if (ct.id_hoa_don == idHoaDon) match = true;
+          if (ct.idHoadon == idHoaDon) match = true;
+          if (ct.hoadonId == idHoaDon) match = true;
+
+          return match;
+        });
+
+        console.log(`Chi tiết của riêng Hóa Đơn ${idHoaDon}:`, chiTietCuaHD);
+
+        tbody.innerHTML = '';
+        if (chiTietCuaHD.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5">Không có món ăn nào.</td></tr>'; return;
+        }
+
+        let stt = 1;
+        chiTietCuaHD.forEach(ct => {
+          const tenMon = (ct.monAn && ct.monAn.tenMon) ? ct.monAn.tenMon : 'Món ăn';
+          const donGia = ct.giaTien || 0;
+          const soLuong = ct.soLuong || 1;
+          tbody.innerHTML += `
+    <tr>
+      <td>${stt++}</td>
+      <td class="text-left font-weight-bold">${tenMon}</td>
+      <td>${formatVND(donGia)}</td>
+      <td>${soLuong}</td>
+      <td>${formatVND(donGia * soLuong)}</td>
+      <td>
+        <button class="btn btn-danger btn-sm"
+          onclick="xoaMonKhoiHoaDon(${ct.idChiTiet || ct.id}, ${idHoaDon})">
+          ❌
+        </button>
+      </td>
+    </tr>
+  `;
+        })
+        // 1. Tính toán lại tổng tiền hiển thị trong Modal
+        const tongTienMoi = tinhTongTienHoaDon();
+
+        // 2. Gọi hàm đồng bộ lên Backend
+        await capNhatTongTienLendBackend(idHoaDon, tongTienMoi);
+
+        // 3. Tải lại bảng Hóa Đơn và Tổng Quan bên ngoài ngay lập tức
+        loadDanhSachHoaDonToanBo();
+        loadHoaDon();
+      } catch (error) {
+        console.error("Lỗi tải chi tiết Hóa đơn:", error);
+      }
+    };
+
+    const xuLyThanhToan = async () => {
+      const idHoaDon = document.getElementById('thanh-toan-hd-id').value;
+      const tongTien = document.getElementById('thanh-toan-hd-tong').value;
+      const soBan = document.getElementById('thanh-toan-hd-soban').value; // Lấy số bàn
+
+      if (confirm(`Xác nhận thu khách số tiền: ${formatVND(tongTien)}?`)) {
+        try {
+          // 1. Lấy thông tin HD và chuyển thành DaThanhToan
+          const resGet = await axios.get(`${BASE_URL}/hoadon/${idHoaDon}`);
+          let hdUpdate = resGet.data;
+          hdUpdate.trangThai = 'DaThanhToan';
+          await axios.put(`${BASE_URL}/hoadon/${idHoaDon}`, hdUpdate);
+
+          // 2. Chuyển trạng thái bàn về "Trong" nếu biết số bàn
+          if (soBan && soBan !== '?') {
+            try {
+              await axios.put(`${BASE_URL}/ban/${soBan}/status`, { trangThai: 'Trong' });
+            } catch (errBan) {
+               console.error("Hóa đơn đã thu tiền, nhưng lỗi khi dọn bàn:", errBan);
+            }
+          }
+
+          alert("Thanh toán thành công! Bàn đã được dọn dẹp.");
+          $('#modal-chi-tiet-hd').modal('hide');
+
+          // 3. Tải lại toàn bộ dữ liệu trên các màn hình cho đồng bộ
+          loadDanhSachHoaDonToanBo();
+          loadGiaoDienBan();
+          loadBan();
+          loadHoaDon();
+        } catch (error) {
+          console.error("Lỗi thanh toán:", error);
+          alert("Lỗi khi gửi yêu cầu thanh toán!");
+        }
+      }
+    };
+
+    // =========================================================
+    // 7. KHỞI CHẠY KHI TẢI TRANG
+    // =========================================================
+   document.addEventListener("DOMContentLoaded", () => {
+    // ---- TỰ ĐỘNG ĐỔI TÊN VÀ ĐỔI MÀU ROLE TRÊN SIDEBAR ----
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user && document.getElementById('ten-user-sidebar')) {
+          let badgeColor = 'badge-secondary'; // Mặc định USER màu xám
+
+          if (user.vaiTro === 'ADMIN') {
+              badgeColor = 'badge-danger';   // ADMIN màu đỏ
+          } else if (user.vaiTro === 'STAFF') {
+              badgeColor = 'badge-primary';  // STAFF màu xanh dương
+          }
+
+          // Lấy tên người dùng (ưu tiên hoTen hoặc tenKhachHang tùy thuộc vào API của bạn)
+          const tenNguoiDung = user.username || user.tenKhachHang || 'Người dùng';
+
+          // Đổ dữ liệu ra sidebar bao gồm: Tên + Badge màu
+          document.getElementById('ten-user-sidebar').innerHTML = `
+              ${tenNguoiDung} <span class="badge ${badgeColor} ml-1" style="font-size: 11px;">${user.vaiTro}</span>
+          `;
+      }
+    // Phân quyền ẩn chức năng cho STAFF
+    if (user && user.vaiTro === "STAFF") {
+        if (document.getElementById('menu-nhan-vien')) {
+            document.getElementById('menu-nhan-vien').parentElement.style.display = 'none';
+        }
+        if (document.getElementById('menu-bao-cao')) {
+            document.getElementById('menu-bao-cao').parentElement.style.display = 'none';
+        }
     }
+    const navHeaders = document.querySelectorAll('.nav-header');
+        navHeaders.forEach(header => {
+            if (header.textContent.trim() === "HỆ THỐNG & NHÂN SỰ") {
+                header.style.display = 'none';
+            }
+        });
 
-    try {
-      await axios.post(`${BASE_URL}/chitiethoadon`, {
-        idHoaDon: idHoaDon,
-        idMonAn: idMonAn,
-        soLuong: soLuong
-      });
-
-      alert("Đã thêm món vào hóa đơn!");
-
-      // KHÔNG lấy tổng tiền cũ từ input nữa
-      const soBan = document.getElementById('thanh-toan-hd-soban').value;
-
-      // Cập nhật lại bảng ngoài danh sách trước (lúc này API GET /hoadon sẽ trả về 70.000đ)
-      await loadDanhSachHoaDonToanBo(); 
-      loadHoaDon();
-
-      // Mở lại modal, truyền 0 vào vì hàm moModalChiTietHD sẽ tự chạy tinhTongTienHoaDon()
-      moModalChiTietHD(idHoaDon, 'DangXuLy', 0, soBan)
-
-      // reload dashboard
-      loadHoaDon();
-      loadDanhSachHoaDonToanBo();
-
-    } catch (err) {
-      console.error(err);
-      alert("Lỗi khi thêm món!");
-    }
-  };
-  const xoaMonKhoiHoaDon = async (idChiTiet, idHoaDon) => {
-    if (!confirm("Xóa món này khỏi hóa đơn?")) return;
-
-    try {
-      await axios.delete(`${BASE_URL}/chitiethoadon/${idChiTiet}`);
-
-     // ... (Phần axios.delete giữ nguyên)
-      alert("Đã xóa món!");
-
-      const soBan = document.getElementById('thanh-toan-hd-soban').value;
-
-      // Cập nhật lại bảng ngoài danh sách
-      await loadDanhSachHoaDonToanBo();
-      loadHoaDon();
-
-      // Mở lại modal
-      moModalChiTietHD(idHoaDon, 'DangXuLy', 0, soBan);
-
-      await moModalChiTietHD(idHoaDon, 'ChuaThanhToan', 0);
-      // 🔥 cập nhật dashboard luôn
-      loadHoaDon();
-      loadDanhSachHoaDonToanBo();
-
-    } catch (err) {
-      console.error(err);
-      alert("Lỗi khi xóa món!");
-    }
-  };
-  const tinhTongTienHoaDon = () => {
-    const rows = document.querySelectorAll("#bang-chi-tiet-hd tr");
-
-    let tong = 0;
-
-    rows.forEach(row => {
-      const cells = row.querySelectorAll("td");
-
-      // bỏ qua dòng "không có dữ liệu"
-      if (cells.length < 5) return;
-
-      const thanhTienText = cells[4].innerText.replace(/[^\d]/g, "");
-      const thanhTien = parseFloat(thanhTienText) || 0;
-
-      tong += thanhTien;
-    });
-
-    document.getElementById("hd-tong-tien-text").innerText =
-            new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tong);
-
-    document.getElementById("thanh-toan-hd-tong").value = tong;
-
-    return tong;
-  };
-// Hàm đồng bộ tổng tiền mới tính được lên Database
-const capNhatTongTienLendBackend = async (idHoaDon, tongTienMoi) => {
-  try {
-    // Lấy thông tin hóa đơn hiện tại
-    const res = await axios.get(`${BASE_URL}/hoadon/${idHoaDon}`);
-    let hoaDon = res.data;
-    
-    // Gán tổng tiền mới
-    hoaDon.tongTien = tongTienMoi;
-    
-    // Gửi lệnh PUT để cập nhật
-    await axios.put(`${BASE_URL}/hoadon/${idHoaDon}`, hoaDon);
-  } catch (error) {
-    console.error("Lỗi đồng bộ tổng tiền:", error);
-  }
-};
-const huyHoaDonToanBo = async (idHoaDon) => {
-  if (user && user.vaiTro !== "ADMIN") {
-      alert("Bạn không có quyền thực hiện chức năng hủy hóa đơn này!");
-      return;
-  }
-  if (!confirm(`Bạn có chắc chắn muốn HỦY và XÓA hoàn toàn hóa đơn HD${idHoaDon}?`)) return;
-
-  try {
-    // Gửi lệnh xóa lên API hóa đơn của Backend
-    await axios.delete(`${BASE_URL}/hoadon/${idHoaDon}`);
-    
-    alert("Đã hủy hóa đơn thành công!");
-    
-    // Tải lại các danh sách để cập nhật giao diện ngay lập tức
-    loadDanhSachHoaDonToanBo();
-    loadGiaoDienBan();
+    // Mặc định load tab Tổng quan
     loadBan();
     loadHoaDon();
-  } catch (error) {
-    console.error("Lỗi khi hủy hóa đơn:", error);
-    alert("Không thể hủy hóa đơn này! (Có thể do vướng dữ liệu chi tiết ở Backend)");
-  }
-};
+    loadMonAn();
+  });
+    const loadMonChoHoaDon = async () => {
+      const res = await axios.get(`${BASE_URL}/monan`);
+      const select = document.getElementById("chon-mon-them");
 
+      select.innerHTML = "";
 
-  // --- 2. HÀM TẢI DANH SÁCH TÀI KHOẢN TỪ BACKEND ---
- const loadDanhSachNhanVien = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/nguoidung`);
-      const tbody = document.getElementById('bang-nhan-vien');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-
-      res.data.forEach(nd => {
-        // 1. Mặc định màu xám cho vai trò USER hoặc các vai trò khác
-        let badgeColor = 'badge-secondary'; 
-        
-        // 2. Kiểm tra chính xác bằng biến `nd`
-        if (nd.vaiTro === 'ADMIN') {
-            badgeColor = 'badge-danger';    // Màu đỏ nổi bật cho ADMIN
-        } else if (nd.vaiTro === 'STAFF') {
-            badgeColor = 'badge-primary';   // Màu xanh dương cho STAFF (Đã sửa item thành nd và badgeClass thành badgeColor)
-        }
-
-        tbody.innerHTML += `
-          <tr class="text-center">
-            <td>${nd.idNguoiDung || nd.id}</td>
-            <td class="text-center">${nd.tenKhachHang || nd.hoTen || 'Chưa cập nhật'}</td>
-            <td>${nd.email || 'N/A'}</td>
-            <td><span class="badge ${badgeColor}">${nd.vaiTro || 'KHACH_HANG'}</span></td>
-            <td>
-              <button class="btn btn-sm btn-info" onclick="moModalPhanQuyen(${nd.idNguoiDung || nd.id}, '${nd.vaiTro || 'KHACH_HANG'}')">
-                <i class="fas fa-edit"></i> Thay đổi nhiệm vụ
-              </button>
-            </td>
-          </tr>
-        `;
+      res.data.forEach(mon => {
+        select.innerHTML += `
+        <option value="${mon.idMonAn}">
+          ${mon.tenMon} - ${formatVND(mon.giaTien)}
+        </option>
+      `;
       });
+    };
+    const themMonVaoHoaDon = async () => {
+      const idHoaDon = document.getElementById('thanh-toan-hd-id').value;
+      const idMonAn = document.getElementById('chon-mon-them').value;
+      const soLuong = parseInt(document.getElementById('so-luong-them').value);
+
+      if (!soLuong || soLuong <= 0) {
+        return alert("Số lượng không hợp lệ!");
+      }
+
+      try {
+        await axios.post(`${BASE_URL}/chitiethoadon`, {
+          idHoaDon: idHoaDon,
+          idMonAn: idMonAn,
+          soLuong: soLuong
+        });
+
+        alert("Đã thêm món vào hóa đơn!");
+
+        // KHÔNG lấy tổng tiền cũ từ input nữa
+        const soBan = document.getElementById('thanh-toan-hd-soban').value;
+
+        // Cập nhật lại bảng ngoài danh sách trước (lúc này API GET /hoadon sẽ trả về 70.000đ)
+        await loadDanhSachHoaDonToanBo();
+        loadHoaDon();
+
+        // Mở lại modal, truyền 0 vào vì hàm moModalChiTietHD sẽ tự chạy tinhTongTienHoaDon()
+        moModalChiTietHD(idHoaDon, 'DangXuLy', 0, soBan)
+
+        // reload dashboard
+        loadHoaDon();
+        loadDanhSachHoaDonToanBo();
+
+      } catch (err) {
+        console.error(err);
+        alert("Lỗi khi thêm món!");
+      }
+    };
+    const xoaMonKhoiHoaDon = async (idChiTiet, idHoaDon) => {
+      if (!confirm("Xóa món này khỏi hóa đơn?")) return;
+
+      try {
+        await axios.delete(`${BASE_URL}/chitiethoadon/${idChiTiet}`);
+
+       // ... (Phần axios.delete giữ nguyên)
+        alert("Đã xóa món!");
+
+        const soBan = document.getElementById('thanh-toan-hd-soban').value;
+
+        // Cập nhật lại bảng ngoài danh sách
+        await loadDanhSachHoaDonToanBo();
+        loadHoaDon();
+
+        // Mở lại modal
+        moModalChiTietHD(idHoaDon, 'DangXuLy', 0, soBan);
+
+        await moModalChiTietHD(idHoaDon, 'ChuaThanhToan', 0);
+        // 🔥 cập nhật dashboard luôn
+        loadHoaDon();
+        loadDanhSachHoaDonToanBo();
+
+      } catch (err) {
+        console.error(err);
+        alert("Lỗi khi xóa món!");
+      }
+    };
+    const tinhTongTienHoaDon = () => {
+      const rows = document.querySelectorAll("#bang-chi-tiet-hd tr");
+
+      let tong = 0;
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+
+        // bỏ qua dòng "không có dữ liệu"
+        if (cells.length < 5) return;
+
+        const thanhTienText = cells[4].innerText.replace(/[^\d]/g, "");
+        const thanhTien = parseFloat(thanhTienText) || 0;
+
+        tong += thanhTien;
+      });
+
+      document.getElementById("hd-tong-tien-text").innerText =
+              new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(tong);
+
+      document.getElementById("thanh-toan-hd-tong").value = tong;
+
+      return tong;
+    };
+  // Hàm đồng bộ tổng tiền mới tính được lên Database
+  const capNhatTongTienLendBackend = async (idHoaDon, tongTienMoi) => {
+    try {
+      // Lấy thông tin hóa đơn hiện tại
+      const res = await axios.get(`${BASE_URL}/hoadon/${idHoaDon}`);
+      let hoaDon = res.data;
+
+      // Gán tổng tiền mới
+      hoaDon.tongTien = tongTienMoi;
+
+      // Gửi lệnh PUT để cập nhật
+      await axios.put(`${BASE_URL}/hoadon/${idHoaDon}`, hoaDon);
     } catch (error) {
-      console.error("Lỗi tải danh sách người dùng:", error);
+      console.error("Lỗi đồng bộ tổng tiền:", error);
     }
-};
-
-  // --- 3. HÀM MỞ MODAL PHÂN QUYỀN ---
-  const moModalPhanQuyen = (id, vaiTroHienTai) => {
-    document.getElementById('id-nguoi-dung-dang-sua').value = id;
-    document.getElementById('chon-vai-tro').value = vaiTroHienTai;
-    $('#modalPhanQuyen').modal('show');
   };
-
-  // --- 4. HÀM GỬI YÊU CẦU THAY ĐỔI XUỐNG SPRING BOOT ---
-  const luuVaiTroMoi = async () => {
-    const id = document.getElementById('id-nguoi-dung-dang-sua').value;
-    const vaiTroMoi = document.getElementById('chon-vai-tro').value;
+  const huyHoaDonToanBo = async (idHoaDon) => {
+    if (user && user.vaiTro !== "ADMIN") {
+        alert("Bạn không có quyền thực hiện chức năng hủy hóa đơn này!");
+        return;
+    }
+    if (!confirm(`Bạn có chắc chắn muốn HỦY và XÓA hoàn toàn hóa đơn HD${idHoaDon}?`)) return;
 
     try {
-      await axios.put(`${BASE_URL}/nguoidung/${id}/vaitro`, { vaiTro: vaiTroMoi });
-      alert("Đã phân công lại nhiệm vụ thành công!");
-      $('#modalPhanQuyen').modal('hide');
-      loadDanhSachNhanVien(); // Tải lại bảng để cập nhật giao diện ngay lập tức
+      // Gửi lệnh xóa lên API hóa đơn của Backend
+      await axios.delete(`${BASE_URL}/hoadon/${idHoaDon}`);
+
+      alert("Đã hủy hóa đơn thành công!");
+
+      // Tải lại các danh sách để cập nhật giao diện ngay lập tức
+      loadDanhSachHoaDonToanBo();
+      loadGiaoDienBan();
+      loadBan();
+      loadHoaDon();
     } catch (error) {
-      console.error("Lỗi thay đổi nhiệm vụ nhân viên:", error);
-      alert("Cập nhật thất bại! Vui lòng kiểm tra lại API.");
+      console.error("Lỗi khi hủy hóa đơn:", error);
+      alert("Không thể hủy hóa đơn này! (Có thể do vướng dữ liệu chi tiết ở Backend)");
     }
   };
-  $(document).ready(function () {
-    // 1. TỰ ĐỘNG THIẾT LẬP THỜI GIAN THÁNG HIỆN TẠI
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng dạng 01, 02...
-    
-    // Ngày đầu tháng (01) và ngày hiện tại (Hệ thống tự động đồng bộ theo thời gian thực)
-    const firstDay = `${year}-${month}-01`;
-    const today = `${year}-${month}-${String(now.getDate()).padStart(2, '0')}`;
 
-    // Gán giá trị mặc định vào ô Input
-    $('#fromDate').val(firstDay);
-    $('#toDate').val(today);
 
-    // 2. HÀM TẢI, LỌC VÀ VẼ DỮ LIỆU THEO NGÀY MONG MUỐN
-    async function loadDataAndRender(startDate, endDate) {
-        // Cập nhật lại tiêu đề text hiển thị
-        const startDisp = startDate.split('-').reverse().join('/');
-        const endDisp = endDate.split('-').reverse().join('/');
-        $('#chartTitle').text(`Biểu đồ doanh thu: ${startDisp} - ${endDisp}`);
+    // --- 2. HÀM TẢI DANH SÁCH TÀI KHOẢN TỪ BACKEND ---
+   const loadDanhSachNhanVien = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/nguoidung`);
+        const tbody = document.getElementById('bang-nhan-vien');
+        if (!tbody) return;
+        tbody.innerHTML = '';
 
-        // Hiển thị trạng thái đang tải ở bảng
-        $('#bang-doanh-thu-ngay').html('<tr><td colspan="4">Đang tải dữ liệu...</td></tr>');
+        res.data.forEach(nd => {
+          // 1. Mặc định màu xám cho vai trò USER hoặc các vai trò khác
+          let badgeColor = 'badge-secondary';
 
-        try {
-            // Gọi trực tiếp đến API tổng của hệ thống bạn
-            const response = await axios.get(`${BASE_URL}/hoadon`);
-            const hoadons = response.data;
+          // 2. Kiểm tra chính xác bằng biến `nd`
+          if (nd.vaiTro === 'ADMIN') {
+              badgeColor = 'badge-danger';    // Màu đỏ nổi bật cho ADMIN
+          } else if (nd.vaiTro === 'STAFF') {
+              badgeColor = 'badge-primary';   // Màu xanh dương cho STAFF (Đã sửa item thành nd và badgeClass thành badgeColor)
+          }
 
-            // Lọc hóa đơn Đã thanh toán và nằm trong khoảng thời gian người dùng chọn
-            const hdHopLe = hoadons.filter(hd => {
-                if (hd.trangThai !== 'DaThanhToan' || !hd.ngayTao) return false;
-                const ngayHD = hd.ngayTao.split('T')[0]; // Lấy định dạng YYYY-MM-DD
-                return ngayHD >= startDate && ngayHD <= endDate;
-            });
+          tbody.innerHTML += `
+            <tr class="text-center">
+              <td>${nd.idNguoiDung || nd.id}</td>
+              <td class="text-center">${nd.tenKhachHang || nd.hoTen || 'Chưa cập nhật'}</td>
+              <td>${nd.email || 'N/A'}</td>
+              <td><span class="badge ${badgeColor}">${nd.vaiTro || 'KHACH_HANG'}</span></td>
+              <td>
+                <button class="btn btn-sm btn-info" onclick="moModalPhanQuyen(${nd.idNguoiDung || nd.id}, '${nd.vaiTro || 'KHACH_HANG'}')">
+                  <i class="fas fa-edit"></i> Thay đổi nhiệm vụ
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      } catch (error) {
+        console.error("Lỗi tải danh sách người dùng:", error);
+      }
+  };
 
-            // Gom nhóm dữ liệu theo ngày để chuẩn bị vẽ biểu đồ và bảng
-            const doanhThuTheoNgay = {};
-            
-            // Khởi tạo các ngày trong khoảng từ startDate đến endDate để biểu đồ không bị khuyết ngày
-            let currentStr = startDate;
-            while (currentStr <= endDate) {
-                doanhThuTheoNgay[currentStr] = { soDon: 0, tongTien: 0 };
-                let d = new Date(currentStr);
-                d.setDate(d.getDate() + 1);
-                currentStr = d.toISOString().split('T')[0];
-            }
+    // --- 3. HÀM MỞ MODAL PHÂN QUYỀN ---
+    const moModalPhanQuyen = (id, vaiTroHienTai) => {
+      document.getElementById('id-nguoi-dung-dang-sua').value = id;
+      document.getElementById('chon-vai-tro').value = vaiTroHienTai;
+      $('#modalPhanQuyen').modal('show');
+    };
 
-            // Đổ dữ liệu thật vào nhóm ngày
-            hdHopLe.forEach(hd => {
-                const ngay = hd.ngayTao.split('T')[0];
-                if (doanhThuTheoNgay[ngay]) {
-                    doanhThuTheoNgay[ngay].soDon += 1;
-                    doanhThuTheoNgay[ngay].tongTien += (hd.tongTien || 0);
-                }
-            });
+    // --- 4. HÀM GỬI YÊU CẦU THAY ĐỔI XUỐNG SPRING BOOT ---
+    const luuVaiTroMoi = async () => {
+      const id = document.getElementById('id-nguoi-dung-dang-sua').value;
+      const vaiTroMoi = document.getElementById('chon-vai-tro').value;
 
-            // Sắp xếp mảng ngày tăng dần cho biểu đồ
-            const mangNgayTangDan = Object.keys(doanhThuTheoNgay).sort((a, b) => new Date(a) - new Date(b));
-            
-            const labelsBieuDo = mangNgayTangDan.map(ngay => {
-                const [y, m, d] = ngay.split('-');
-                return `${d}/${m}`;
-            });
-            const dataBieuDo = mangNgayTangDan.map(ngay => doanhThuTheoNgay[ngay].tongTien);
+      try {
+        await axios.put(`${BASE_URL}/nguoidung/${id}/vaitro`, { vaiTro: vaiTroMoi });
+        alert("Đã phân công lại nhiệm vụ thành công!");
+        $('#modalPhanQuyen').modal('hide');
+        loadDanhSachNhanVien(); // Tải lại bảng để cập nhật giao diện ngay lập tức
+      } catch (error) {
+        console.error("Lỗi thay đổi nhiệm vụ nhân viên:", error);
+        alert("Cập nhật thất bại! Vui lòng kiểm tra lại API.");
+      }
+    };
+    $(document).ready(function () {
+      // 1. TỰ ĐỘNG THIẾT LẬP THỜI GIAN THÁNG HIỆN TẠI
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng dạng 01, 02...
 
-            // --- VẼ HOẶC CẬP NHẬT BIỂU ĐỒ (salesChart) ---
-            const canvas = document.getElementById('salesChart');
-            if (canvas) {
-                if (bieuDoTongQuan) bieuDoTongQuan.destroy(); // Hủy biểu đồ cũ gốc để chống nhấp nháy dữ liệu
-                
-                bieuDoTongQuan = new Chart(canvas.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: labelsBieuDo,
-                        datasets: [{
-                            label: 'Doanh thu (VNĐ)',
-                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                            borderColor: 'rgba(0, 123, 255, 1)',
-                            pointBackgroundColor: '#28a745',
-                            pointRadius: 4,
-                            data: dataBieuDo,
-                            fill: true,
-                            borderWidth: 2,
-                            tension: 0.3
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    callback: value => value.toLocaleString('vi-VN') + ' đ'
-                                }
-                            }]
-                        },
-                        tooltips: {
-                            callbacks: {
-                                label: tooltipItem => tooltipItem.yLabel.toLocaleString('vi-VN') + ' đ'
-                            }
-                        }
-                    }
-                });
-            }
+      // Ngày đầu tháng (01) và ngày hiện tại (Hệ thống tự động đồng bộ theo thời gian thực)
+      const firstDay = `${year}-${month}-01`;
+      const today = `${year}-${month}-${String(now.getDate()).padStart(2, '0')}`;
 
-            // --- ĐỔ DỮ LIỆU MỚI VÀO BẢNG HIỂN THỊ (Ngày mới nhất xếp lên đầu) ---
-            const mangNgayGiamDan = [...mangNgayTangDan].reverse();
-            let htmlTable = '';
-            let stt = 1;
+      // Gán giá trị mặc định vào ô Input
+      $('#fromDate').val(firstDay);
+      $('#toDate').val(today);
 
-            let coDuLieu = false;
-            mangNgayGiamDan.forEach(ngay => {
-                const item = doanhThuTheoNgay[ngay];
-                if (item.soDon > 0) { // Chỉ hiện những ngày thực sự có doanh thu
-                    coDuLieu = true;
-                    const [y, m, d] = ngay.split('-');
-                    htmlTable += `
-                        <tr>
-                            <td>${stt++}</td>
-                            <td class="font-weight-bold text-primary">${d}/${m}/${y}</td>
-                            <td><span class="badge badge-secondary px-2">${item.soDon} đơn</span></td>
-                            <td class="text-success font-weight-bold" style="font-size: 1.1rem;">${formatVND(item.tongTien)}</td>
-                        </tr>
-                    `;
-                }
-            });
+      // 2. HÀM TẢI, LỌC VÀ VẼ DỮ LIỆU THEO NGÀY MONG MUỐN
+      async function loadDataAndRender(startDate, endDate) {
+          // Cập nhật lại tiêu đề text hiển thị
+          const startDisp = startDate.split('-').reverse().join('/');
+          const endDisp = endDate.split('-').reverse().join('/');
+          $('#chartTitle').text(`Biểu đồ doanh thu: ${startDisp} - ${endDisp}`);
 
-            if (!coDuLieu) {
-                htmlTable = '<tr><td colspan="4">Không có dữ liệu doanh thu trong khoảng thời gian này.</td></tr>';
-            }
-            $('#bang-doanh-thu-ngay').html(htmlTable);
+          // Hiển thị trạng thái đang tải ở bảng
+          $('#bang-doanh-thu-ngay').html('<tr><td colspan="4">Đang tải dữ liệu...</td></tr>');
 
-        } catch (error) {
-            console.error("Lỗi xử lý bộ lọc doanh thu:", error);
-            $('#bang-doanh-thu-ngay').html('<tr><td colspan="4" class="text-danger">Lỗi kết nối API hệ thống!</td></tr>');
-        }
-    }
+          try {
+              // Gọi trực tiếp đến API tổng của hệ thống bạn
+              const response = await axios.get(`${BASE_URL}/hoadon`);
+              const hoadons = response.data;
 
-    // 3. CHẠY LẦN ĐẦU TIÊN KHI TRANG LOAD (Mặc định tự động tính tháng hiện tại)
-    loadDataAndRender(firstDay, today);
+              // Lọc hóa đơn Đã thanh toán và nằm trong khoảng thời gian người dùng chọn
+              const hdHopLe = hoadons.filter(hd => {
+                  if (hd.trangThai !== 'DaThanhToan' || !hd.ngayTao) return false;
+                  const ngayHD = hd.ngayTao.split('T')[0]; // Lấy định dạng YYYY-MM-DD
+                  return ngayHD >= startDate && ngayHD <= endDate;
+              });
 
-    // 4. BẮT SỰ KIỆN KHI BẤM NÚT LỌC
-    $('#btnFilter').click(function () {
-        const startDate = $('#fromDate').val();
-        const endDate = $('#toDate').val();
+              // Gom nhóm dữ liệu theo ngày để chuẩn bị vẽ biểu đồ và bảng
+              const doanhThuTheoNgay = {};
 
-        if (!startDate || !endDate) {
-            alert('Vui lòng chọn đầy đủ từ ngày và đến ngày!');
-            return;
-        }
+              // Khởi tạo các ngày trong khoảng từ startDate đến endDate để biểu đồ không bị khuyết ngày
+              let currentStr = startDate;
+              while (currentStr <= endDate) {
+                  doanhThuTheoNgay[currentStr] = { soDon: 0, tongTien: 0 };
+                  let d = new Date(currentStr);
+                  d.setDate(d.getDate() + 1);
+                  currentStr = d.toISOString().split('T')[0];
+              }
 
-        if (new Date(startDate) > new Date(endDate)) {
-            alert('Ngày bắt đầu không được lớn hơn ngày kết thúc!');
-            return;
-        }
+              // Đổ dữ liệu thật vào nhóm ngày
+              hdHopLe.forEach(hd => {
+                  const ngay = hd.ngayTao.split('T')[0];
+                  if (doanhThuTheoNgay[ngay]) {
+                      doanhThuTheoNgay[ngay].soDon += 1;
+                      doanhThuTheoNgay[ngay].tongTien += (hd.tongTien || 0);
+                  }
+              });
 
-        // Kích hoạt tính toán lại toàn bộ dữ liệu theo khoảng ngày mới chọn
-        loadDataAndRender(startDate, endDate);
-    });
-});
+              // Sắp xếp mảng ngày tăng dần cho biểu đồ
+              const mangNgayTangDan = Object.keys(doanhThuTheoNgay).sort((a, b) => new Date(a) - new Date(b));
+
+              const labelsBieuDo = mangNgayTangDan.map(ngay => {
+                  const [y, m, d] = ngay.split('-');
+                  return `${d}/${m}`;
+              });
+              const dataBieuDo = mangNgayTangDan.map(ngay => doanhThuTheoNgay[ngay].tongTien);
+
+              // --- VẼ HOẶC CẬP NHẬT BIỂU ĐỒ (salesChart) ---
+              const canvas = document.getElementById('salesChart');
+              if (canvas) {
+                  if (bieuDoTongQuan) bieuDoTongQuan.destroy(); // Hủy biểu đồ cũ gốc để chống nhấp nháy dữ liệu
+
+                  bieuDoTongQuan = new Chart(canvas.getContext('2d'), {
+                      type: 'line',
+                      data: {
+                          labels: labelsBieuDo,
+                          datasets: [{
+                              label: 'Doanh thu (VNĐ)',
+                              backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                              borderColor: 'rgba(0, 123, 255, 1)',
+                              pointBackgroundColor: '#28a745',
+                              pointRadius: 4,
+                              data: dataBieuDo,
+                              fill: true,
+                              borderWidth: 2,
+                              tension: 0.3
+                          }]
+                      },
+                      options: {
+                          responsive: true,
+                          maintainAspectRatio: false,
+                          scales: {
+                              yAxes: [{
+                                  ticks: {
+                                      beginAtZero: true,
+                                      callback: value => value.toLocaleString('vi-VN') + ' đ'
+                                  }
+                              }]
+                          },
+                          tooltips: {
+                              callbacks: {
+                                  label: tooltipItem => tooltipItem.yLabel.toLocaleString('vi-VN') + ' đ'
+                              }
+                          }
+                      }
+                  });
+              }
+
+              // --- ĐỔ DỮ LIỆU MỚI VÀO BẢNG HIỂN THỊ (Ngày mới nhất xếp lên đầu) ---
+              const mangNgayGiamDan = [...mangNgayTangDan].reverse();
+              let htmlTable = '';
+              let stt = 1;
+
+              let coDuLieu = false;
+              mangNgayGiamDan.forEach(ngay => {
+                  const item = doanhThuTheoNgay[ngay];
+                  if (item.soDon > 0) { // Chỉ hiện những ngày thực sự có doanh thu
+                      coDuLieu = true;
+                      const [y, m, d] = ngay.split('-');
+                      htmlTable += `
+                          <tr>
+                              <td>${stt++}</td>
+                              <td class="font-weight-bold text-primary">${d}/${m}/${y}</td>
+                              <td><span class="badge badge-secondary px-2">${item.soDon} đơn</span></td>
+                              <td class="text-success font-weight-bold" style="font-size: 1.1rem;">${formatVND(item.tongTien)}</td>
+                          </tr>
+                      `;
+                  }
+              });
+
+              if (!coDuLieu) {
+                  htmlTable = '<tr><td colspan="4">Không có dữ liệu doanh thu trong khoảng thời gian này.</td></tr>';
+              }
+              $('#bang-doanh-thu-ngay').html(htmlTable);
+
+          } catch (error) {
+              console.error("Lỗi xử lý bộ lọc doanh thu:", error);
+              $('#bang-doanh-thu-ngay').html('<tr><td colspan="4" class="text-danger">Lỗi kết nối API hệ thống!</td></tr>');
+          }
+      }
+
+      // 3. CHẠY LẦN ĐẦU TIÊN KHI TRANG LOAD (Mặc định tự động tính tháng hiện tại)
+      loadDataAndRender(firstDay, today);
+
+      // 4. BẮT SỰ KIỆN KHI BẤM NÚT LỌC
+      $('#btnFilter').click(function () {
+          const startDate = $('#fromDate').val();
+          const endDate = $('#toDate').val();
+
+          if (!startDate || !endDate) {
+              alert('Vui lòng chọn đầy đủ từ ngày và đến ngày!');
+              return;
+          }
+
+          if (new Date(startDate) > new Date(endDate)) {
+              alert('Ngày bắt đầu không được lớn hơn ngày kết thúc!');
+              return;
+          }
+
+          // Kích hoạt tính toán lại toàn bộ dữ liệu theo khoảng ngày mới chọn
+          loadDataAndRender(startDate, endDate);
+      });
+  });
 </script>
 <script src="js/chatbot.js"></script>
 </body>

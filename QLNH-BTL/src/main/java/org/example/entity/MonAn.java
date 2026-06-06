@@ -23,7 +23,8 @@ public class MonAn {
     @Column(name = "mo_ta", columnDefinition = "TEXT")
     private String moTa;
 
-    @Column(name = "hinh_anh", length = 255)
+    @Lob
+    @Column(name = "hinh_anh", columnDefinition = "LONGTEXT")
     private String hinhAnh;
 
     @ManyToOne
