@@ -90,15 +90,15 @@
       <span class="brand-text font-weight-light">Hệ Thống QLNH</span>
     </a>
 
-    <div class="sidebar">
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Quản Trị Viên</a>
-        </div>
-      </div>
+   <div class="sidebar">
+  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+      <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+    </div>
+    <div class="info">
+      <a href="profile.html" class="d-block" id="ten-user-sidebar">Quản Trị Viên</a>
+    </div>
+  </div>
 
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -144,7 +144,7 @@
           <li class="nav-item">
     <a href="javascript:void(0)" class="nav-link" id="menu-nhan-vien">
         <i class="nav-icon fas fa-users"></i>
-        <p>Quản Lý Nhân Viên</p>
+        <p>Quản Lý Người Dùng</p>
     </a>
 </li>
           
@@ -675,6 +675,7 @@
                     <label for="chon-vai-tro">Chọn nhiệm vụ mới:</label>
                  <select class="form-control" id="chon-vai-tro">
     <option value="USER">Người Dùng (USER)</option>
+    <option value="STAFF">Nhân Viên (STAFF)</option>
     <option value="ADMIN">Quản Trị Viên (ADMIN)</option>
 </select>
                 </div>
@@ -706,7 +707,7 @@
 
 <script>
   const user = JSON.parse(localStorage.getItem("user"));
-if (!user || user.vaiTro !== "ADMIN") {
+if (!user || (user.vaiTro !== "ADMIN" && user.vaiTro !== "STAFF")) {
     alert("Bạn không có quyền truy cập trang này!");
     window.location.href = "login.html";
 }
@@ -1484,24 +1485,27 @@ ul.innerHTML += `
         const idHD = hd.idHoaDon || hd.id;
         let soBan = (hd.ban && hd.ban.soBan) ? hd.ban.soBan : (hd.idBan || '?');
 
-        tbody.innerHTML += `
-          <tr>
-            <td class="font-weight-bold">HD${idHD}</td>
-            <td>Bàn ${soBan}</td>
-            <td>${hd.ngayTao ? hd.ngayTao.replace('T', ' ').substring(0, 16) : 'N/A'}</td>
-            <td class="text-warning font-weight-bold">${formatVND(hd.tongTien || 0)}</td>
-            <td><span class="badge ${badgeClass} px-2 py-1">${txtStatus}</span></td>
-            <td>
-              <button class="btn btn-sm btn-info" onclick="moModalChiTietHD(${idHD}, '${hd.trangThai}', ${hd.tongTien || 0}, ${soBan})">
-                <i class="fas fa-eye"></i> Xem / Thanh Toán
-              </button>
-              <button class="btn btn-sm btn-danger ml-1" onclick="huyHoaDonToanBo(${idHD})">
-                <i class="fas fa-trash"></i> Hủy Đơn
-              </button>
-            </td>
-            
-          </tr>
-        `;
+        const nutHuyDon = (user && user.vaiTro === "ADMIN") ? `
+  <button class="btn btn-sm btn-danger ml-1" onclick="huyHoaDonToanBo(${idHD})">
+    <i class="fas fa-trash"></i> Hủy Đơn
+  </button>
+` : '';
+
+tbody.innerHTML += `
+  <tr>
+    <td class="font-weight-bold">HD${idHD}</td>
+    <td>Bàn ${soBan}</td>
+    <td>${hd.ngayTao ? hd.ngayTao.replace('T', ' ').substring(0, 16) : 'N/A'}</td>
+    <td class="text-warning font-weight-bold">${formatVND(hd.tongTien || 0)}</td>
+    <td><span class="badge ${badgeClass} px-2 py-1">${txtStatus}</span></td>
+    <td>
+      <button class="btn btn-sm btn-info" onclick="moModalChiTietHD(${idHD}, '${hd.trangThai}', ${hd.tongTien || 0}, ${soBan})">
+        <i class="fas fa-eye"></i> Xem / Thanh Toán
+      </button>
+      ${nutHuyDon}
+    </td>
+  </tr>
+`;
       });
     } catch (error) {
       console.error("Lỗi danh sách Hóa Đơn:", error);
@@ -1639,12 +1643,42 @@ ul.innerHTML += `
   // =========================================================
   // 7. KHỞI CHẠY KHI TẢI TRANG
   // =========================================================
-  document.addEventListener("DOMContentLoaded", () => {
-    // Mặc định load tab Tổng quan
-    loadBan();
-    loadHoaDon();
-    loadMonAn();
-  });
+ document.addEventListener("DOMContentLoaded", () => {
+  // ---- TỰ ĐỘNG ĐỔI TÊN VÀ ĐỔI MÀU ROLE TRÊN SIDEBAR ----
+    const user = JSON.parse(localStorage.getItem("user"));
+    
+    if (user && document.getElementById('ten-user-sidebar')) {
+        let badgeColor = 'badge-secondary'; // Mặc định USER màu xám
+        
+        if (user.vaiTro === 'ADMIN') {
+            badgeColor = 'badge-danger';   // ADMIN màu đỏ
+        } else if (user.vaiTro === 'STAFF') {
+            badgeColor = 'badge-primary';  // STAFF màu xanh dương
+        }
+
+        // Lấy tên người dùng (ưu tiên hoTen hoặc tenKhachHang tùy thuộc vào API của bạn)
+        const tenNguoiDung = user.hoTen || user.tenKhachHang || 'Người dùng';
+
+        // Đổ dữ liệu ra sidebar bao gồm: Tên + Badge màu
+        document.getElementById('ten-user-sidebar').innerHTML = `
+            ${tenNguoiDung} <span class="badge ${badgeColor} ml-1" style="font-size: 11px;">${user.vaiTro}</span>
+        `;
+    }
+  // Phân quyền ẩn chức năng cho STAFF
+  if (user && user.vaiTro === "STAFF") {
+      if (document.getElementById('menu-nhan-vien')) {
+          document.getElementById('menu-nhan-vien').parentElement.style.display = 'none';
+      }
+      if (document.getElementById('menu-bao-cao')) {
+          document.getElementById('menu-bao-cao').parentElement.style.display = 'none';
+      }
+  }
+
+  // Mặc định load tab Tổng quan
+  loadBan();
+  loadHoaDon();
+  loadMonAn();
+});
   const loadMonChoHoaDon = async () => {
     const res = await axios.get(`${BASE_URL}/monan`);
     const select = document.getElementById("chon-mon-them");
@@ -1765,6 +1799,10 @@ const capNhatTongTienLendBackend = async (idHoaDon, tongTienMoi) => {
   }
 };
 const huyHoaDonToanBo = async (idHoaDon) => {
+  if (user && user.vaiTro !== "ADMIN") {
+      alert("Bạn không có quyền thực hiện chức năng hủy hóa đơn này!");
+      return;
+  }
   if (!confirm(`Bạn có chắc chắn muốn HỦY và XÓA hoàn toàn hóa đơn HD${idHoaDon}?`)) return;
 
   try {
@@ -1786,7 +1824,7 @@ const huyHoaDonToanBo = async (idHoaDon) => {
 
 
   // --- 2. HÀM TẢI DANH SÁCH TÀI KHOẢN TỪ BACKEND ---
-  const loadDanhSachNhanVien = async () => {
+ const loadDanhSachNhanVien = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/nguoidung`);
       const tbody = document.getElementById('bang-nhan-vien');
@@ -1794,12 +1832,15 @@ const huyHoaDonToanBo = async (idHoaDon) => {
       tbody.innerHTML = '';
 
       res.data.forEach(nd => {
-        // Tạo nhãn màu sắc trực quan tương ứng với từng công việc
-      // Thiết lập màu sắc tương ứng cho ADMIN và USER
-let badgeColor = 'badge-secondary'; // Màu xám mặc định cho vai trò USER
-if (nd.vaiTro === 'ADMIN') {
-    badgeColor = 'badge-danger';    // Màu đỏ nổi bật cho vai trò ADMIN
-}
+        // 1. Mặc định màu xám cho vai trò USER hoặc các vai trò khác
+        let badgeColor = 'badge-secondary'; 
+        
+        // 2. Kiểm tra chính xác bằng biến `nd`
+        if (nd.vaiTro === 'ADMIN') {
+            badgeColor = 'badge-danger';    // Màu đỏ nổi bật cho ADMIN
+        } else if (nd.vaiTro === 'STAFF') {
+            badgeColor = 'badge-primary';   // Màu xanh dương cho STAFF (Đã sửa item thành nd và badgeClass thành badgeColor)
+        }
 
         tbody.innerHTML += `
           <tr class="text-center">
@@ -1818,7 +1859,7 @@ if (nd.vaiTro === 'ADMIN') {
     } catch (error) {
       console.error("Lỗi tải danh sách người dùng:", error);
     }
-  };
+};
 
   // --- 3. HÀM MỞ MODAL PHÂN QUYỀN ---
   const moModalPhanQuyen = (id, vaiTroHienTai) => {
