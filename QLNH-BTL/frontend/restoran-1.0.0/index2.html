@@ -1672,13 +1672,14 @@ tbody.innerHTML += `
       if (document.getElementById('menu-bao-cao')) {
           document.getElementById('menu-bao-cao').parentElement.style.display = 'none';
       }
-  }
-  const navHeaders = document.querySelectorAll('.nav-header');
+    const navHeaders = document.querySelectorAll('.nav-header');
       navHeaders.forEach(header => {
           if (header.textContent.trim() === "HỆ THỐNG & NHÂN SỰ") {
               header.style.display = 'none';
           }
       });
+  }
+  
 
   // Mặc định load tab Tổng quan
   loadBan();
