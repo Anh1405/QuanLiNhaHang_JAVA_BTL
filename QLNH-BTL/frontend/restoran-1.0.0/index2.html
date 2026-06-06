@@ -1657,7 +1657,7 @@ tbody.innerHTML += `
         }
 
         // Lấy tên người dùng (ưu tiên hoTen hoặc tenKhachHang tùy thuộc vào API của bạn)
-        const tenNguoiDung = user.hoTen || user.tenKhachHang || 'Người dùng';
+        const tenNguoiDung = user.username || user.tenKhachHang || 'Người dùng';
 
         // Đổ dữ liệu ra sidebar bao gồm: Tên + Badge màu
         document.getElementById('ten-user-sidebar').innerHTML = `
@@ -1673,6 +1673,12 @@ tbody.innerHTML += `
           document.getElementById('menu-bao-cao').parentElement.style.display = 'none';
       }
   }
+  const navHeaders = document.querySelectorAll('.nav-header');
+      navHeaders.forEach(header => {
+          if (header.textContent.trim() === "HỆ THỐNG & NHÂN SỰ") {
+              header.style.display = 'none';
+          }
+      });
 
   // Mặc định load tab Tổng quan
   loadBan();
