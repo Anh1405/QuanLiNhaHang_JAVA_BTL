@@ -2,18 +2,33 @@ package org.example.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class VnPayConfig {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://127.0.0.1:5500/payment-result.html";
+    public static String vnp_ReturnUrl = "https://restoranqka.up.railway.app/payment-result.html";
     public static String vnp_TmnCode = "OIT3PGPN";
     public static String vnp_HashSecret = "BSYALUANCJF064C2XBESWEZBWXS1Y2I1";
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
+    public static String getCreateDate() {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        return now.format(formatter);
+    }
 
+    // Hàm lấy thời gian hết hạn giao dịch (+15 phút theo giờ Việt Nam)
+    public static String getExpireDate() {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        ZonedDateTime expire = now.plusMinutes(15); // VNPAY khuyến khích tối thiểu 15 phút
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        return expire.format(formatter);
+    }
     public static String hmacSHA512(final String key, final String data) {
         try {
             if (key == null || data == null) {
