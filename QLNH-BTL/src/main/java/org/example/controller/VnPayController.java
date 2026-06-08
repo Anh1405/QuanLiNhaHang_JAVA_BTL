@@ -71,6 +71,8 @@ public class VnPayController {
         vnp_Params.put("vnp_Version", VnPayConfig.vnp_Version);
         vnp_Params.put("vnp_Command", VnPayConfig.vnp_Command);
         vnp_Params.put("vnp_TmnCode", VnPayConfig.vnp_TmnCode);
+        vnp_Params.put("vnp_CreateDate", VnPayConfig.getCreateDate());
+        vnp_Params.put("vnp_ExpireDate", VnPayConfig.getExpireDate());
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
