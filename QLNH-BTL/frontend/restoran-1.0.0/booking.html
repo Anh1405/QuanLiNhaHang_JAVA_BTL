@@ -557,9 +557,28 @@
             `;
         }
 
-        function formatTien(tien) {
-            return Number(tien).toLocaleString('vi-VN') + " đ";
-        }
+       function formatTien(tien) {
+    // 1. Chuyển đổi tham số truyền vào thành kiểu số để tránh lỗi dữ liệu đầu vào là chuỗi
+    const giaTriSo = Number(tien) || 0;
+
+    // 2. Lấy ngôn ngữ hiện tại từ localStorage
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
+    const exchangeRate = 26270; // Tỷ giá: 1 USD = 26.270 VNĐ
+
+    if (currentLang === "en") {
+        // Chuyển đổi sang USD
+        const priceInUSD = giaTriSo / exchangeRate;
+        
+        // Định dạng chuẩn Tiền tệ Mỹ (Tự động thêm $ và lấy 2 chữ số thập phân)
+        return priceInUSD.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        });
+    } else {
+        // Định dạng chuẩn Tiền tệ Việt Nam (Ví dụ: 150.000 VNĐ)
+        return giaTriSo.toLocaleString('vi-VN') + " VNĐ";
+    }
+}
 
         function xoaMon(idMonAn) {
             let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
