@@ -7,7 +7,7 @@
     <title>Restoran - Food Menu</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.png" rel="icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -193,7 +193,7 @@
         // LOAD DANH MỤC
         // =======================
          function loadDanhMuc() {
-    axios.get("https://restoranqka.up.railway.app/api/danhmuc")
+    axios.get("http://localhost:8080/api/danhmuc")
         .then(response => {
             allDanhMuc = response.data;
             
@@ -330,7 +330,7 @@
         // LOAD MÓN ĂN THEO DANH MỤC
         // =======================
         function loadMonAnTheoDanhMuc(idDanhMuc) {
-            axios.get(`https://restoranqka.up.railway.app/api/monan/danhmuc/${idDanhMuc}`)
+            axios.get(`http://localhost:8080/api/monan/danhmuc/${idDanhMuc}`)
                 .then(response => {
                     renderMenu({
                         monAns: response.data
