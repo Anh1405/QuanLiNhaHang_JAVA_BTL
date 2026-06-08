@@ -310,7 +310,7 @@
     <script src="js/chatbot.js"></script>
     <script>
         function loadBan() {
-            axios.get('https://quanlinhahang-java-btl-3se3.onrender.com/api/ban')
+            axios.get('https://restoranqka.up.railway.app/api/ban')
                 .then(res => {
                     renderBan(res.data);
                 })
@@ -430,7 +430,7 @@
 
         } else {
             const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
-            await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
+            await axios.put(`https://restoranqka.up.railway.app/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
             alert(`Đặt bàn thành công! Quý khách vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
             resetGiaoDienDatBan();
         }
@@ -459,7 +459,7 @@
                     duLieuDatBanTam.gioHang
                 );
 
-                await axios.put(`https://quanlinhahang-java-btl-3se3.onrender.com/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
+                await axios.put(`https://restoranqka.up.railway.app/api/ban/${duLieuDatBanTam.banDangChon}/status`, {
                     trangThai: 'CoKhach' 
                 });
 
@@ -496,7 +496,7 @@
     console.log("👉 ĐANG GỬI PAYLOAD LÊN SERVER:", payloadHoaDon);
     
     const resResult = await axios.post(
-        'https://quanlinhahang-java-btl-3se3.onrender.com/api/hoadon',
+        'https://restoranqka.up.railway.app/api/hoadon',
         payloadHoaDon
     );
 
@@ -513,7 +513,7 @@
     }));
 
     const requests = danhSachMon.map(item =>
-        axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/chitiethoadon', item)
+        axios.post('https://restoranqka.up.railway.app/api/chitiethoadon', item)
     );
 
     await Promise.all(requests);

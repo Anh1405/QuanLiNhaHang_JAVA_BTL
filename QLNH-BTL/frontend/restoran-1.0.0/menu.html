@@ -193,7 +193,7 @@
         // LOAD DANH MỤC
         // =======================
          function loadDanhMuc() {
-    axios.get("https://quanlinhahang-java-btl-3se3.onrender.com/api/danhmuc")
+    axios.get("https://restoranqka.up.railway.app/api/danhmuc")
         .then(response => {
             allDanhMuc = response.data;
             
@@ -330,7 +330,7 @@
         // LOAD MÓN ĂN THEO DANH MỤC
         // =======================
         function loadMonAnTheoDanhMuc(idDanhMuc) {
-            axios.get(`https://quanlinhahang-java-btl-3se3.onrender.com/api/monan/danhmuc/${idDanhMuc}`)
+            axios.get(`https://restoranqka.up.railway.app/api/monan/danhmuc/${idDanhMuc}`)
                 .then(response => {
                     renderMenu({
                         monAns: response.data
