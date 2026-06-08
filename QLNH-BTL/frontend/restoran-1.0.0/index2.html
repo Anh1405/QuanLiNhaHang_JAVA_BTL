@@ -711,11 +711,15 @@
 <script src="dist/js/pages/dashboard2.js"></script>
 
 <script>
-    const user = JSON.parse(localStorage.getItem("user"));
-  if (!user || (user.vaiTro !== "ADMIN" && user.vaiTro !== "STAFF")) {
-      alert("Bạn không có quyền truy cập trang này!")``;
-      window.location.href = "login.html";
-  }
+    (function chotChanQuyenTruyCap() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        
+        if (!user || (user.vaiTro !== "ADMIN" && user.vaiTro !== "STAFF")) {
+            alert("Bạn không có quyền truy cập trang này!");
+            window.location.href = "login.html";
+            return; // Dừng thực thi toàn bộ script phía sau
+        }
+    })();
     // =========================================================
     // 1. CẤU HÌNH & TIỆN ÍCH
     // =========================================================
