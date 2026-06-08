@@ -22,8 +22,6 @@ public class MonAn {
 
     @Column(name = "mo_ta", columnDefinition = "TEXT")
     private String moTa;
-
-    @Lob
     @Column(name = "hinh_anh", columnDefinition = "LONGTEXT")
     private String hinhAnh;
 
