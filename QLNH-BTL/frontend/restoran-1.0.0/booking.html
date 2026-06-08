@@ -310,22 +310,33 @@
     <script src="js/chatbot.js"></script>
     <script>
         function loadBan() {
-            axios.get('https://restoranqka.up.railway.app/api/ban')
-                .then(res => {
-                    renderBan(res.data);
-                })
-                .catch(err => {
-                    console.log("Không thể kết nối tới API. Hiển thị dữ liệu mẫu...");
-                    const dummyBans = [
-                        { soBan: 101, trangThai: 'Trong' }, { soBan: 102, trangThai: 'CoKhach' },
-                        { soBan: 103, trangThai: 'Trong' }, { soBan: 104, trangThai: 'Trong' },
-                        { soBan: 105, trangThai: 'CoKhach' },{ soBan: 106, trangThai: 'Trong' },
-                        { soBan: 201, trangThai: 'CoKhach' }, { soBan: 202, trangThai: 'Trong' },
-                        { soBan: 203, trangThai: 'Trong' }, { soBan: 204, trangThai: 'Trong' }
-                    ];
-                    renderBan(dummyBans);
-                });
-        }
+    axios.get('https://restoranqka.up.railway.app/api/ban')
+        .then(res => {
+            let dsBan = res.data;
+
+            // ================== LOGIC SỬA LỖI XẾP LỘN XỘN BÀN 10 TRƯỚC BÀN 9 ==================
+            // Ép mảng dữ liệu tự động sắp xếp lại theo thuộc tính idBan dạng số tăng dần
+            dsBan.sort((a, b) => parseInt(a.idBan) - parseInt(b.idBan));
+            // =================================================================================
+
+            renderBan(dsBan); // Truyền mảng đã sắp xếp chuẩn vào hàm vẽ giao diện
+        })
+        .catch(err => {
+            console.log("Không thể kết nối tới API. Hiển thị dữ liệu mẫu...");
+            const dummyBans = [
+                { idBan: 1, soBan: 101, trangThai: 'Trong' }, { idBan: 2, soBan: 102, trangThai: 'CoKhach' },
+                { idBan: 3, soBan: 103, trangThai: 'Trong' }, { idBan: 4, soBan: 104, trangThai: 'Trong' },
+                { idBan: 5, soBan: 105, trangThai: 'CoKhach' },{ idBan: 6, soBan: 106, trangThai: 'Trong' },
+                { idBan: 7, soBan: 201, trangThai: 'CoKhach' }, { idBan: 8, soBan: 202, trangThai: 'Trong' },
+                { idBan: 9, soBan: 203, trangThai: 'Trong' }, { idBan: 10, soBan: 204, trangThai: 'Trong' }
+            ];
+            
+            // Sắp xếp luôn cho cả mảng dữ liệu mẫu (nếu cần)
+            dummyBans.sort((a, b) => parseInt(a.idBan) - parseInt(b.idBan));
+            
+            renderBan(dummyBans);
+        });
+}
 
         function renderBan(bans) {
             const tang1 = document.getElementById('tang-1');
@@ -366,7 +377,7 @@
         let duLieuDatBanTam = null;
 
         async function datBan() {
-    // 1. Kiểm tra các điều kiện đầu vào (Validate)
+            // 1. Kiểm tra các điều kiện đầu vào (Validate giữ nguyên)
             const user = JSON.parse(localStorage.getItem("user"));
 
             if (!user) {
@@ -374,71 +385,86 @@
                 window.location.href = "login.html";
                 return;
             }
-    const ngayDat = document.querySelector('input[type="date"]').value;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); 
-    const ngayChon = new Date(ngayDat);
+            const ngayDat = document.querySelector('input[type="date"]').value;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); 
+            const ngayChon = new Date(ngayDat);
 
-    if (ngayChon < today) return alert("Ngày đặt bàn không được trong quá khứ!");
-    if (!banDangChon) return alert("Vui lòng chọn chỗ ngồi!");
+            if (ngayChon < today) return alert("Ngày đặt bàn không được trong quá khứ!");
+            if (!banDangChon) return alert("Vui lòng chọn chỗ ngồi!");
 
-    const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
-    if (gioHang.length === 0) return alert("Bạn chưa chọn món ăn nào!");
+            const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+            if (gioHang.length === 0) return alert("Bạn chưa chọn món ăn nào!");
 
-    const tenKhachHang = document.getElementById("tenKhachHang").value;
-    const soDienThoai = document.getElementById("soDienThoai").value;
-    if (!/^[0-9]{10}$/.test(soDienThoai)) return alert("Số điện thoại phải đúng 10 chữ số!");
+            const tenKhachHang = document.getElementById("tenKhachHang").value;
+            const soDienThoai = document.getElementById("soDienThoai").value;
+            if (!/^[0-9]{10}$/.test(soDienThoai)) return alert("Số điện thoại phải đúng 10 chữ số!");
 
-    // 👉 ĐỔI DÒNG NÀY: Ép kiểu Số Nguyên ngay tại đây và dùng biến let/const chuẩn
-    const soLuongKhachSelect = document.getElementById("soLuongKhach").value;
-    const soLuongKhach = parseInt(soLuongKhachSelect, 10) || 1; 
+            const soLuongKhachSelect = document.getElementById("soLuongKhach").value;
+            const soLuongKhach = parseInt(soLuongKhachSelect, 10) || 1; 
 
-    const ghiChu = document.getElementById("ghiChu").value;
-    if (!tenKhachHang || !soDienThoai) return alert("Vui lòng nhập đầy đủ Họ tên và Số điện thoại!");
+            const ghiChu = document.getElementById("ghiChu").value;
+            if (!tenKhachHang || !soDienThoai) return alert("Vui lòng nhập đầy đủ Họ tên và Số điện thoại!");
 
-    const tongTien = gioHang.reduce((total, mon) => total + (mon.gia * mon.soLuong), 0);
-    const phuongThucChon = document.querySelector('input[name="paymentMethod"]:checked').value;
+            const tongTien = gioHang.reduce((total, mon) => total + (mon.gia * mon.soLuong), 0);
+            const phuongThucChon = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-    try {
-        if (phuongThucChon === "VNPAY") {
-            // Đảm bảo dữ liệu tạm lưu con số đã được ép kiểu (Number)
-            duLieuDatBanTam = { tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, banDangChon, gioHang };
+            try {
+                // ĐÂY LÀ ĐOẠN ĐƯỢC THAY THẾ CHO PHƯƠNG THỨC VNPAY THẬT
+                if (phuongThucChon === "VNPAY") {
+                    
+                    // Chuẩn bị payload khớp dữ liệu đầu vào của Backend Java Controller
+                    const payloadVnPay = {
+                        tenKhachHang,
+                        soDienThoai,
+                        soLuongKhach,
+                        ghiChu,
+                        tongTien,
+                        idBan: banDangChon,
+                        idNguoiDung: user?.id
+                    };
 
-            const BANK_ID = "vietcombank";
-            const ACCOUNT_NO = "1234567890";
-            const ACCOUNT_NAME = "NGUYEN VAN A";
-            
-            const noiDungChuyenKhoan = `DAT BAN ${soDienThoai}`.replace(/[^a-zA-Z0-9 ]/g, "");
-            const qrImageUrl = `https://img.vietqr.io/image/${BANK_ID}-${ACCOUNT_NO}-compact2.png?amount=${tongTien}&addInfo=${encodeURIComponent(noiDungChuyenKhoan)}&accountName=${encodeURIComponent(ACCOUNT_NAME)}`;
+                    // Gọi lên server Spring Boot để tạo hóa đơn tạm và lấy link cổng thanh toán VNPay
+                    // (Bạn có thể thay đổi localhost thành link Railway của bạn sau này)
+                    const response = await axios.post('https://restoranqka.up.railway.app/api/vnpay/create-payment', payloadVnPay);
+                    
+                    if (response.data && response.data.paymentUrl) {
+                        const idHoaDonMoi = response.data.idHoaDon;
 
-            const modalHtml = `
-                <div id="qrModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; display:flex; justify-content:center; align-items:center;">
-                    <div style="position:relative; background:white; padding:30px; border-radius:15px; text-align:center; max-width:400px; width:90%;">
-                        <span onclick="document.getElementById('qrModal').remove()" style="position:absolute; top:10px; right:15px; font-size:28px; font-weight:bold; color:#888; cursor:pointer; line-height:1; padding:0 5px;" onmouseover="this.style.color='#333'" onmouseout="this.style.color='#888'">&times;</span>
-                        <h3 style="color:#333; margin-bottom:15px; margin-top:10px;">Quét Mã QR Thanh Toán</h3>
-                        <p style="font-size:14px; color:#666;">Hệ thống đang giả lập giao dịch đặt bàn</p>
-                        <img src="${qrImageUrl}" style="width:250px; height:250px; margin:15px 0; border:1px solid #eee; padding:10px; border-radius:10px;" alt="Mã QR Chuyển Khoản">
-                        <div style="background:#f8f9fa; padding:10px; border-radius:8px; text-align:left; font-size:14px; margin-bottom:20px;">
-                            <p style="margin-bottom:5px;"><b>Số tiền:</b> <span style="color:#d32f2f; font-weight:bold;">${tongTien.toLocaleString('vi-VN')} đ</span></p>
-                            <p style="margin-bottom:0;"><b>Nội dung:</b> <span style="color:#0d6efd; font-weight:bold;">${noiDungChuyenKhoan}</span></p>
-                        </div>
-                        <button onclick="xacNhanDaChuyenKhoan()" class="btn btn-primary w-100 py-2">Tôi Đã Chuyển Khoản Thành Công</button>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
+                        // Đồng bộ lưu danh sách món ăn đã chọn vào Chi tiết hóa đơn ngay lập tức
+                        const danhSachMon = gioHang.map(mon => ({
+                            idHoaDon: idHoaDonMoi,
+                            idMonAn: mon.idMonAn,
+                            soLuong: mon.soLuong,
+                            gia: mon.gia
+                        }));
 
-        } else {
-            const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
-            await axios.put(`https://restoranqka.up.railway.app/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
-            alert(`Đặt bàn thành công! Quý khách vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
-            resetGiaoDienDatBan();
+                        const requests = danhSachMon.map(item =>
+                            axios.post('https://restoranqka.up.railway.app/api/chitiethoadon', item)
+                        );
+                        await Promise.all(requests);
+
+                        // Lưu trạng thái bàn tạm thời hoặc chuyển hướng thẳng sang cổng VNPay
+                        localStorage.setItem("vnpay_selected_ban", banDangChon);
+
+                        // CHUYỂN HƯỚNG SANG CỔNG VNPAY THẬT
+                        window.location.href = response.data.paymentUrl;
+                    } else {
+                        alert("Không thể khởi tạo link kết nối cổng VNPay!");
+                    }
+
+                } else {
+                    // Phương thức thanh toán tại quầy giữ nguyên logic cũ của bạn
+                    const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
+                    await axios.put(`https://restoranqka.up.railway.app/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
+                    alert(`Đặt bàn thành công! Quý khách vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
+                    resetGiaoDienDatBan();
+                }
+            } catch (error) {
+                console.error("Lỗi quá trình đặt bàn:", error);
+                alert("Có lỗi xảy ra khi xử lý hệ thống kết nối thanh toán!");
+            }
         }
-    } catch (error) {
-        console.error("Lỗi quá trình đặt bàn:", error);
-        alert("Có lỗi xảy ra khi xử lý hệ thống!");
-    }
-}
 
         async function xacNhanDaChuyenKhoan() {
             try {

@@ -1,21 +1,19 @@
 package org.example.config;
+
 import jakarta.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class VnPayConfig {
-    // Các thông tin cấu hình môi trường Sandbox (Thử nghiệm) của VNPAY
-    public static String vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_TmnCode = "4M8095E6"; // Điền mã định danh website do VNPAY cấp khi đăng ký test
-    public static String vnp_HashSecret = "FOKZDYLYHVDWUPAGXSQTLRIVZUPCHYOH"; // Điền chuỗi bí mật do VNPAY cấp
-    public static String vnp_ReturnUrl = "http://localhost:8080/api/vnpay/payment-callback"; // Link VNPAY trả kết quả về sau khi quét QR thành công
+    public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+    public static String vnp_ReturnUrl = "http://127.0.0.1:5500/payment-result.html";
+    public static String vnp_TmnCode = "OIT3PGPN";
+    public static String vnp_HashSecret = "BSYALUANCJF064C2XBESWEZBWXS1Y2I1";
+    public static String vnp_Version = "2.1.0";
+    public static String vnp_Command = "pay";
 
-    // Thuật toán mã hóa chữ ký số HMAC-SHA512 để VNPAY kiểm tra tính toàn vẹn của số tiền
     public static String hmacSHA512(final String key, final String data) {
         try {
             if (key == null || data == null) {
@@ -37,7 +35,6 @@ public class VnPayConfig {
         }
     }
 
-    // Hàm lấy IP của thiết bị khách hàng (VNPAY bắt buộc truyền tham số này)
     public static String getIpAddress(HttpServletRequest request) {
         String ipAdress;
         try {
