@@ -40,7 +40,7 @@ try{
 
 const response = await axios.put(
 
-`https://quanlinhahang-java-btl-3se3.onrender.com/api/nguoidung/${user.id}/matkhau`,
+`https://restoranqka.up.railway.app/api/nguoidung/${user.id}/matkhau`,
 
 {
 password:newPassword

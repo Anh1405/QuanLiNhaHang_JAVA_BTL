@@ -17,7 +17,7 @@ window.loadOrderHistory = async function () {
         // ==============================
         // CALL MYSQL API
         // ==============================
-        const res = await fetch("https://quanlinhahang-java-btl-3se3.onrender.com/api/hoadon/user/" + user.id);
+        const res = await fetch("https://restoranqka.up.railway.app/api/hoadon/user/" + user.id);
 
         if (!res.ok) throw new Error("API error");
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="img/favicon.png" rel="icon">
     <title>Quản Lý Nhà Hàng | Tổng Quan</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -711,15 +712,19 @@
 <script src="dist/js/pages/dashboard2.js"></script>
 
 <script>
-    const user = JSON.parse(localStorage.getItem("user"));
-  if (!user || (user.vaiTro !== "ADMIN" && user.vaiTro !== "STAFF")) {
-      alert("Bạn không có quyền truy cập trang này!")``;
-      window.location.href = "login.html";
-  }
+  const user = JSON.parse(localStorage.getItem("user"));
+
+(function chotChanQuyenTruyCap() {
+    if (!user || (user.vaiTro !== "ADMIN" && user.vaiTro !== "STAFF")) {
+        alert("Bạn không có quyền truy cập trang này!");
+        window.location.href = "login.html";
+        return;
+    }
+})();
     // =========================================================
     // 1. CẤU HÌNH & TIỆN ÍCH
     // =========================================================
-    const BASE_URL = 'https://quanlinhahang-java-btl-3se3.onrender.com/api';
+    const BASE_URL = 'https://restoranqka.up.railway.app/api';
 
     const formatVND = (amount) => {
       return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
@@ -1779,33 +1784,27 @@
       }
     };
     const xoaMonKhoiHoaDon = async (idChiTiet, idHoaDon) => {
-      if (!confirm("Xóa món này khỏi hóa đơn?")) return;
+  if (!confirm("Xóa món này khỏi hóa đơn?")) return;
 
-      try {
-        await axios.delete(`${BASE_URL}/chitiethoadon/${idChiTiet}`);
+  try {
+    await axios.delete(`${BASE_URL}/chitiethoadon/${idChiTiet}`);
+    alert("Đã xóa món!");
 
-       // ... (Phần axios.delete giữ nguyên)
-        alert("Đã xóa món!");
+    const soBan = document.getElementById('thanh-toan-hd-soban').value;
 
-        const soBan = document.getElementById('thanh-toan-hd-soban').value;
+    // Chỉ gọi duy nhất 1 lần để cập nhật lại modal chi tiết
+    moModalChiTietHD(idHoaDon, 'DangXuLy', 0, soBan);
 
-        // Cập nhật lại bảng ngoài danh sách
-        await loadDanhSachHoaDonToanBo();
-        loadHoaDon();
+    // XÓA BỎ DÒNG NÀY: await moModalChiTietHD(idHoaDon, 'ChuaThanhToan', 0); (Gây lỗi lặp)
 
-        // Mở lại modal
-        moModalChiTietHD(idHoaDon, 'DangXuLy', 0, soBan);
-
-        await moModalChiTietHD(idHoaDon, 'ChuaThanhToan', 0);
-        // 🔥 cập nhật dashboard luôn
-        loadHoaDon();
-        loadDanhSachHoaDonToanBo();
-
-      } catch (err) {
-        console.error(err);
-        alert("Lỗi khi xóa món!");
-      }
-    };
+    // Cập nhật lại giao diện nền
+    loadHoaDon();
+    loadDanhSachHoaDonToanBo();
+  } catch (err) {
+    console.error(err);
+    alert("Lỗi khi xóa món!");
+  }
+};
     const tinhTongTienHoaDon = () => {
       const rows = document.querySelectorAll("#bang-chi-tiet-hd tr");
 

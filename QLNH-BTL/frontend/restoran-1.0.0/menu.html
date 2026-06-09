@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +6,7 @@
     <title>Restoran - Food Menu</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.png" rel="icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -108,7 +107,7 @@
                     <div id="danh-muc-tabs" class="nav nav-pills d-inline-flex justify-content-center border-bottom"></div>
                 </div>
 
-                <!-- Danh sách món ăn kết nối API/Dữ liệu mẫu -->
+                <!-- Danh sách món ăn kết nối Dữ liệu mẫu -->
                 <div class="row g-4" id="menu-container">
                     <!-- JavaScript render dữ liệu động tại đây -->
                 </div>
@@ -193,7 +192,7 @@
         // LOAD DANH MỤC
         // =======================
          function loadDanhMuc() {
-    axios.get("https://quanlinhahang-java-btl-3se3.onrender.com/api/danhmuc")
+    axios.get("https://restoranqka.up.railway.app/danhmuc")
         .then(response => {
             allDanhMuc = response.data;
             
@@ -330,7 +329,7 @@
         // LOAD MÓN ĂN THEO DANH MỤC
         // =======================
         function loadMonAnTheoDanhMuc(idDanhMuc) {
-            axios.get(`https://quanlinhahang-java-btl-3se3.onrender.com/api/monan/danhmuc/${idDanhMuc}`)
+            axios.get(`https://restoranqka.up.railway.app/api/monan/danhmuc/${idDanhMuc}`)
                 .then(response => {
                     renderMenu({
                         monAns: response.data

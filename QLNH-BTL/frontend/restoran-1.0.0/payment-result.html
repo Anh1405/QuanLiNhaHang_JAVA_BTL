@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="img/favicon.png" rel="icon">
+    <title>Kết Quả Thanh Toán - Restoran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <style>
+        body { 
+            font-family: 'Nunito', 'Heebo', sans-serif;
+            background: linear-gradient(135deg, #0F172B 0%, #1A2436 100%); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card-result { 
+            max-width: 520px; 
+            width: 100%; 
+            padding: 40px 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+            background: #ffffff; 
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(0);
+            animation: fadeInScale 0.5s ease-out forwards;
+        }
+        .status-icon-wrapper {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px auto;
+            font-size: 45px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        .bg-success-light { background-color: #d1e7dd; color: #0f5132; }
+        .bg-danger-light { background-color: #f8d7da; color: #842029; }
+        .bg-warning-light { background-color: #fff3cd; color: #664d03; }
+
+        .status-icon-wrapper i {
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .invoice-details {
+            background-color: #F8F9FA;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px dashed #DEE2E6;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #E9ECEF;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            color: #6C757D;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .detail-value {
+            color: #212529;
+            font-weight: 700;
+            font-size: 15px;
+            text-align: right;
+        }
+        .btn-custom {
+            background: linear-gradient(90deg, #FEA116 0%, #F18805 100%);
+            border: none;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(254, 161, 22, 0.3);
+        }
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(254, 161, 22, 0.5);
+            background: linear-gradient(90deg, #F18805 0%, #D47202 100%);
+            color: white;
+        }
+        
+        /* Loading Spinner Tinh Chỉnh */
+        .spinner-container {
+            padding: 40px 0;
+        }
+        .spinner-border {
+            width: 3.5rem;
+            height: 3.5rem;
+            color: #FEA116 !important;
+        }
+        .loading-text {
+            color: #ffffff;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* Hiệu ứng chuyển động mượt mà */
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading" class="text-center spinner-container">
+    <div class="spinner-border" role="status"></div>
+    <div class="loading-text text-white-50">Đang xác thực bảo mật hóa đơn với máy chủ...</div>
+</div>
+
+<div class="card-result" id="result-container" style="display: none;">
+    <div id="status-icon-box" class="status-icon-wrapper">
+        <i id="status-icon"></i>
+    </div>
+    
+    <h2 id="status-title" class="fw-extrabold mb-2" style="color: #0F172B;"></h2>
+    <p id="status-message" class="text-muted px-2 mb-4"></p>
+    
+    <div class="invoice-details my-4 text-start">
+        <div class="detail-row">
+            <span class="detail-label"><i class="fa-solid fa-hashtag text-secondary"></i> Mã đơn hàng:</span>
+            <span class="detail-value text-muted" id="res-order-id">--</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label"><i class="fa-solid fa-money-bill-wave text-secondary"></i> Số tiền cọc:</span>
+            <span class="detail-value text-danger fs-5 fw-bold" id="res-amount">--</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label"><i class="fa-solid fa-circle-info text-secondary"></i> Nội dung:</span>
+            <span class="detail-value text-wrap" id="res-info" style="max-width: 250px;">--</span>
+        </div>
+    </div>
+
+    <a href="index.html" class="btn btn-custom w-100 py-3 mt-2 text-uppercase"><i class="fa-solid fa-house me-2"></i>Quay lại Trang Chủ</a>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (!urlParams.has('vnp_ResponseCode')) {
+            window.location.href = "index.html";
+            return;
+        }
+
+        const responseCode = urlParams.get('vnp_ResponseCode');
+        const orderId = urlParams.get('vnp_TxnRef');
+        const amount = parseInt(urlParams.get('vnp_Amount')) / 100;
+        const orderInfo = decodeURIComponent(urlParams.get('vnp_OrderInfo').replace(/\+/g, ' '));
+
+        document.getElementById('res-order-id').innerText = orderId;
+        document.getElementById('res-amount').innerText = amount.toLocaleString('vi-VN') + " VNĐ";
+        document.getElementById('res-info').innerText = orderInfo;
+
+        try {
+            // 1. Gọi API Backend kiểm tra ngầm (Đã sửa Backend trả về 200 nên không bị nhảy vào catch nữa)
+            const response = await axios.get(`https://restoranqka.up.railway.app/api/vnpay/payment-callback${window.location.search}`);
+            
+            // 2. Ẩn Loading và hiện màn hình kết quả công khai
+            document.getElementById('loading').style.setProperty('display', 'none', 'important');
+            document.getElementById('result-container').style.display = 'block';
+
+            const iconBox = document.getElementById('status-icon-box');
+            const icon = document.getElementById('status-icon');
+
+            // 3. Kiểm tra mã phản hồi trực tiếp từ URL VNPay
+           if (responseCode === "00") {
+    if(iconBox) iconBox.className = "status-icon-wrapper bg-success-light";
+    if(icon) icon.className = "fa-solid fa-circle-check text-success";
+    
+    document.getElementById('status-title').innerText = "Thanh Toán Thành Công!";
+    document.getElementById('status-title').style.color = "#198754";
+    document.getElementById('status-message').innerText = "Tuyệt vời! Đơn đặt bàn đã được hệ thống kích hoạt thành công.";
+    
+    // Không cần gọi axios.put đổi trạng thái bàn ở đây nữa! Backend đã làm rồi.
+    localStorage.removeItem("vnpay_selected_ban"); // Chỉ cần xóa dọn rác bộ nhớ trình duyệt
+    localStorage.removeItem("gioHang");
+} else {
+                // =============== THANH TOÁN THẤT BẠI HOẶC HỦY ===============
+                if(iconBox) iconBox.className = "status-icon-wrapper bg-danger-light";
+                if(icon) icon.className = "fa-solid fa-circle-xmark text-danger";
+                
+                document.getElementById('status-title').innerText = "Thanh Toán Thất Bại";
+                document.getElementById('status-title').style.color = "#dc3545";
+                document.getElementById('status-message').innerText = `Giao dịch không thành công hoặc đã bị hủy bỏ. (Mã lỗi: ${responseCode})`;
+            }
+
+        } catch (error) {
+            // Chỉ rơi vào đây nếu sập mạng hoặc Backend bị sập hoàn toàn
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            
+            const iconBox = document.getElementById('status-icon-box');
+            const icon = document.getElementById('status-icon');
+            
+            if(iconBox) iconBox.className = "status-icon-wrapper bg-warning-light";
+            if(icon) icon.className = "fa-solid fa-triangle-exclamation text-warning";
+            
+            document.getElementById('status-title').innerText = "Lỗi Kết Nối";
+            document.getElementById('status-title').style.color = "#ffc107";
+            document.getElementById('status-message').innerText = "Không thể kết nối tới máy chủ dịch vụ để xác minh giao dịch.";
+            console.error("Chi tiết lỗi kết nối API:", error);
+        }
+    });
+</script>
+</body>
+</html>
