@@ -66,40 +66,22 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="form-floating">
-                                            <input type="email"
-                                                   class="form-control"
-                                                   id="email"
-                                                   placeholder="Email"
-                                                   required>
-                                            <label for="email">
-                                                Địa chỉ Email
-                                            </label>
-                                        </div>
-                                    </div>
+    <div class="form-floating">
+        <input type="email" class="form-control" id="email" data-i18n-placeholder="register-email-ph" placeholder="Email" required>
+        <label for="email" data-i18n="register-email-label">Địa chỉ Email</label>
+    </div>
+</div>
 
-                                    <div class="col-12">
-                                        <button
-                                                type="button"
-                                                class="btn btn-warning w-100"
-                                                onclick="guiOtp()">
-                                            Gửi mã OTP
-                                        </button>
-                                    </div>
+<div class="col-12">
+    <button type="button" class="btn btn-warning w-100" onclick="guiOtp()" data-i18n="otp-btn-send">Gửi mã OTP</button>
+</div>
 
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    id="otp"
-                                                    placeholder="OTP"
-                                                    required>
-                                            <label for="otp">
-                                                Mã OTP
-                                            </label>
-                                        </div>
-                                    </div>
+<div class="col-12">
+    <div class="form-floating">
+        <input type="text" class="form-control" id="otp" data-i18n-placeholder="otp-ph" placeholder="OTP" required>
+        <label for="otp" data-i18n="otp-label">Mã OTP</label>
+    </div>
+</div>
                                     <div class="col-12">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="regUsername" data-i18n-placeholder="register-username-ph" placeholder="Tên đăng nhập" required>
@@ -156,51 +138,27 @@
         // Gọi hàm kiểm tra ngay khi script được tải
         checkUserLoggedIn();
         async function guiOtp() {
+    const emailInputId = document.getElementById("forgotEmail") ? "forgotEmail" : "email";
+    const email = document.getElementById(emailInputId).value;
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
 
-            const email = document.getElementById("email").value.trim().toLowerCase();
+    if (!email) {
+        alert(currentLang === "en" ? "Please enter your email first!" : "Vui lòng nhập email trước!");
+        return;
+    }
 
-            const emailRegex = /^[a-z0-9._%+-]+@gmail\.com$/i;
-
-            if (!email) {
-                alert("Nhập email trước");
-                return;
-            }
-
-            if (!email.endsWith("@gmail.com")) {
-                alert("Chỉ chấp nhận email @gmail.com");
-                return;
-            }
-
-            if (email.includes("..")) {
-                alert("Email không hợp lệ");
-                return;
-            }
-
-            if (!emailRegex.test(email)) {
-                alert("Email không đúng định dạng Gmail");
-                return;
-            }
-
-            try {
-
-                await axios.post(
-                    "https://restoranqka.up.railway.app/api/nguoidung/send-otp?email="
-                    + email
-                );
-
-                alert("OTP đã gửi tới email");
-
-            } catch (e) {
-
-                console.error(e);
-
-                if (e.response) {
-                    alert(e.response.data);
-                } else {
-                    alert("Không gửi được OTP");
-                }
-            }
+    try {
+        await axios.post("https://restoranqka.up.railway.app/api/nguoidung/send-otp?email=" + email);
+        alert(currentLang === "en" ? "OTP has been sent to your email!" : "OTP đã được gửi tới email của bạn!");
+    } catch (e) {
+        console.error(e);
+        if (e.response && e.response.data) {
+            alert(e.response.data);
+        } else {
+            alert(currentLang === "en" ? "Failed to send OTP!" : "Không gửi được mã OTP!");
         }
+    }
+}
         async function handleRegister(event) {
 
             event.preventDefault();
