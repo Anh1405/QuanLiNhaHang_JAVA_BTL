@@ -157,11 +157,27 @@
         checkUserLoggedIn();
         async function guiOtp() {
 
-            const email =
-                document.getElementById("email").value;
+            const email = document.getElementById("email").value.trim().toLowerCase();
+
+            const emailRegex = /^[a-z0-9._%+-]+@gmail\.com$/i;
 
             if (!email) {
                 alert("Nhập email trước");
+                return;
+            }
+
+            if (!email.endsWith("@gmail.com")) {
+                alert("Chỉ chấp nhận email @gmail.com");
+                return;
+            }
+
+            if (email.includes("..")) {
+                alert("Email không hợp lệ");
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                alert("Email không đúng định dạng Gmail");
                 return;
             }
 
