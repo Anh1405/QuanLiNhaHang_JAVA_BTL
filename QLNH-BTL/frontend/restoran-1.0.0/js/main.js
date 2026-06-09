@@ -183,10 +183,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 window.handleLogout = function(event) {
-    // Ngăn chặn hành vi mặc định nếu được gọi từ thẻ <a>
     if(event) event.preventDefault(); 
     
-    if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
+    const confirmMsg = currentLang === "en" ? "Are you sure you want to log out?" : "Bạn có chắc chắn muốn đăng xuất?";
+
+    if (confirm(confirmMsg)) {
         localStorage.removeItem("user");
         window.location.href = "index.html"; 
     }
@@ -202,12 +204,23 @@ function formatTienMini(tien) {
 }
 
 // Cập nhật số lượng Badge VÀ render danh sách món ăn vào Dropdown
-function capNhatBadgeGioHang() {
+window.capNhatBadgeGioHang = function(){
     const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
     const badge = document.getElementById("cart-badge-count");
     const miniCart = document.getElementById("mini-cart-container");
     
-    // 1. Xử lý nhảy con số trên Badge
+    // 1. Lấy ngôn ngữ hiện tại
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
+
+    // 2. Bộ từ vựng dành riêng cho Mini Cart
+    const i18nCart = {
+        "empty": currentLang === "en" ? "Cart is empty!" : "Giỏ hàng trống trơn!",
+        "selected": currentLang === "en" ? "Selected Dishes" : "Món ăn đã chọn",
+        "total": currentLang === "en" ? "Total:" : "Tổng cộng:",
+        "viewCart": currentLang === "en" ? "View Cart Details" : "Xem Chi Tiết Giỏ Hàng"
+    };
+    
+    // 3. Xử lý nhảy con số trên Badge
     const tongSoLuong = gioHang.reduce((total, mon) => total + mon.soLuong, 0);
     if (badge) {
         if (tongSoLuong > 0) {
@@ -218,18 +231,21 @@ function capNhatBadgeGioHang() {
         }
     }
 
-    // 2. Xử lý hiển thị danh sách món bên trong Dropdown "inner"
+    // 4. Xử lý hiển thị danh sách món bên trong Dropdown "inner"
     if (miniCart) {
         if (gioHang.length === 0) {
-            miniCart.innerHTML = `<div class="text-center py-3 text-muted">Giỏ hàng trống trơn!</div>`;
+            // Thay thế chữ cứng bằng biến i18nCart.empty
+            miniCart.innerHTML = `<div class="text-center py-3 text-muted">${i18nCart.empty}</div>`;
             return;
         }
 
-        let htmlMonAn = `<h6 class="fw-bold border-bottom pb-2 mb-2 text-dark">Món ăn đã chọn</h6>`;
+        // Thay thế chữ cứng bằng biến i18nCart.selected
+        let htmlMonAn = `<h6 class="fw-bold border-bottom pb-2 mb-2 text-dark">${i18nCart.selected}</h6>`;
         let tongTien = 0;
 
         gioHang.forEach(mon => {
             tongTien += mon.gia * mon.soLuong;
+            
             htmlMonAn += `
                 <div class="d-flex align-items-center justify-content-between mb-2 border-bottom pb-2">
                     <img src="${mon.hinhAnh}" style="width:45px; height:45px; object-fit:cover; border-radius:4px;">
@@ -246,13 +262,13 @@ function capNhatBadgeGioHang() {
             `;
         });
 
-        // Phần tổng tiền và nút thanh toán nhanh
+        // Thay thế chữ Tổng cộng và Xem chi tiết giỏ hàng
         htmlMonAn += `
             <div class="d-flex justify-content-between align-items-center mt-3 pt-2 font-weight-bold">
-                <span class="text-dark fw-bold" style="font-size:14px;">Tổng cộng:</span>
+                <span class="text-dark fw-bold" style="font-size:14px;">${i18nCart.total}</span>
                 <span class="text-primary fw-bold" style="font-size:15px;">${formatTienMini(tongTien)}</span>
             </div>
-            <a href="booking.html" class="btn btn-primary btn-sm w-100 mt-3 py-2 fw-bold">Xem Chi Tiết Giỏ Hàng</a>
+            <a href="booking.html" class="btn btn-primary btn-sm w-100 mt-3 py-2 fw-bold">${i18nCart.viewCart}</a>
         `;
 
         miniCart.innerHTML = htmlMonAn;

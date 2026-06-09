@@ -229,8 +229,17 @@ const dictionary = {
 "edit-label-username": "Tên đăng nhập",
 "edit-label-password": "Mật khẩu hiện tại",
 "edit-btn-submit": "Lưu thay đổi",
+"otp-btn-send": "Gửi mã OTP",
+        "otp-label": "Mã OTP",
+        "otp-ph": "Mã OTP",
+        "otp-btn-verify": "Xác thực OTP",
+        
     },
     en: {
+        "otp-btn-send": "Send OTP Code",
+        "otp-label": "OTP Code",
+        "otp-ph": "OTP Code",
+        "otp-btn-verify": "Verify OTP",
         "edit-card-title": "Personal Information",
 "edit-card-sub": "Update your account details",
 "edit-label-name": "Full Name",
@@ -565,6 +574,12 @@ function applyLanguage(lang) {
     }
     if (typeof window.loadAuthArea === "function") {
         window.loadAuthArea(); 
+    }
+    if (typeof window.capNhatBadgeGioHang === "function") {
+        window.capNhatBadgeGioHang();
+    }
+    if (typeof window.hienThiMonDaChon === "function") {
+        window.hienThiMonDaChon();
     }
 }
 

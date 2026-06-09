@@ -557,42 +557,53 @@
     return idHoaDonMoi;
 }
 
-        function hienThiMonDaChon() {
-            const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
-            const container = document.getElementById("selected-food-list");
+       function hienThiMonDaChon() {
+    const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    const container = document.getElementById("selected-food-list");
 
-            if (!container) return;
+    if (!container) return;
 
-            let tongTien = 0;
-            container.innerHTML = "";
+    // 1. Lấy ngôn ngữ hiện tại
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
+    
+    // 2. Bộ từ vựng động cho giỏ hàng đặt bàn
+    const i18nBookingCart = {
+        "delete": currentLang === "en" ? "Delete" : "Xóa",
+        "total": currentLang === "en" ? "Total:" : "Tổng cộng:"
+    };
 
-            gioHang.forEach(mon => {
-                tongTien += mon.gia * mon.soLuong;
+    let tongTien = 0;
+    container.innerHTML = "";
 
-                container.innerHTML += `
-                    <div class="d-flex align-items-center mb-3 border-bottom pb-3">
-                        <img src="${mon.hinhAnh}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
-                        <div class="ms-3 flex-grow-1">
-                            <h6 class="mb-1">${mon.tenMon}</h6>
-                            <span class="text-primary fw-bold">${formatTien(mon.gia)}</span>
-                            <div class="d-flex align-items-center mt-2">
-                                <button class="btn btn-sm btn-outline-danger" onclick="giamSoLuong(${mon.idMonAn})">-</button>
-                                <span class="mx-3 fw-bold">${mon.soLuong}</span>
-                                <button class="btn btn-sm btn-outline-success" onclick="tangSoLuong(${mon.idMonAn})">+</button>
-                            </div>
-                        </div>
-                        <button class="btn btn-danger btn-sm" onclick="xoaMon(${mon.idMonAn})">Xóa</button>
+    gioHang.forEach(mon => {
+        tongTien += mon.gia * mon.soLuong;
+
+        // Dùng biến i18nBookingCart.delete thay cho chữ "Xóa" cứng
+        container.innerHTML += `
+            <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+                <img src="${mon.hinhAnh}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
+                <div class="ms-3 flex-grow-1">
+                    <h6 class="mb-1">${mon.tenMon}</h6>
+                    <span class="text-primary fw-bold">${formatTien(mon.gia)}</span>
+                    <div class="d-flex align-items-center mt-2">
+                        <button class="btn btn-sm btn-outline-danger" onclick="giamSoLuong(${mon.idMonAn})">-</button>
+                        <span class="mx-3 fw-bold">${mon.soLuong}</span>
+                        <button class="btn btn-sm btn-outline-success" onclick="tangSoLuong(${mon.idMonAn})">+</button>
                     </div>
-                `;
-            });
-
-            container.innerHTML += `
-                <div class="d-flex justify-content-between mt-4">
-                    <h5>Tổng cộng:</h5>
-                    <h5 class="text-primary">${formatTien(tongTien)}</h5>
                 </div>
-            `;
-        }
+                <button class="btn btn-danger btn-sm" onclick="xoaMon(${mon.idMonAn})">${i18nBookingCart.delete}</button>
+            </div>
+        `;
+    });
+
+    // Dùng biến i18nBookingCart.total thay cho chữ "Tổng cộng"
+    container.innerHTML += `
+        <div class="d-flex justify-content-between mt-4">
+            <h5>${i18nBookingCart.total}</h5>
+            <h5 class="text-primary">${formatTien(tongTien)}</h5>
+        </div>
+    `;
+}
 
        function formatTien(tien) {
     // 1. Chuyển đổi tham số truyền vào thành kiểu số để tránh lỗi dữ liệu đầu vào là chuỗi
