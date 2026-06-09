@@ -67,8 +67,37 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" data-i18n-placeholder="register-email-ph" placeholder="Email" required>
-                                            <label for="email" data-i18n="register-email-label">Địa chỉ Email</label>
+                                            <input type="email"
+                                                   class="form-control"
+                                                   id="email"
+                                                   placeholder="Email"
+                                                   required>
+                                            <label for="email">
+                                                Địa chỉ Email
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button
+                                                type="button"
+                                                class="btn btn-warning w-100"
+                                                onclick="guiOtp()">
+                                            Gửi mã OTP
+                                        </button>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="otp"
+                                                    placeholder="OTP"
+                                                    required>
+                                            <label for="otp">
+                                                Mã OTP
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -126,21 +155,48 @@
         };
         // Gọi hàm kiểm tra ngay khi script được tải
         checkUserLoggedIn();
+        async function guiOtp() {
+
+            const email =
+                document.getElementById("email").value;
+
+            if (!email) {
+                alert("Nhập email trước");
+                return;
+            }
+
+            try {
+
+                await axios.post(
+                    "https://restoranqka.up.railway.app/api/nguoidung/send-otp?email="
+                    + email
+                );
+
+                alert("OTP đã gửi tới email");
+
+            } catch (e) {
+
+                console.error(e);
+
+                if (e.response) {
+                    alert(e.response.data);
+                } else {
+                    alert("Không gửi được OTP");
+                }
+            }
+        }
         async function handleRegister(event) {
 
             event.preventDefault();
 
             const fullName = document.getElementById("fullName").value;
             const email = document.getElementById("email").value;
+            const otp =
+                document.getElementById("otp").value;
             const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
             if (!emailRegex.test(email)) {
                 alert("Chỉ được dùng email @gmail.com");
-                document.getElementById("email").focus();
-                return;
-            
-
-                alert(msg);
                 document.getElementById("email").focus();
                 return;
             }
@@ -160,11 +216,12 @@
                 hoTen: fullName,
                 email: email,
                 username: username,
-                password: password
+                password: password,
+                otp: otp
             };
 
             try {
-                const response = await axios.post('https://quanlinhahang-java-btl-3se3.onrender.com/api/nguoidung/register', data);
+                const response = await axios.post('https://restoranqka.up.railway.app/api/nguoidung/register', data);
                 console.log("Đăng ký thành công:", response.data);
                 
                 const successMsg = currentLang === "en" 

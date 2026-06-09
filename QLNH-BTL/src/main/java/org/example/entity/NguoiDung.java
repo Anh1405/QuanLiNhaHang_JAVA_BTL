@@ -26,4 +26,5 @@ public class NguoiDung {
 
     @Column(name = "vai_tro")
     private String vaiTro; // "ADMIN", "STAFF", "USER"
+
 }

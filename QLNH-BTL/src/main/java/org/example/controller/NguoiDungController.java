@@ -1,13 +1,17 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.dto.ForgotPasswordRequest;
+import org.example.dto.RegisterRequest;
 import org.example.entity.NguoiDung;
 import org.example.repository.NguoiDungRepository;
+import org.example.service.EmailService;
 import org.example.service.NguoiDungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.service.OtpService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,32 +27,195 @@ public class NguoiDungController {
     @Autowired
     private NguoiDungRepository nguoiDungRepository;
 
+    @Autowired
+    private OtpService otpService;
+    @Autowired
+    private EmailService emailService;
+
+
+    @PostMapping("/send-otp")
+    public ResponseEntity<?> sendOtp(
+            @RequestParam String email) {
+
+        try {
+
+            System.out.println("EMAIL NHAN: " + email);
+
+            String otp =
+                    otpService.generateOtp(email);
+
+            System.out.println("OTP TAO RA: " + otp);
+
+            emailService.sendOtp(
+                    email,
+                    otp
+            );
+
+            System.out.println("DA GUI MAIL");
+
+            return ResponseEntity.ok(
+                    "OTP đã gửi tới email"
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+        }
+    }
 
     // Đăng ký
     @PostMapping("/register")
     public ResponseEntity<?> register(
-            @RequestBody NguoiDung nguoiDung) {
+            @RequestBody RegisterRequest request) {
 
         try {
 
-            NguoiDung newUser =
-                    service.register(nguoiDung);
+            boolean valid =
+                    otpService.verifyOtp(
+                            request.getEmail(),
+                            request.getOtp()
+                    );
 
-            return ResponseEntity.ok(newUser);
+            if (!valid) {
+
+                return ResponseEntity
+                        .badRequest()
+                        .body("OTP không chính xác");
+            }
+
+            NguoiDung nd = new NguoiDung();
+
+            nd.setHoTen(
+                    request.getHoTen()
+            );
+
+            nd.setEmail(
+                    request.getEmail()
+            );
+
+            nd.setUsername(
+                    request.getUsername()
+            );
+
+            nd.setPassword(
+                    request.getPassword()
+            );
+
+            NguoiDung newUser =
+                    service.register(nd);
+
+            return ResponseEntity.ok(
+                    newUser
+            );
 
         } catch (RuntimeException e) {
 
             return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
+                    .badRequest()
                     .body(e.getMessage());
         }
+    }
+
+    @PostMapping("/forgot-password/send-otp")
+    public ResponseEntity<?> sendOtpForgotPassword(
+            @RequestParam String email) {
+
+        NguoiDung nd =
+                nguoiDungRepository
+                        .findByEmail(email)
+                        .orElse(null);
+
+        if (nd == null) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body("Email không tồn tại");
+        }
+
+        String otp =
+                otpService.generateOtp(email);
+
+        emailService.sendOtp(
+                email,
+                otp
+        );
+
+        return ResponseEntity.ok(
+                "OTP đã gửi"
+        );
+    }
+
+    @PostMapping("/forgot-password/verify-otp")
+    public ResponseEntity<?> verifyOtpForgot(@RequestBody Map<String, String> body) {
+
+        String email = body.get("email");
+        String otp = body.get("otp");
+
+        System.out.println("DEBUG EMAIL = " + email);
+        System.out.println("DEBUG OTP = " + otp);
+
+        boolean valid = otpService.verifyOtp(email, otp);
+
+        System.out.println("RESULT = " + valid);
+
+        if (!valid) {
+            return ResponseEntity.badRequest().body(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(
+            @RequestBody ForgotPasswordRequest request) {
+
+        boolean valid =
+                otpService.verifyOtp(
+                        request.getEmail(),
+                        request.getOtp()
+                );
+
+        if (!valid) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body("OTP không chính xác");
+        }
+
+        NguoiDung nd =
+                nguoiDungRepository
+                        .findByEmail(
+                                request.getEmail()
+                        )
+                        .orElse(null);
+
+        if (nd == null) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body("Email không tồn tại");
+        }
+
+        nd.setPassword(
+                request.getNewPassword()
+        );
+
+        nguoiDungRepository.save(nd);
+
+        return ResponseEntity.ok(
+                "Đổi mật khẩu thành công"
+        );
     }
 
 
     // Đăng nhập
     @PostMapping("/login")
     public ResponseEntity<?> login(
-            @RequestBody Map<String,String> request) {
+            @RequestBody Map<String, String> request) {
 
         String username =
                 request.get("username");
@@ -62,7 +229,7 @@ public class NguoiDungController {
                         password
                 );
 
-        if(nguoiDung!=null){
+        if (nguoiDung != null) {
 
             return ResponseEntity
                     .ok(nguoiDung);
@@ -77,7 +244,7 @@ public class NguoiDungController {
 
     // Lấy danh sách người dùng
     @GetMapping
-    public List<NguoiDung> layDanhSachNguoiDung(){
+    public List<NguoiDung> layDanhSachNguoiDung() {
 
         return nguoiDungRepository.findAll();
 
@@ -88,13 +255,13 @@ public class NguoiDungController {
     @PutMapping("/{id}/vaitro")
     public NguoiDung capNhatVaiTro(
             @PathVariable Long id,
-            @RequestBody Map<String,String> payload){
+            @RequestBody Map<String, String> payload) {
 
         NguoiDung nd =
                 nguoiDungRepository
                         .findById(id)
                         .orElseThrow(
-                                ()->new RuntimeException(
+                                () -> new RuntimeException(
                                         "Không tìm thấy người dùng!"
                                 ));
 
@@ -111,42 +278,21 @@ public class NguoiDungController {
     @PutMapping("/{id}/matkhau")
     public ResponseEntity<?> capNhatMatKhau(
             @PathVariable Long id,
-            @RequestBody Map<String,String> payload){
+            @RequestBody Map<String,String> payload) {
 
-        try{
+        try {
+            NguoiDung nd = nguoiDungRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng!"));
 
-            NguoiDung nd =
-                    nguoiDungRepository
-                            .findById(id)
-                            .orElseThrow(
-                                    ()->new RuntimeException(
-                                            "Không tìm thấy người dùng!"
-                                    ));
+            String matKhauMoi = payload.get("password");
 
-            String matKhauMoi =
-                    payload.get("password");
+            nd.setPassword(matKhauMoi);
+            nguoiDungRepository.save(nd);
 
-            nd.setPassword(
-                    matKhauMoi
-            );
-
-            nguoiDungRepository.save(
-                    nd
-            );
-
-            return ResponseEntity.ok(
-                    "Đổi mật khẩu thành công!"
-            );
-
+            return ResponseEntity.ok("Đổi mật khẩu thành công!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        catch(Exception e){
-
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-
-        }
-
     }
 
     @PutMapping("/{id}/capnhat")
@@ -196,5 +342,20 @@ public class NguoiDungController {
 
         }
 
+    }
+    @PutMapping("/matkhau-by-email")
+    public ResponseEntity<?> capNhatMatKhauTheoEmail(
+            @RequestParam String email,
+            @RequestBody Map<String,String> payload) {
+
+        NguoiDung nd = nguoiDungRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy email"));
+
+        String matKhauMoi = payload.get("password");
+
+        nd.setPassword(matKhauMoi);
+        nguoiDungRepository.save(nd);
+
+        return ResponseEntity.ok("Đổi mật khẩu thành công!");
     }
 }
