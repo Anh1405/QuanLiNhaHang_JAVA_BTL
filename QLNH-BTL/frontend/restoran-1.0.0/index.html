@@ -859,27 +859,36 @@ function formatPrice(price) {
 
             alert(`Đã thêm ${mon.tenMon} vào giỏ hàng!`);
         }
-        function datMonVaDatBan(mon) {
-            let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+       function datMonVaDatBan(mon) {
+    let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    const index = gioHang.findIndex(item => item.idMonAn === mon.idMonAn);
 
-            const index = gioHang.findIndex(item => item.idMonAn === mon.idMonAn);
+    if (index !== -1) {
+        gioHang[index].soLuong++;
+    } else {
+        gioHang.push({
+            idMonAn: mon.idMonAn,
+            tenMon: mon.tenMon,
+            gia: mon.giaTien || mon.gia,
+            hinhAnh: mon.hinhAnh || "img/menu-1.jpg",
+            soLuong: 1
+        });
+    }
 
-            if (index !== -1) {
-                gioHang[index].soLuong++;
-            } else {
-                gioHang.push({
-                    idMonAn: mon.idMonAn,
-                    tenMon: mon.tenMon,
-                    gia: mon.giaTien || mon.gia,
-                    hinhAnh: mon.hinhAnh || "img/menu-1.jpg",
-                    soLuong: 1
-                });
-            }
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
 
-            localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    // 1. ƯU TIÊN CẬP NHẬT GIAO DIỆN MINICART TRƯỚC
+    if (typeof window.kichHoatCapNhatGioHang === "function") {
+        window.kichHoatCapNhatGioHang();
+    } else if (typeof kichHoatCapNhatGioHang === "function") {
+        kichHoatCapNhatGioHang();
+    }
 
-            alert("Đã thêm " + mon.tenMon + " vào giỏ hàng!");
-        }
+    // 2. Delay alert một chút để trình duyệt kịp vẽ lại DOM
+    setTimeout(() => {
+        alert("Đã thêm " + mon.tenMon + " vào giỏ hàng!");
+    }, 50);
+}
     </script>
 
 </body>

@@ -276,10 +276,14 @@ window.capNhatBadgeGioHang = function(){
 }
 
 // Kích hoạt cập nhật thời gian thực
-function kichHoatCapNhatGioHang() {
-    capNhatBadgeGioHang();
+window.kichHoatCapNhatGioHang = function() {
+    if (typeof window.capNhatBadgeGioHang === "function") {
+        window.capNhatBadgeGioHang();
+    } else {
+        capNhatBadgeGioHang(); // Gọi dự phòng
+    }
     window.dispatchEvent(new Event('cart-updated'));
-}
+};
 
 // Khởi chạy hệ thống lắng nghe nhảy số liên tục
 document.addEventListener('DOMContentLoaded', function () {

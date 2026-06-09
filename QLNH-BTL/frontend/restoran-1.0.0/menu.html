@@ -576,12 +576,18 @@ function formatPrice(price) {
     }
 
     localStorage.setItem("gioHang", JSON.stringify(gioHang));
-    alert("Đã thêm " + mon.tenMon + " vào giỏ hàng!");
 
-    // Thêm dòng này để cập nhật Mini Cart và Badge ngay lập tức
-    if (typeof kichHoatCapNhatGioHang === "function") {
+    // 1. ƯU TIÊN CẬP NHẬT GIAO DIỆN MINICART TRƯỚC
+    if (typeof window.kichHoatCapNhatGioHang === "function") {
+        window.kichHoatCapNhatGioHang();
+    } else if (typeof kichHoatCapNhatGioHang === "function") {
         kichHoatCapNhatGioHang();
     }
+
+    // 2. Delay alert một chút để trình duyệt kịp vẽ lại DOM
+    setTimeout(() => {
+        alert("Đã thêm " + mon.tenMon + " vào giỏ hàng!");
+    }, 50);
 }
     </script>
 <!-- JavaScript Libraries -->
