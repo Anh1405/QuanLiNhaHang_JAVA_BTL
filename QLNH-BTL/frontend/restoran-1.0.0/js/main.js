@@ -182,19 +182,121 @@ document.addEventListener("DOMContentLoaded", function () {
     window.loadAuthArea();
 });
 
-// Hàm xử lý đăng xuất mẫu đồng bộ hệ thống
 window.handleLogout = function(event) {
-    if(event) event.preventDefault();
-    localStorage.removeItem("user");
-    window.location.href = "index.html";
-};
-
-// Hàm đăng xuất dùng chung cho mọi trang
-function handleLogout() {
+    // Ngăn chặn hành vi mặc định nếu được gọi từ thẻ <a>
+    if(event) event.preventDefault(); 
+    
     if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
         localStorage.removeItem("user");
-        // Sau khi xóa xong, tải lại trang để Navbar cập nhật lại chữ "Đăng Nhập"
         window.location.href = "index.html"; 
+    }
+};
+// 1. Hàm tính toán và cập nhật số lượng hiển thị trên Badge giỏ hàng
+function formatTienMini(tien) {
+    const giaTriSo = Number(tien) || 0;
+    const currentLang = localStorage.getItem("currentLanguage") || "vi";
+    if (currentLang === "en") {
+        return (giaTriSo / 26270).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    }
+    return giaTriSo.toLocaleString('vi-VN') + " VNĐ";
+}
+
+// Cập nhật số lượng Badge VÀ render danh sách món ăn vào Dropdown
+function capNhatBadgeGioHang() {
+    const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    const badge = document.getElementById("cart-badge-count");
+    const miniCart = document.getElementById("mini-cart-container");
+    
+    // 1. Xử lý nhảy con số trên Badge
+    const tongSoLuong = gioHang.reduce((total, mon) => total + mon.soLuong, 0);
+    if (badge) {
+        if (tongSoLuong > 0) {
+            badge.innerText = tongSoLuong;
+            badge.style.display = "inline-block";
+        } else {
+            badge.style.display = "none";
+        }
+    }
+
+    // 2. Xử lý hiển thị danh sách món bên trong Dropdown "inner"
+    if (miniCart) {
+        if (gioHang.length === 0) {
+            miniCart.innerHTML = `<div class="text-center py-3 text-muted">Giỏ hàng trống trơn!</div>`;
+            return;
+        }
+
+        let htmlMonAn = `<h6 class="fw-bold border-bottom pb-2 mb-2 text-dark">Món ăn đã chọn</h6>`;
+        let tongTien = 0;
+
+        gioHang.forEach(mon => {
+            tongTien += mon.gia * mon.soLuong;
+            htmlMonAn += `
+                <div class="d-flex align-items-center justify-content-between mb-2 border-bottom pb-2">
+                    <img src="${mon.hinhAnh}" style="width:45px; height:45px; object-fit:cover; border-radius:4px;">
+                    <div class="ms-2 flex-grow-1" style="font-size: 13px;">
+                        <span class="fw-bold d-block text-truncate text-dark" style="max-width: 130px;">${mon.tenMon}</span>
+                        <span class="text-primary small">${formatTienMini(mon.gia)}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-sm btn-light p-1 px-2 border" onclick="giamSoLuong(${mon.idMonAn})">-</button>
+                        <span class="mx-2 fw-bold text-dark" style="font-size: 13px;">${mon.soLuong}</span>
+                        <button class="btn btn-sm btn-light p-1 px-2 border" onclick="tangSoLuong(${mon.idMonAn})">+</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Phần tổng tiền và nút thanh toán nhanh
+        htmlMonAn += `
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 font-weight-bold">
+                <span class="text-dark fw-bold" style="font-size:14px;">Tổng cộng:</span>
+                <span class="text-primary fw-bold" style="font-size:15px;">${formatTienMini(tongTien)}</span>
+            </div>
+            <a href="booking.html" class="btn btn-primary btn-sm w-100 mt-3 py-2 fw-bold">Xem Chi Tiết Giỏ Hàng</a>
+        `;
+
+        miniCart.innerHTML = htmlMonAn;
     }
 }
 
+// Kích hoạt cập nhật thời gian thực
+function kichHoatCapNhatGioHang() {
+    capNhatBadgeGioHang();
+    window.dispatchEvent(new Event('cart-updated'));
+}
+
+// Khởi chạy hệ thống lắng nghe nhảy số liên tục
+document.addEventListener('DOMContentLoaded', function () {
+    capNhatBadgeGioHang();
+
+    window.addEventListener('storage', function (e) {
+        if (e.key === 'gioHang') capNhatBadgeGioHang();
+    });
+
+    window.addEventListener('cart-updated', capNhatBadgeGioHang);
+});
+window.tangSoLuong = function(idMonAn) {
+    let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    const index = gioHang.findIndex(item => item.idMonAn === idMonAn);
+    
+    if (index !== -1) {
+        gioHang[index].soLuong++;
+        localStorage.setItem("gioHang", JSON.stringify(gioHang));
+        kichHoatCapNhatGioHang(); // Vẽ lại giao diện
+    }
+};
+window.giamSoLuong = function(idMonAn) {
+    let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    const index = gioHang.findIndex(item => item.idMonAn === idMonAn);
+    
+    if (index !== -1) {
+        if (gioHang[index].soLuong > 1) {
+            gioHang[index].soLuong--;
+        } else {
+            // Nếu số lượng lùi về 0, xóa món khỏi giỏ hàng
+            gioHang.splice(index, 1); 
+        }
+        localStorage.setItem("gioHang", JSON.stringify(gioHang));
+        kichHoatCapNhatGioHang(); // Vẽ lại giao diện
+    }
+};

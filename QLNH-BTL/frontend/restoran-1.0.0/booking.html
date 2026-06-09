@@ -85,11 +85,22 @@
                         </a>
                     </div>
                 </div>
+<div class="nav-item dropdown ms-3 me-3">
+            <a href="#" class="position-relative nav-link text-white dropdown-toggle no-arrow" data-bs-toggle="dropdown" data-bs-auto-close="outside" style="font-size: 22px;">
+                <i class="fa fa-shopping-cart text-primary"></i>
+                <span id="cart-badge-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 11px; display: none;">
+                    0
+                </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end p-3 shadow-lg" id="mini-cart-container" style="width: 320px; max-height: 400px; overflow-y: auto; border: 1px solid #ddd;">
+                </div>
+        </div>
 
-                <!-- Nút đặt bàn -->
-                <a href="booking.html" class="btn btn-primary py-2 px-4" data-i18n="btn-book-now">
-                    Đặt bàn ngay
-                </a>
+    </div> <a href="booking.html" class="btn btn-primary py-2 px-4" data-i18n="btn-book-now">
+        Đặt bàn ngay
+    </a>
+            </div>
+    </div>
             </div>
         </nav>
 
@@ -606,13 +617,15 @@
     }
 }
 
-        function xoaMon(idMonAn) {
-            let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
-            gioHang = gioHang.filter(mon => mon.idMonAn !== idMonAn);
-            localStorage.setItem("gioHang", JSON.stringify(gioHang));
-            hienThiMonDaChon();
-            alert("Đã xóa món khỏi giỏ hàng!");
-        }
+       function xoaMon(idMonAn) {
+    let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    gioHang = gioHang.filter(mon => mon.idMonAn !== idMonAn);
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    hienThiMonDaChon();
+    
+    kichHoatCapNhatGioHang(); // <--- Đã sửa thành không dấu
+    alert("Đã xóa món khỏi giỏ hàng!");
+}
 
         document.addEventListener('DOMContentLoaded', function () {
             loadBan();
@@ -636,40 +649,42 @@
         });
 
         function resetGiaoDienDatBan() {
-            document.getElementById("tenKhachHang").value = '';
-            document.getElementById("soDienThoai").value = '';
-            document.getElementById("soLuongKhach").value = '1';
-            document.getElementById("ghiChu").value = '';
-            if(document.getElementById("thongBaoDoanDong")) {
-                document.getElementById("thongBaoDoanDong").style.display = "none";
-            }
-            localStorage.removeItem("gioHang");
-            hienThiMonDaChon();
-            loadBan();
-        }
+    document.getElementById("tenKhachHang").value = '';
+    document.getElementById("soDienThoai").value = '';
+    document.getElementById("soLuongKhach").value = '1';
+    document.getElementById("ghiChu").value = '';
+    if(document.getElementById("thongBaoDoanDong")) {
+        document.getElementById("thongBaoDoanDong").style.display = "none";
+    }
+    localStorage.removeItem("gioHang");
+    hienThiMonDaChon();
+    loadBan();
+    
+    kichHoatCapNhatGioHang(); // <--- Đã sửa thành không dấu
+}
 
         function tangSoLuong(idMonAn) {
-            let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
-            const mon = gioHang.find(item => item.idMonAn === idMonAn);
-            if(mon){
-                mon.soLuong++;
-            }
-            localStorage.setItem("gioHang", JSON.stringify(gioHang));
-            hienThiMonDaChon();
-        }
+    let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    const mon = gioHang.find(item => item.idMonAn === idMonAn);
+    if(mon) mon.soLuong++;
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    
+    hienThiMonDaChon();     // Vẽ lại giỏ hàng lớn ở trang đặt bàn
+    kichHoatCapNhatGioHang(); // Bắn sự kiện nhảy số + vẽ lại giỏ hàng mini trên Navbar
+}
 
         function giamSoLuong(idMonAn) {
-            let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
-            const mon = gioHang.find(item => item.idMonAn === idMonAn);
-            if(mon){
-                mon.soLuong--;
-                if(mon.soLuong <= 0){
-                    gioHang = gioHang.filter(item => item.idMonAn !== idMonAn);
-                }
-            }
-            localStorage.setItem("gioHang", JSON.stringify(gioHang));
-            hienThiMonDaChon();
-        }
+    let gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    const mon = gioHang.find(item => item.idMonAn === idMonAn);
+    if(mon){
+        mon.soLuong--;
+        if(mon.soLuong <= 0) gioHang = gioHang.filter(item => item.idMonAn !== idMonAn);
+    }
+    localStorage.setItem("gioHang", JSON.stringify(gioHang));
+    
+    hienThiMonDaChon();     // Vẽ lại giỏ hàng lớn
+    kichHoatCapNhatGioHang(); // Bắn sự kiện nhảy số + vẽ lại giỏ hàng mini
+}
 
         function kiemTraSoLuongKhach() {
             const soLuong = parseInt(document.getElementById("soLuongKhach").value);
