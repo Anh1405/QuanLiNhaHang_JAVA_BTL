@@ -192,7 +192,7 @@
         // LOAD DANH MỤC
         // =======================
          function loadDanhMuc() {
-    axios.get("https://restoranqka.up.railway.app/danhmuc")
+    axios.get("https://restoranqka.up.railway.app/api/danhmuc")
         .then(response => {
             allDanhMuc = response.data;
             
