@@ -157,7 +157,7 @@
     <!-- Thêm thuộc tính data-i18n vào đây -->
     <label data-i18n="booking-form-guests">Số lượng khách</label>
 
-    <select id="soLuongKhach" class="form-control" onchange="goiYBan()">
+    <select id="soLuongKhach" class="form-control" onchange="goiYBan(); hienThiMonDaChon();">
         <option value="1">1 người</option>
         <option value="2">2 người</option>
         <option value="3">3 người</option>
@@ -388,95 +388,93 @@
         let duLieuDatBanTam = null;
 
         async function datBan() {
-            // 1. Kiểm tra các điều kiện đầu vào (Validate giữ nguyên)
-            const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
-            if (!user) {
-                alert("Vui lòng đăng nhập trước khi đặt bàn!");
-                window.location.href = "login.html";
-                return;
+    if (!user) {
+        alert("Vui lòng đăng nhập trước khi đặt bàn!");
+        window.location.href = "login.html";
+        return;
+    }
+    const ngayDat = document.querySelector('input[type="date"]').value;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    const ngayChon = new Date(ngayDat);
+
+    if (ngayChon < today) return alert("Ngày đặt bàn không được trong quá khứ!");
+    if (!banDangChon) return alert("Vui lòng chọn chỗ ngồi!");
+
+    const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
+    if (gioHang.length === 0) return alert("Bạn chưa chọn món ăn nào!");
+
+    const tenKhachHang = document.getElementById("tenKhachHang").value;
+    const soDienThoai = document.getElementById("soDienThoai").value;
+    if (!/^[0-9]{10}$/.test(soDienThoai)) return alert("Số điện thoại phải đúng 10 chữ số!");
+
+    const soLuongKhachSelect = document.getElementById("soLuongKhach").value;
+    const soLuongKhach = parseInt(soLuongKhachSelect, 10) || 1; 
+
+    const ghiChu = document.getElementById("ghiChu").value;
+    if (!tenKhachHang || !soDienThoai) return alert("Vui lòng nhập đầy đủ Họ tên và Số điện thoại!");
+
+    // === CẬP NHẬT LOGIC TÍNH TỔNG TIỀN ĐÃ GIẢM ĐỂ GỬI LÊN SERVER ===
+    const tongTienBanDau = gioHang.reduce((total, mon) => total + (mon.gia * mon.soLuong), 0);
+    let phanTramGiam = 0;
+    if (soLuongKhach >= 20) phanTramGiam = 0.15;
+    else if (soLuongKhach >= 10) phanTramGiam = 0.10;
+    else if (soLuongKhach >= 6) phanTramGiam = 0.05;
+    else if (soLuongKhach >= 4) phanTramGiam = 0.02;
+
+    const tongTien = tongTienBanDau * (1 - phanTramGiam); // Đây là số tiền cuối cùng sau chiết khấu
+    // ==============================================================
+
+    const phuongThucChon = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+    try {
+        if (phuongThucChon === "VNPAY") {
+            const payloadVnPay = {
+                tenKhachHang,
+                soDienThoai,
+                soLuongKhach,
+                ghiChu,
+                tongTien, // Số tiền gửi đi đã giảm
+                idBan: banDangChon,
+                idNguoiDung: user?.id
+            };
+
+            const response = await axios.post('https://restoranqka.up.railway.app/api/vnpay/create-payment', payloadVnPay);
+            
+            if (response.data && response.data.paymentUrl) {
+                const idHoaDonMoi = response.data.idHoaDon;
+
+                const danhSachMon = gioHang.map(mon => ({
+                    idHoaDon: idHoaDonMoi,
+                    idMonAn: mon.idMonAn,
+                    soLuong: mon.soLuong,
+                    gia: mon.gia
+                }));
+
+                const requests = danhSachMon.map(item =>
+                    axios.post('https://restoranqka.up.railway.app/api/chitiethoadon', item)
+                );
+                await Promise.all(requests);
+
+                localStorage.setItem("vnpay_selected_ban", banDangChon);
+                window.location.href = response.data.paymentUrl;
+            } else {
+                alert("Không thể khởi tạo link kết nối cổng VNPay!");
             }
-            const ngayDat = document.querySelector('input[type="date"]').value;
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); 
-            const ngayChon = new Date(ngayDat);
 
-            if (ngayChon < today) return alert("Ngày đặt bàn không được trong quá khứ!");
-            if (!banDangChon) return alert("Vui lòng chọn chỗ ngồi!");
-
-            const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
-            if (gioHang.length === 0) return alert("Bạn chưa chọn món ăn nào!");
-
-            const tenKhachHang = document.getElementById("tenKhachHang").value;
-            const soDienThoai = document.getElementById("soDienThoai").value;
-            if (!/^[0-9]{10}$/.test(soDienThoai)) return alert("Số điện thoại phải đúng 10 chữ số!");
-
-            const soLuongKhachSelect = document.getElementById("soLuongKhach").value;
-            const soLuongKhach = parseInt(soLuongKhachSelect, 10) || 1; 
-
-            const ghiChu = document.getElementById("ghiChu").value;
-            if (!tenKhachHang || !soDienThoai) return alert("Vui lòng nhập đầy đủ Họ tên và Số điện thoại!");
-
-            const tongTien = gioHang.reduce((total, mon) => total + (mon.gia * mon.soLuong), 0);
-            const phuongThucChon = document.querySelector('input[name="paymentMethod"]:checked').value;
-
-            try {
-                // ĐÂY LÀ ĐOẠN ĐƯỢC THAY THẾ CHO PHƯƠNG THỨC VNPAY THẬT
-                if (phuongThucChon === "VNPAY") {
-                    
-                    // Chuẩn bị payload khớp dữ liệu đầu vào của Backend Java Controller
-                    const payloadVnPay = {
-                        tenKhachHang,
-                        soDienThoai,
-                        soLuongKhach,
-                        ghiChu,
-                        tongTien,
-                        idBan: banDangChon,
-                        idNguoiDung: user?.id
-                    };
-
-                    // Gọi lên server Spring Boot để tạo hóa đơn tạm và lấy link cổng thanh toán VNPay
-                    // (Bạn có thể thay đổi localhost thành link Railway của bạn sau này)
-                    const response = await axios.post('https://restoranqka.up.railway.app/api/vnpay/create-payment', payloadVnPay);
-                    
-                    if (response.data && response.data.paymentUrl) {
-                        const idHoaDonMoi = response.data.idHoaDon;
-
-                        // Đồng bộ lưu danh sách món ăn đã chọn vào Chi tiết hóa đơn ngay lập tức
-                        const danhSachMon = gioHang.map(mon => ({
-                            idHoaDon: idHoaDonMoi,
-                            idMonAn: mon.idMonAn,
-                            soLuong: mon.soLuong,
-                            gia: mon.gia
-                        }));
-
-                        const requests = danhSachMon.map(item =>
-                            axios.post('https://restoranqka.up.railway.app/api/chitiethoadon', item)
-                        );
-                        await Promise.all(requests);
-
-                        // Lưu trạng thái bàn tạm thời hoặc chuyển hướng thẳng sang cổng VNPay
-                        localStorage.setItem("vnpay_selected_ban", banDangChon);
-
-                        // CHUYỂN HƯỚNG SANG CỔNG VNPAY THẬT
-                        window.location.href = response.data.paymentUrl;
-                    } else {
-                        alert("Không thể khởi tạo link kết nối cổng VNPay!");
-                    }
-
-                } else {
-                    // Phương thức thanh toán tại quầy giữ nguyên logic cũ của bạn
-                    const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
-                    await axios.put(`https://restoranqka.up.railway.app/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
-                    alert(`Đặt bàn thành công! Quý khách vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
-                    resetGiaoDienDatBan();
-                }
-            } catch (error) {
-                console.error("Lỗi quá trình đặt bàn:", error);
-                alert("Có lỗi xảy ra khi xử lý hệ thống kết nối thanh toán!");
-            }
+        } else {
+            const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
+            await axios.put(`https://restoranqka.up.railway.app/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
+            alert(`Đặt bàn thành công! Quý khách được áp dụng ưu đãi đi đông. Vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
+            resetGiaoDienDatBan();
         }
-
+    } catch (error) {
+        console.error("Lỗi quá trình đặt bàn:", error);
+        alert("Có lỗi xảy ra khi xử lý hệ thống kết nối thanh toán!");
+    }
+}
         async function xacNhanDaChuyenKhoan() {
             try {
                 if (!duLieuDatBanTam) {
@@ -569,16 +567,18 @@
     // 2. Bộ từ vựng động cho giỏ hàng đặt bàn
     const i18nBookingCart = {
         "delete": currentLang === "en" ? "Delete" : "Xóa",
-        "total": currentLang === "en" ? "Total:" : "Tổng cộng:"
+        "total": currentLang === "en" ? "Total:" : "Tổng cộng:",
+        "discount": currentLang === "en" ? "Volume Discount" : "Giảm giá đi đông",
+        "finalTotal": currentLang === "en" ? "Final Total:" : "Thành tiền:"
     };
 
-    let tongTien = 0;
+    let tongTienBanDau = 0;
     container.innerHTML = "";
 
+    // Duyệt qua giỏ hàng để vẽ danh sách món ăn
     gioHang.forEach(mon => {
-        tongTien += mon.gia * mon.soLuong;
+        tongTienBanDau += mon.gia * mon.soLuong;
 
-        // Dùng biến i18nBookingCart.delete thay cho chữ "Xóa" cứng
         container.innerHTML += `
             <div class="d-flex align-items-center mb-3 border-bottom pb-3">
                 <img src="${mon.hinhAnh}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
@@ -596,11 +596,42 @@
         `;
     });
 
-    // Dùng biến i18nBookingCart.total thay cho chữ "Tổng cộng"
+    // ================== LOGIC TÍNH GIẢM GIÁ ĐI ĐÔNG ==================
+    const soKhach = parseInt(document.getElementById("soLuongKhach").value, 10) || 1;
+    let phanTramGiam = 0;
+
+    if (soKhach >= 20) phanTramGiam = 0.15;      // Đi từ 20 người trở lên giảm 15%
+    else if (soKhach >= 10) phanTramGiam = 0.10; // Đi từ 10 - 19 người giảm 10%
+    else if (soKhach >= 6) phanTramGiam = 0.05;  // Đi từ 6 - 9 người giảm 5%
+    else if (soKhach >= 4) phanTramGiam = 0.02;  // Đi từ 4 - 5 người giảm 2%
+
+    let tienGiamGia = tongTienBanDau * phanTramGiam;
+    let tongTienSauGiam = tongTienBanDau - tienGiamGia;
+    // =================================================================
+
+    // Hiển thị Tổng cộng ban đầu
     container.innerHTML += `
         <div class="d-flex justify-content-between mt-4">
-            <h5>${i18nBookingCart.total}</h5>
-            <h5 class="text-primary">${formatTien(tongTien)}</h5>
+            <span>${i18nBookingCart.total}</span>
+            <span>${formatTien(tongTienBanDau)}</span>
+        </div>
+    `;
+
+    // Nếu có giảm giá thì mới hiển thị dòng giảm giá
+    if (phanTramGiam > 0) {
+        container.innerHTML += `
+            <div class="d-flex justify-content-between text-success my-2 fw-bold">
+                <span>${i18nBookingCart.discount} (-${phanTramGiam * 100}%):</span>
+                <span>-${formatTien(tienGiamGia)}</span>
+            </div>
+        `;
+    }
+
+    // Hiển thị số tiền cuối cùng khách phải trả
+    container.innerHTML += `
+        <div class="d-flex justify-content-between mt-2 pt-2 border-top">
+            <h5>${i18nBookingCart.finalTotal}</h5>
+            <h5 class="text-primary">${formatTien(tongTienSauGiam)}</h5>
         </div>
     `;
 }
