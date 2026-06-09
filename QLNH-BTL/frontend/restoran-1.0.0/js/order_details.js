@@ -1,5 +1,6 @@
+
 // ==============================
-// ORDER HISTORY - MYSQL VERSION
+// ORDER HISTORY - MYSQL VERSION (CHỈ CỘNG ĐIỂM KHI ĐÃ THANH TOÁN)
 // ==============================
 
 window.loadOrderHistory = async function () {
@@ -39,6 +40,28 @@ window.loadOrderHistory = async function () {
             return;
         }
 
+        // =======================================================================
+        // 🔥 LOGIC LỌC NGHIÊM NGẶT: CHỈ 'DaThanhToan' MỚI ĐƯỢC TÍNH ĐIỂM
+        // =======================================================================
+        let tongDiemChinhXac = 0;
+
+        orders.forEach(order => {
+            // Kiểm tra trạng thái hóa đơn: Phải chính xác là 'DaThanhToan'
+            if (order.trangThai === 'DaThanhToan') {
+                const items = order.chiTietHoaDons || [];
+                items.forEach(item => {
+                    // Cộng dồn số lượng món ăn thành điểm tích lũy
+                    tongDiemChinhXac += parseInt(item.soLuong || 0, 10);
+                });
+            }
+        });
+
+        // Cập nhật số điểm này vào LocalStorage của trình duyệt
+        user.tongDiemTichLuy = tongDiemChinhXac;
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log("🔥 Đã quét hệ thống! Số điểm tích lũy từ các đơn 'DaThanhToan' là:", tongDiemChinhXac);
+        // =======================================================================
+
         // ==============================
         // TRANSLATION MAP
         // ==============================
@@ -66,19 +89,15 @@ window.loadOrderHistory = async function () {
         // ==============================
         // RENDER ORDERS
         // ==============================
-        // SỬA TẠI ĐÂY: Thêm tham số orderIndex để làm Mã HD tăng dần (bắt đầu từ 0)
         orders.forEach((order, orderIndex) => {
 
-            // Mã HD hiển thị dạng HD-1, HD-2, HD-3... thay vì id gốc từ DB
             const displayOrderId = orderIndex + 1; 
             const items = order.chiTietHoaDons || [];
 
             items.forEach((item, index) => {
 
                 const mon = item.monAn || {};
-
                 const thanhTien = (item.soLuong || 0) * (item.giaTien || 0);
-
                 let tenMonHienThi = mon.tenMon || "";
 
                 if (isEnglish && translationMap[mon.tenMon]) {

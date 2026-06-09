@@ -235,8 +235,7 @@
                     <div class="pasgo-card">
                         <h3 data-i18n="booking-food-title">Món ăn đã chọn</h3>
                         <div id="selected-food-list"></div>
-                        <button class="btn-order" onclick="datBan()" data-i18n="booking-btn-submit">Đặt Bàn Ngay</button>
-                    </div>
+<button class="btn-order" id="btn-submit-booking" onclick="datBan()" data-i18n="booking-btn-submit">Đặt Bàn Ngay</button>                    </div>
                 </div>
             </div>
         </div>
@@ -387,7 +386,7 @@
         // Biến toàn cục lưu trữ dữ liệu tạm thời
         let duLieuDatBanTam = null;
 
-        async function datBan() {
+       async function datBan() {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user) {
@@ -416,16 +415,29 @@
     const ghiChu = document.getElementById("ghiChu").value;
     if (!tenKhachHang || !soDienThoai) return alert("Vui lòng nhập đầy đủ Họ tên và Số điện thoại!");
 
-    // === CẬP NHẬT LOGIC TÍNH TỔNG TIỀN ĐÃ GIẢM ĐỂ GỬI LÊN SERVER ===
+    // ======================================================================
+    // 📊 ĐOẠN ĐÃ THÊM: LOGIC TÍNH TIỀN THEO GIÁ TRỊ ĐƠN HÀNG HOẶC HẠNG THÀNH VIÊN
+    // ======================================================================
     const tongTienBanDau = gioHang.reduce((total, mon) => total + (mon.gia * mon.soLuong), 0);
-    let phanTramGiam = 0;
-    if (soLuongKhach >= 20) phanTramGiam = 0.15;
-    else if (soLuongKhach >= 10) phanTramGiam = 0.10;
-    else if (soLuongKhach >= 6) phanTramGiam = 0.05;
-    else if (soLuongKhach >= 4) phanTramGiam = 0.02;
+    let diemHienTai = user.tongDiemTichLuy ? parseInt(user.tongDiemTichLuy, 10) : 0;
 
-    const tongTien = tongTienBanDau * (1 - phanTramGiam); // Đây là số tiền cuối cùng sau chiết khấu
-    // ==============================================================
+    // 1. Tính % giảm thành viên (Quá khứ)
+    let phanTramThanhVien = 0;
+    if (diemHienTai >= 30) phanTramThanhVien = 0.10;
+    else if (diemHienTai >= 10) phanTramThanhVien = 0.05;
+
+    // 2. Tính % giảm theo giá trị hóa đơn (Hiện tại - Mua càng nhiều tiền càng giảm)
+    let phanTramTheoTien = 0;
+    if (tongTienBanDau >= 1500000) phanTramTheoTien = 0.15;
+    else if (tongTienBanDau >= 800000) phanTramTheoTien = 0.10;
+    else if (tongTienBanDau >= 400000) phanTramTheoTien = 0.05;
+
+    // 3. Lấy mức ưu đãi lớn nhất để bảo vệ quyền lợi khách hàng
+    const phanTramGiamMax = Math.max(phanTramThanhVien, phanTramTheoTien);
+    
+    // 💥 ĐÂY CHÍNH LÀ BIẾN SỐ TIỀN ĐÃ GIẢM SẼ GỬI LÊN SERVER/DB
+    const tongTien = tongTienBanDau * (1 - phanTramGiamMax);
+    // ======================================================================
 
     const phuongThucChon = document.querySelector('input[name="paymentMethod"]:checked').value;
 
@@ -436,7 +448,7 @@
                 soDienThoai,
                 soLuongKhach,
                 ghiChu,
-                tongTien, // Số tiền gửi đi đã giảm
+                tongTien, // VNPay nhận số tiền đã giảm chuẩn xác
                 idBan: banDangChon,
                 idNguoiDung: user?.id
             };
@@ -465,11 +477,28 @@
             }
 
         } else {
-            const idHoaDon = await taoHoaDonTrenServer(tenKhachHang, soDienThoai, soLuongKhach, ghiChu, tongTien, 'ChoThanhToan', banDangChon, gioHang);
-            await axios.put(`https://restoranqka.up.railway.app/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
-            alert(`Đặt bàn thành công! Quý khách được áp dụng ưu đãi đi đông. Vui lòng thanh toán tại quầy khi đến. Mã hóa đơn: HD-${idHoaDon}`);
-            resetGiaoDienDatBan();
-        }
+        // SỬA TẠI ĐÂY: Đảm bảo truyền biến "tongTien" (đã giảm giá) vào vị trí tham số tổng tiền
+        const idHoaDon = await taoHoaDonTrenServer(
+            tenKhachHang, 
+            soDienThoai, 
+            soLuongKhach, 
+            ghiChu, 
+            tongTien, // <-- Biến số tiền đã giảm ở đây
+            'ChoThanhToan', 
+            banDangChon, 
+            gioHang
+        );
+        
+        await axios.put(`https://restoranqka.up.railway.app/api/ban/${banDangChon}/status`, { trangThai: 'DaDat' });
+        
+        // Cập nhật điểm tích lũy
+        const tongSoMonAn = gioHang.reduce((total, mon) => total + mon.soLuong, 0);
+        user.tongDiemTichLuy = diemHienTai + tongSoMonAn;
+        localStorage.setItem("user", JSON.stringify(user));
+
+        alert(`Đặt bàn thành công! Đơn hàng áp dụng ưu đãi thành viên. Quý khách tích lũy thêm được ${tongSoMonAn} điểm. Mã hóa đơn: HD-${idHoaDon}`);
+        resetGiaoDienDatBan();
+    }
     } catch (error) {
         console.error("Lỗi quá trình đặt bàn:", error);
         alert("Có lỗi xảy ra khi xử lý hệ thống kết nối thanh toán!");
@@ -519,15 +548,14 @@
     const payloadHoaDon = {
         tenKhachHang,
         soDienThoai,
-        soLuongKhach: parseInt(soLuongKhach, 10), // Ép kiểu một lần nữa tại đây cho chắc chắn
+        soLuongKhach: parseInt(soLuongKhach, 10),
         ghiChu,
-        tongTien,
+        tongTien: tongTien, // <-- Gửi chính xác số tiền sau giảm lên Back-end
         trangThai: trangThaiHoaDon,
         idBan: idBan,
         idNguoiDung: user?.id
     };
 
-    // 🛑 DÒNG KIỂM TRA: Bật F12 lên xem dòng này có xuất hiện và số lượng khách có chuẩn không nhé!
     console.log("👉 ĐANG GỬI PAYLOAD LÊN SERVER:", payloadHoaDon);
     
     const resResult = await axios.post(
@@ -558,26 +586,62 @@
        function hienThiMonDaChon() {
     const gioHang = JSON.parse(localStorage.getItem("gioHang")) || [];
     const container = document.getElementById("selected-food-list");
+    // Lấy đối tượng nút đặt bàn bằng id vừa thêm
+    const btnSubmit = document.getElementById("btn-submit-booking");
 
     if (!container) return;
 
-    // 1. Lấy ngôn ngữ hiện tại
     const currentLang = localStorage.getItem("currentLanguage") || "vi";
+    const isEnglish = currentLang === "en";
     
-    // 2. Bộ từ vựng động cho giỏ hàng đặt bàn
     const i18nBookingCart = {
-        "delete": currentLang === "en" ? "Delete" : "Xóa",
-        "total": currentLang === "en" ? "Total:" : "Tổng cộng:",
-        "discount": currentLang === "en" ? "Volume Discount" : "Giảm giá đi đông",
-        "finalTotal": currentLang === "en" ? "Final Total:" : "Thành tiền:"
+        "delete": isEnglish ? "Delete" : "Xóa",
+        "total": isEnglish ? "Subtotal:" : "Tổng tiền món:",
+        "loyaltyDiscount": isEnglish ? "Loyalty Tier Discount" : "Ưu đãi hạng thành viên",
+        "valueDiscount": isEnglish ? "Order Value Discount" : "Ưu đãi giá trị đơn hàng",
+        "finalTotal": isEnglish ? "Final Total:" : "Thành tiền:",
+        "pointsEarn": isEnglish ? "Points to earn from this order" : "Điểm tích lũy từ đơn này",
+        "memberTier": isEnglish ? "Your Tier" : "Hạng thành viên",
+        "tierBronze": isEnglish ? "🥉Bronze Member" : "🥉Thành viên Đồng",
+        "tierSilver": isEnglish ? "🥈Silver Member" : "🥈Thành viên Bạc",
+        "tierGold": isEnglish ? "🥇Gold Member" : "🥇Thành viên Vàng",
+        "emptyCart": isEnglish ? "Your cart is empty. Please select dishes from the menu!" : "Giỏ hàng của bạn đang trống. Vui lòng chọn món ăn từ thực đơn!",
+        "chooseFoodNow": isEnglish ? "Go to Menu" : "Chọn món ngay"
     };
 
+    // ====================================================================
+    // 📊 XỬ LÝ ẨN/HIỆN NÚT ĐẶT BÀN KHI GIỎ HÀNG TRỐNG
+    // ====================================================================
+    if (gioHang.length === 0) {
+        // Nếu giỏ hàng trống -> ẨN NÚT ĐẶT BÀN
+        if (btnSubmit) btnSubmit.style.display = "none";
+
+        container.innerHTML = `
+            <div class="text-center py-5">
+                <div class="mb-3">
+                    <i class="fa fa-shopping-basket text-muted" style="font-size: 48px;"></i>
+                </div>
+                <p class="text-muted mb-4" style="font-size: 15px;">${i18nBookingCart.emptyCart}</p>
+                <a href="menu.html" class="btn btn-primary btn-sm px-4 py-2 rounded-pill fw-bold">
+                    <i class="fa fa-utensils me-2"></i>${i18nBookingCart.chooseFoodNow}
+                </a>
+            </div>
+        `;
+        return;
+    } else {
+        // Nếu giỏ hàng CÓ MÓN -> HIỆN NÚT ĐẶT BÀN
+        if (btnSubmit) btnSubmit.style.display = "block"; 
+    }
+    // ====================================================================
+
     let tongTienBanDau = 0;
+    let tongSoMonAnDonNay = 0; 
     container.innerHTML = "";
 
-    // Duyệt qua giỏ hàng để vẽ danh sách món ăn
+    // Duyệt qua giỏ hàng hiển thị món ăn
     gioHang.forEach(mon => {
         tongTienBanDau += mon.gia * mon.soLuong;
+        tongSoMonAnDonNay += mon.soLuong; 
 
         container.innerHTML += `
             <div class="d-flex align-items-center mb-3 border-bottom pb-3">
@@ -596,42 +660,84 @@
         `;
     });
 
-    // ================== LOGIC TÍNH GIẢM GIÁ ĐI ĐÔNG ==================
-    const soKhach = parseInt(document.getElementById("soLuongKhach").value, 10) || 1;
-    let phanTramGiam = 0;
+    // ====================================================================
+    // 📊 XỬ LÝ SONG SONG 2 ƯU ĐÃI (THÀNH VIÊN VÀ GIÁ TRỊ HÓA ĐƠN)
+    // ====================================================================
+    
+    // 1. Lấy chiết khấu theo Hạng Thành Viên (Lịch sử quá khứ)
+    const user = JSON.parse(localStorage.getItem("user"));
+    let diemHienTai = (user && user.tongDiemTichLuy) ? parseInt(user.tongDiemTichLuy, 10) : 0;
+    let phanTramGiamThanhVien = 0;
+    let tenHangHienThi = i18nBookingCart.tierBronze;
 
-    if (soKhach >= 20) phanTramGiam = 0.15;      // Đi từ 20 người trở lên giảm 15%
-    else if (soKhach >= 10) phanTramGiam = 0.10; // Đi từ 10 - 19 người giảm 10%
-    else if (soKhach >= 6) phanTramGiam = 0.05;  // Đi từ 6 - 9 người giảm 5%
-    else if (soKhach >= 4) phanTramGiam = 0.02;  // Đi từ 4 - 5 người giảm 2%
+    if (diemHienTai >= 30) {
+        phanTramGiamThanhVien = 0.10; // Hạng Vàng giảm 10%
+        tenHangHienThi = i18nBookingCart.tierGold;
+    } else if (diemHienTai >= 10) {
+        phanTramGiamThanhVien = 0.05; // Hạng Bạc giảm 5%
+        tenHangHienThi = i18nBookingCart.tierSilver;
+    }
 
-    let tienGiamGia = tongTienBanDau * phanTramGiam;
+    // 2. Lấy chiết khấu theo Giá trị đơn hàng (Mức tiền càng cao giảm càng nhiều)
+    let phanTramGiamTheoTien = 0;
+    if (tongTienBanDau >= 1500000) phanTramGiamTheoTien = 0.15;      // Đơn từ 1.5 Triệu trở lên giảm 15%
+    else if (tongTienBanDau >= 800000) phanTramGiamTheoTien = 0.10;  // Đơn từ 800k đến dưới 1.5 Triệu giảm 10%
+    else if (tongTienBanDau >= 400000) phanTramGiamTheoTien = 0.05;  // Đơn từ 400k đến dưới 800k giảm 5%
+
+    // 3. So sánh xem ưu đãi nào có mức chiết khấu lớn hơn thì áp dụng cái đó
+    let phanTramGiamCuoiCung = 0;
+    let loaiUuDaiHienThi = "";
+
+    if (phanTramGiamTheoTien >= phanTramGiamThanhVien && phanTramGiamTheoTien > 0) {
+        phanTramGiamCuoiCung = phanTramGiamTheoTien;
+        loaiUuDaiHienThi = `${i18nBookingCart.valueDiscount} (-${phanTramGiamTheoTien * 100}%)`;
+    } else if (phanTramGiamThanhVien > 0) {
+        phanTramGiamCuoiCung = phanTramGiamThanhVien;
+        loaiUuDaiHienThi = `${i18nBookingCart.loyaltyDiscount} (-${phanTramGiamThanhVien * 100}%)`;
+    }
+
+    let tienGiamGia = tongTienBanDau * phanTramGiamCuoiCung;
     let tongTienSauGiam = tongTienBanDau - tienGiamGia;
-    // =================================================================
+    // ====================================================================
 
-    // Hiển thị Tổng cộng ban đầu
+    // Giao diện hiển thị Hạng thành viên
     container.innerHTML += `
-        <div class="d-flex justify-content-between mt-4">
+        <div class="p-2 mb-3 bg-light rounded text-center border">
+            <small class="text-muted d-block">${i18nBookingCart.memberTier}:</small>
+            <strong class="text-secondary" style="font-size: 15px;"> ${tenHangHienThi} (${diemHienTai} pts)</strong>
+        </div>
+    `;
+
+    // Hiển thị Tổng tiền món ban đầu
+    container.innerHTML += `
+        <div class="d-flex justify-content-between mt-2">
             <span>${i18nBookingCart.total}</span>
             <span>${formatTien(tongTienBanDau)}</span>
         </div>
     `;
 
-    // Nếu có giảm giá thì mới hiển thị dòng giảm giá
-    if (phanTramGiam > 0) {
+    // Hiển thị dòng giảm giá nếu có
+    if (phanTramGiamCuoiCung > 0) {
         container.innerHTML += `
             <div class="d-flex justify-content-between text-success my-2 fw-bold">
-                <span>${i18nBookingCart.discount} (-${phanTramGiam * 100}%):</span>
+                <span>${loaiUuDaiHienThi}:</span>
                 <span>-${formatTien(tienGiamGia)}</span>
             </div>
         `;
     }
 
-    // Hiển thị số tiền cuối cùng khách phải trả
+    // Thành tiền cuối cùng
     container.innerHTML += `
         <div class="d-flex justify-content-between mt-2 pt-2 border-top">
             <h5>${i18nBookingCart.finalTotal}</h5>
             <h5 class="text-primary">${formatTien(tongTienSauGiam)}</h5>
+        </div>
+    `;
+
+    // Thông báo số điểm tích lũy sẽ nhận được (vẫn giữ logic 1 món = 1 điểm của bạn)
+    container.innerHTML += `
+        <div class="mt-3 p-2 bg-light text-success border border-success rounded text-center" style="font-size: 13px; font-style: italic;">
+            💡 ${i18nBookingCart.pointsEarn}: <strong class="fs-6">+${tongSoMonAnDonNay}</strong> điểm!
         </div>
     `;
 }
@@ -669,7 +775,8 @@
     alert("Đã xóa món khỏi giỏ hàng!");
 }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', async function () {
+            await capNhatDiemThanhVienRealtime();
             loadBan();
             hienThiMonDaChon();
 
@@ -764,6 +871,39 @@
             const textEl = document.getElementById("goiYText");
             if(textEl) textEl.innerHTML = "Hệ thống đề xuất: " + goiY;
         }
+        async function capNhatDiemThanhVienRealtime() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) return;
+
+    try {
+        // Gọi API lấy toàn bộ hóa đơn của user này từ Server Railway
+        const res = await fetch("https://restoranqka.up.railway.app/api/hoadon/user/" + user.id);
+        if (!res.ok) return;
+
+        const orders = await res.json();
+        let tongDiemChinhXac = 0;
+
+        // Quét nghiêm ngặt: Chỉ những đơn DaThanhToan mới được tính điểm
+        if (orders && orders.length > 0) {
+            orders.forEach(order => {
+                if (order.trangThai === 'DaThanhToan') {
+                    const items = order.chiTietHoaDons || [];
+                    items.forEach(item => {
+                        tongDiemChinhXac += parseInt(item.soLuong || 0, 10);
+                    });
+                }
+            });
+        }
+
+        // Ghi đè số điểm chuẩn realtime này vào LocalStorage
+        user.tongDiemTichLuy = tongDiemChinhXac;
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log("🔄 Đã tự động cập nhật điểm realtime tại trang Booking:", tongDiemChinhXac);
+
+    } catch (error) {
+        console.error("Lỗi quét điểm realtime:", error);
+    }
+}
     </script>
 </body>
 </html>
